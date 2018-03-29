@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.tieu_nt.vshop.MainActivity"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cảm ơn bạn đã sử dụng ứng dụng mua hàng online trên điện thoại di động."
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/colorRed"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hãy đăng nhập vào ứng dụng để có thể trải nghiệm ứng dụng tốt hơn."
+            android:textAlignment="center"
+            android:textColor="@color/colorRed"
+            android:textSize="18sp"
+            />
+
+</LinearLayout>
