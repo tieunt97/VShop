@@ -2,7 +2,6 @@ package com.example.tieu_nt.vshop.View.TrangChu;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,18 +16,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.example.tieu_nt.vshop.Adapter.RecyclerViewAdapter;
+import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Model.DrawerItem;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.Adapter.ViewPagerAdapter;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +39,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TrangChuActivity extends AppCompatActivity implements View.OnClickListener{
-    private FrameLayout trangChu;
+    private FrameLayout trangChu, frameLoc;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
-    private TabLayout tabs;
-    private ViewPager viewPager;
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private ToggleButton tgLayout;
+    private Button btnSapXep;
+    private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
+    private AdapterMenu recyclerViewAdapter;
     private CircleImageView imgInfo;
     private String items[] = {"Trang chủ", "Tin tức", "Danh sách yêu thích","Giỏ hàng", "Cài đặt",
             "Trung tâm hỗ trợ", "Giới thiệu VShop", "Đăng xuất"};
@@ -85,15 +85,10 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
         for(int i = 0; i < items.length; i++){
             dsItems.add(new DrawerItem(hinh[i], items[i]));
         }
-        recyclerViewAdapter = new RecyclerViewAdapter(TrangChuActivity.this, dsItems);
+        recyclerViewAdapter = new AdapterMenu(TrangChuActivity.this, dsItems);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
-
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        tabs.setupWithViewPager(viewPager);
 
         setActions();
     }
@@ -106,16 +101,20 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
 
     private void anhXa(){
         trangChu = (FrameLayout) findViewById(R.id.trangChu);
+        frameLoc = (FrameLayout) findViewById(R.id.frameLoc);
+        tgLayout = (ToggleButton) findViewById(R.id.tgLayout);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabs = (TabLayout) findViewById(R.id.tab);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerThuongHieu = (RecyclerView) findViewById(R.id.recyclerThuongHieu);
+        recyclerSanPham = (RecyclerView) findViewById(R.id.recyclerSanPham);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
+        btnSapXep = (Button) findViewById(R.id.btnSapXep);
     }
 
     private void setActions(){
         imgInfo.setOnClickListener(this);
+        btnSapXep.setOnClickListener(this);
     }
 
     @Override
@@ -125,6 +124,11 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(intent, IMG_GALLERY_REQUEST);
+                break;
+            case R.id.btnSapXep:
+                Toast.makeText(this, "BLABLA", Toast.LENGTH_SHORT).show();
+                Intent iChiTietSP = new Intent(TrangChuActivity.this, ChiTietSanPhamActivity.class);
+                startActivity(iChiTietSP);
                 break;
         }
     }

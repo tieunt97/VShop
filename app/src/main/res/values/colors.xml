@@ -12,4 +12,7 @@
     <color name="colorBlue">#42A5F5</color>
     <color name="colorRed">#D8202A</color>
     <color name="colorGrey">#484646</color>
+    <color name="tranparentGrey">#B2484646</color>
+    <color name="colorGreyish">#E0E0E0</color>
+    <color name="colorOrange">#E65100</color>
 </resources>

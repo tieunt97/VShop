@@ -19,11 +19,11 @@ import java.util.List;
  * Created by tieu_nt on 3/16/2018.
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHolder>{
     List<DrawerItem> dsItems;
     Context context;
 
-    public RecyclerViewAdapter(Context context, List<DrawerItem> dsItems){
+    public AdapterMenu(Context context, List<DrawerItem> dsItems){
         this.context = context;
         this.dsItems = dsItems;
     }

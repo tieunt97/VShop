@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(500);
                     Intent intent = new Intent(MainActivity.this, DangNhapActivity.class);
                     startActivity(intent);
                 } catch (InterruptedException e) {

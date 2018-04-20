@@ -27,13 +27,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".View.DangNhap.DangNhapActivity">
+        <activity android:name=".View.DangNhap.DangNhapActivity"
+            android:screenOrientation="portrait"/>
 
-        </activity>
+        <activity android:name=".View.TrangChu.TrangChuActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".View.TrangChu.TrangChuActivity">
-
-        </activity>
+        <activity android:name=".View.TrangChu.ChiTietSanPhamActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
