@@ -35,6 +35,22 @@
 
         <activity android:name=".View.TrangChu.ChiTietSanPhamActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.TinTuc.TinTucActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.DanhSachYeuThich.DanhSachYeuThichActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.TrangChu.HienThiSanPhamTheoThuongHieuActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.DonHangCuaToi.DonHangCuaToiActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.CaiDat.CaiDatActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

@@ -1,15 +1,18 @@
 package com.example.tieu_nt.vshop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.TrangChu.HienThiSanPhamTheoThuongHieuActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +48,13 @@ public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.Vi
 
             }
         });
+        holder.frameThuongHieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iHienThiSPTheoThuongHieu = new Intent(context, HienThiSanPhamTheoThuongHieuActivity.class);
+                context.startActivity(iHienThiSPTheoThuongHieu);
+            }
+        });
     }
 
     @Override
@@ -53,10 +63,12 @@ public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        FrameLayout frameThuongHieu;
         ImageView imgHinhThuongHieu;
         ProgressBar progressBarDownload;
         public ViewHolder(View itemView) {
             super(itemView);
+            frameThuongHieu = (FrameLayout) itemView.findViewById(R.id.frameThuongHieu);
             imgHinhThuongHieu = (ImageView) itemView.findViewById(R.id.imgHinhThuongHieu);
             progressBarDownload = (ProgressBar) itemView.findViewById(R.id.progress_bar_download);
         }

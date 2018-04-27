@@ -6,9 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -25,12 +22,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
-import com.example.tieu_nt.vshop.Model.DrawerItem;
 import com.example.tieu_nt.vshop.R;
-import com.example.tieu_nt.vshop.Adapter.ViewPagerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,13 +38,9 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
     private ToggleButton tgLayout;
     private Button btnSapXep;
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
-    private AdapterMenu recyclerViewAdapter;
+    private AdapterMenu adapterMenu;
     private CircleImageView imgInfo;
-    private String items[] = {"Trang chủ", "Tin tức", "Danh sách yêu thích","Giỏ hàng", "Cài đặt",
-            "Trung tâm hỗ trợ", "Giới thiệu VShop", "Đăng xuất"};
-    private int[] hinh = {R.drawable.home, R.drawable.newspaper, R.drawable.like, R.drawable.shopping_cart,
-            R.drawable.settings, R.drawable.mail, R.drawable.info, R.drawable.logout};
-    private List<DrawerItem> dsItems = new ArrayList<>();
+
     public static int IMG_GALLERY_REQUEST = 1;
 
     @Override
@@ -82,13 +70,10 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        for(int i = 0; i < items.length; i++){
-            dsItems.add(new DrawerItem(hinh[i], items[i]));
-        }
-        recyclerViewAdapter = new AdapterMenu(TrangChuActivity.this, dsItems);
+        adapterMenu = new AdapterMenu(TrangChuActivity.this, drawerLayout, 0);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(adapterMenu);
 
         setActions();
     }

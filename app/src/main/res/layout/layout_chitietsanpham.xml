@@ -569,6 +569,15 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <TextView
+                    android:id="@+id/tvXemTatCaDanhGia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="XEM TẤT CẢ"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlue"
+                    android:layout_marginHorizontal="15dp"/>
+
             </LinearLayout>
 
         </LinearLayout>
