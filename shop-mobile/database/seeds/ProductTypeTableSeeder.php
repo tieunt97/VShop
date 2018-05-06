@@ -19,6 +19,7 @@ class ProductTypeTableSeeder extends Seeder
         	$productTypes[] = [
         		'id' => $productType_id,
         		'product_type_name' => $types[$productType_id-1],
+                'icon_image'    => $faker->imageUrl($width = 320, $height = 320),
         	];
         }
 

@@ -15,7 +15,6 @@ class CreateSaleBillsTable extends Migration
     {
         Schema::create('sale_bills', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bill_id')->unsigned();
             $table->integer('customer_id')->unsigned();
             $table->integer('shipper_id')->unsigned();
             $table->integer('payment_id')->unsigned();

@@ -15,7 +15,6 @@ class CreateInputDescriptionsTable extends Migration
     {
         Schema::create('input_descriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bill_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('unit_price')->unsigned()->nullable();
             $table->integer('amount')->unsigned()->nullable();

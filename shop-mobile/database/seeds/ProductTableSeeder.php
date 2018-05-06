@@ -19,7 +19,6 @@ class ProductTableSeeder extends Seeder
         $products = [];
         $faker = Faker::create();
         $RECORD_COUNT =500;
-        $trademarks = TradeMark::all()->pluck('id')->toArray();
         $productTypes = ProductType::all()->pluck('id')->toArray();
         $producers = Provider::all()->pluck('id')->toArray();
         $product_trademark = [];
@@ -33,7 +32,6 @@ class ProductTableSeeder extends Seeder
         		'description'				=>  $faker->text($maxNbChars = 500),
         		'quantity'			=> 	$faker->numberBetween(15,300),
         		'product_type_id' 		=> 	$faker->randomElement($productTypes),
-        		'product_trademark_id'	=>	$faker->randomElement($trademarks),
                 'main_image'            =>  $faker->imageUrl($width = 640, $height = 480),
                 'sub_images'            =>  json_encode($this->getImages(10))
         	];

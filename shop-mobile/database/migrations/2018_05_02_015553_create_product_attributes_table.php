@@ -15,8 +15,13 @@ class CreateProductAttributesTable extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('category_name')->nullable();//ten danh muc
+            $table->integer('category_attribute_id');
+            $table->integer('product_type_id');
             $table->timestamps();
+
+            $table->index('category_attribute_id');
+            $table->index('product_type_id');
+            $table->unique(['category_attribute_id','product_type_id']);
         });
     }
 

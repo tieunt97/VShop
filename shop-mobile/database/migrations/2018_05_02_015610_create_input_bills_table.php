@@ -15,7 +15,6 @@ class CreateInputBillsTable extends Migration
     {
         Schema::create('input_bills', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bill_id')->unsigned();
             $table->integer('customer_id')->unsigned();
             $table->dateTime('create_date');
             $table->integer('payment_id')->unsigned();//so thanh toan

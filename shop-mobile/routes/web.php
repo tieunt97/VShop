@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('product_type','HomeController@getAllProductType')->name('types');
+Route::get('{productTypeId}/products','HomeController@getProductByType');
+
+Route::get('products/{id}','ProductController@getProductById')->name('product');
+Route::get('products/search/{keyword}','ProductController@searchProductBy');

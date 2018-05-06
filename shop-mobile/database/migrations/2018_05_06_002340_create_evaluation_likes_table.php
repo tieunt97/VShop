@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrademarksTable extends Migration
+class CreateEvaluationLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateTrademarksTable extends Migration
      */
     public function up()
     {
-        Schema::create('trademarks', function (Blueprint $table) {
+        Schema::create('evaluation_likes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->integer('customer_id');
+            $table->integer('evaluation_id');
             $table->timestamps();
+
+            $table->index('customer_id');
+            $table->index('evaluation_id');
+            $table->unique(['customer_id','evaluation_id']);
         });
     }
 
@@ -27,6 +32,6 @@ class CreateTrademarksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trademarks');
+        Schema::dropIfExists('evaluation_likes');
     }
 }
