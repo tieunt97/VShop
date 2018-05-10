@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,30 +13,26 @@ import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.R;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 
 /**
- * Created by tieu_nt on 4/19/2018.
+ * Created by tieu_nt on 5/9/2018.
  */
 
-public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHolder>{
+public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGioHang.ViewHolder>{
     private Context context;
     private List<SanPham> dsSanPham;
-    private int layout;
 
 
-    public AdapterSanPham(Context context, List<SanPham> dsSanPham, int layout) {
+    public AdapterSanPhamGioHang(Context context, List<SanPham> dsSanPham) {
         this.context = context;
         this.dsSanPham = dsSanPham;
-        this.layout = layout;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(layout, parent, false);
+        View view = inflater.inflate(R.layout.custom_layout_item_giohang, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -45,10 +42,9 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         SanPham sanPham = dsSanPham.get(position);
         Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP);
-        holder.tvTenSanPham.setText(sanPham.getTenSanPham());
-        NumberFormat numberFormat = new DecimalFormat("###,###");
-        String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
-        holder.tvGiaSP.setText(gia + " đ");
+        holder.tvTenSP.setText(sanPham.getTenSanPham());
+        holder.tvGiaSP.setText(sanPham.getGiaChuan());
+        holder.tvGiaSP.setText("");
     }
 
     @Override
@@ -58,13 +54,18 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgHinhSP;
-        TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop;
+        TextView tvTenSP, tvGiaSP, tvGiamGia, tvSoSP;
+        ImageButton imgXoa, imgCong, imgTru;
         public ViewHolder(View itemView) {
             super(itemView);
             imgHinhSP = (ImageView) itemView.findViewById(R.id.imgHinhSP);
-            tvTenSanPham = (TextView) itemView.findViewById(R.id.tvTenSanPham);
+            tvTenSP = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);
-            tvKhuyenMaiTraGop = (TextView) itemView.findViewById(R.id.tvKhuyenMaiTraGop);
+            tvGiamGia = (TextView) itemView.findViewById(R.id.tvGiamGia);
+            tvSoSP = (TextView) itemView.findViewById(R.id.tvSoSanPham);
+            imgXoa = (ImageButton) itemView.findViewById(R.id.imgXoa);
+            imgCong = (ImageButton) itemView.findViewById(R.id.imgCong);
+            imgTru = (ImageButton) itemView.findViewById(R.id.imgTru);
         }
     }
 }

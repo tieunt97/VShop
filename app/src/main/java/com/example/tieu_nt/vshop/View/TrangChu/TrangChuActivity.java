@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -31,12 +32,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TrangChuActivity extends AppCompatActivity implements View.OnClickListener{
-    private FrameLayout trangChu, frameLoc;
+    private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private ToggleButton tgLayout;
-    private Button btnSapXep;
+    private Button btnSapXep, btnLoc;
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
     private AdapterMenu adapterMenu;
     private CircleImageView imgInfo;
@@ -86,7 +87,6 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
 
     private void anhXa(){
         trangChu = (FrameLayout) findViewById(R.id.trangChu);
-        frameLoc = (FrameLayout) findViewById(R.id.frameLoc);
         tgLayout = (ToggleButton) findViewById(R.id.tgLayout);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,11 +95,13 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
         recyclerSanPham = (RecyclerView) findViewById(R.id.recyclerSanPham);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         btnSapXep = (Button) findViewById(R.id.btnSapXep);
+        btnLoc = (Button) findViewById(R.id.btnLoc);
     }
 
     private void setActions(){
         imgInfo.setOnClickListener(this);
         btnSapXep.setOnClickListener(this);
+        btnLoc.setOnClickListener(this);
     }
 
     @Override
@@ -114,6 +116,11 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(this, "BLABLA", Toast.LENGTH_SHORT).show();
                 Intent iChiTietSP = new Intent(TrangChuActivity.this, ChiTietSanPhamActivity.class);
                 startActivity(iChiTietSP);
+                break;
+            case R.id.btnLoc:
+                Log.d("NUMLFDS", "FDSFDS");
+                Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
+                startActivity(iGioHang);
                 break;
         }
     }

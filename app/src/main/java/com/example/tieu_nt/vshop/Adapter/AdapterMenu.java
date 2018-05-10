@@ -19,6 +19,7 @@ import com.example.tieu_nt.vshop.View.DanhSachYeuThich.DanhSachYeuThichActivity;
 import com.example.tieu_nt.vshop.View.DonHangCuaToi.DonHangCuaToiActivity;
 import com.example.tieu_nt.vshop.View.TinTuc.TinTucActivity;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
+import com.example.tieu_nt.vshop.View.TrungTamHoTro.TrungTamHoTroActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,9 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
     private DrawerLayout drawerLayout;
     private int position;
     private String tenItems[] = {"Trang chủ", "Tin tức", "Danh sách yêu thích","Đơn hàng của tôi", "Cài đặt",
-            "Trung tâm hỗ trợ", "Giới thiệu VShop", "Đăng xuất"};
+            "Trung tâm hỗ trợ", "Đăng xuất"};
     private int[] hinhItems = {R.drawable.home, R.drawable.newspaper, R.drawable.like, R.drawable.clipboards,
-            R.drawable.settings, R.drawable.mail, R.drawable.info, R.drawable.logout};
+            R.drawable.settings, R.drawable.mail, R.drawable.logout};
 
     public AdapterMenu(Context context, DrawerLayout drawerLayout, int position){
         this.context = context;
@@ -96,12 +97,8 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                             context.startActivity(iCaiDat);
                             break;
                         case 5:
-                            Intent iTrungTamHoTro = new Intent(context, TrangChuActivity.class);
+                            Intent iTrungTamHoTro = new Intent(context, TrungTamHoTroActivity.class);
                             context.startActivity(iTrungTamHoTro);
-                            break;
-                        case 6:
-                            Intent iGioiThieu = new Intent(context, TrangChuActivity.class);
-                            context.startActivity(iGioiThieu);
                             break;
                     }
                 }

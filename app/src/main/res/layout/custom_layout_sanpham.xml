@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:text="Xiaomi 5 32GB Ram 3GB (Đen) - Hàng phân phối chính thức"
             android:layout_marginTop="15dp"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            android:textColor="@color/colorBlack"/>
 
         <TextView
             android:id="@+id/tvGiaSP"
