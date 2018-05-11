@@ -1,9 +1,9 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +21,7 @@ import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
 import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
-import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterChiTietSanPham;
+import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicChiTietSanPham;
 import com.example.tieu_nt.vshop.R;
 
 import java.text.DecimalFormat;
@@ -45,7 +45,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private ProgressBar pb5sao, pb4sao, pb3sao, pb2sao, pb1sao;
     private RecyclerView recyclerDanhGia;
     private List<Fragment> fragmentHinhSP = new ArrayList<>();
-    private PresenterChiTietSanPham presenterChiTietSanPham;
+    private PresenterLogicChiTietSanPham presenterChiTietSanPham;
     private SanPham sanPham;
     private KhachHang khachHang;
     private ModelKhachHang modelKhachHang;
@@ -65,7 +65,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
         setSupportActionBar(toolbar);
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
-        presenterChiTietSanPham = new PresenterChiTietSanPham(this);
+        presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterChiTietSanPham.layChiTietSanPham(sanPham);
         setActions();
     }
@@ -120,7 +120,9 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         tvSoAnh.setText("1/" + soHinh);
         viewPagerSlider.setOnPageChangeListener(this);
         if (sanPham.isYeuThich()){
-//            imgThich.setBackground();
+            imgThich.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.like_true));
+        }else {
+            imgThich.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.like_false));
         }
     }
 

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="3.290.000 đ"
             android:textColor="@color/colorOrange"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvKhuyenMaiTraGop"
@@ -42,18 +42,19 @@
             android:text="Áp dụng trả góp"
             android:textSize="13sp"/>
 
-        <FrameLayout
-            android:id="@+id/framDanhGia"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
             <RatingBar
                 android:id="@+id/rbDanhGia"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:scaleY="0.5"
-                android:scaleX="0.5"
+                android:layout_height="wrap_content"
                 android:transformPivotX="0dp"
+                android:stepSize="0.2"
+                android:isIndicator="true"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_centerVertical="true"
                 />
 
             <TextView
@@ -63,9 +64,11 @@
                 android:text="(1453)"
                 android:layout_gravity="right"
                 android:layout_marginTop="2dp"
-                android:layout_marginRight="65dp"/>
-        </FrameLayout>
-
+                android:layout_toRightOf="@id/rbDanhGia"
+                android:layout_centerVertical="true"
+                android:textSize="13sp"
+                android:layout_marginLeft="5dp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

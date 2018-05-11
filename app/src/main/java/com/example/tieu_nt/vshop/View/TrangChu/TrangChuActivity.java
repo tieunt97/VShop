@@ -30,6 +30,7 @@ import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
+import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicTrangChu;
 import com.example.tieu_nt.vshop.R;
 
 import java.util.List;
@@ -53,6 +54,7 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
     private ModelKhachHang modelKhachHang;
     private boolean grid = true;
     private List<SanPham> dsSanPham;
+    private PresenterLogicTrangChu presenterTrangChu;
 
     public static KhachHang khachHang;
     public static int IMG_GALLERY_REQUEST = 1;
@@ -94,6 +96,8 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
         recyclerView.setAdapter(adapterMenu);
 
         setActions();
+        presenterTrangChu = new PresenterLogicTrangChu(this);
+        presenterTrangChu.layDanhSachSanPham();
     }
 
     @Override

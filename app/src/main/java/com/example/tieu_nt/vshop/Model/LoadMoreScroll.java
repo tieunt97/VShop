@@ -33,7 +33,7 @@ public class LoadMoreScroll extends RecyclerView.OnScrollListener{
         }
 
         if(tongItem == (itemAnDauTien + itemLoadTruoc)){
-            iLoadMore.loadMore(tongItem);
+            iLoadMore.loadMore("");
         }
     }
 

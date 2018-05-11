@@ -8,11 +8,11 @@ import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhap;
  * Created by tieu_nt on 5/11/2018.
  */
 
-public class PresenterDanhNhap implements IPresenterDangNhap{
+public class PresenterLogicDanhNhap implements IPresenterDangNhap{
     private ViewDangNhap viewDangNhap;
     private ModelDangNhapDangKy modelDangNhapDangKy;
 
-    public PresenterDanhNhap(ViewDangNhap viewDangNhap) {
+    public PresenterLogicDanhNhap(ViewDangNhap viewDangNhap) {
         this.viewDangNhap = viewDangNhap;
         this.modelDangNhapDangKy = ModelDangNhapDangKy.getInstance();
     }

@@ -5,5 +5,5 @@ package com.example.tieu_nt.vshop.Model;
  */
 
 public interface ILoadMore {
-    void loadMore(int tongItem);
+    void loadMore(String duongDan);
 }

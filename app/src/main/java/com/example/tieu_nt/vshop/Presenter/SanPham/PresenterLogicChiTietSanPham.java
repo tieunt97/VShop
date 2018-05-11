@@ -10,12 +10,12 @@ import java.util.List;
  * Created by tieu_nt on 5/11/2018.
  */
 
-public class PresenterChiTietSanPham implements IPresenterChiTietSanPham{
+public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     private ViewChiTietSanPham viewChiTietSanPham;
     private ModelSanPham modelSanPham;
 
 
-    public PresenterChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
+    public PresenterLogicChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
         this.viewChiTietSanPham = viewChiTietSanPham;
         this.modelSanPham = ModelSanPham.getInstance();
     }

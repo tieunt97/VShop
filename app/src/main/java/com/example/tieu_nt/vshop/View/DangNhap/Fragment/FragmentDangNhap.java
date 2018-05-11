@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterDanhNhap;
+import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDanhNhap;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.Model.TaiKhoan;
 import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhap;
@@ -27,8 +27,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by tieu_nt on 3/16/2018.
@@ -42,7 +40,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private View view;
     private TaiKhoan taiKhoan;
     private AlertDialog.Builder builder;
-    private PresenterDanhNhap presenterDanhNhap;
+    private PresenterLogicDanhNhap presenterDanhNhap;
 
 
     @Nullable
@@ -70,7 +68,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         anhXa();
 
         setActions();
-        presenterDanhNhap = new PresenterDanhNhap(this);
+        presenterDanhNhap = new PresenterLogicDanhNhap(this);
 
         //lay key hash cua app
 //        // Add code to print out the key hash

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -52,6 +53,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
         holder.tvGiaSP.setText(gia + " đ");
+        holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
+        holder.tvSoDanhGia.setText(sanPham.getSoLuotDanhGia());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +73,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView imgHinhSP;
-        TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop;
+        TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop, tvSoDanhGia;
+        RatingBar rbDanhGia;
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardViewSanPham);
@@ -78,6 +82,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
             tvTenSanPham = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);
             tvKhuyenMaiTraGop = (TextView) itemView.findViewById(R.id.tvKhuyenMaiTraGop);
+            rbDanhGia = (RatingBar) itemView.findViewById(R.id.rbDanhGia);
+            tvSoDanhGia = (TextView) itemView.findViewById(R.id.tvSoDanhGia);
         }
     }
 }
