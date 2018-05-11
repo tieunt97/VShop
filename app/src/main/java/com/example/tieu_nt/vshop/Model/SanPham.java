@@ -1,15 +1,18 @@
 package com.example.tieu_nt.vshop.Model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by tieu_nt on 3/20/2018.
  */
 
-public class SanPham {
-    private int idSanPham, idNguoiBan, giaChuan;
+public class SanPham implements Serializable{
+    private int idSanPham, idNguoiBan, giaChuan, soLuotDanhGia;
     private String tenSanPham, moTa, hinhSanPham;
+    private List<String> dsHinhSP;
+    private float danhGiaTB;
+    private boolean yeuThich;
 
 
     public int getIdSanPham() {
@@ -58,5 +61,37 @@ public class SanPham {
 
     public void setHinhSanPham(String hinhSanPham) {
         this.hinhSanPham = hinhSanPham;
+    }
+
+    public List<String> getDsHinhSP() {
+        return dsHinhSP;
+    }
+
+    public void setDsHinhSP(List<String> dsHinhSP) {
+        this.dsHinhSP = dsHinhSP;
+    }
+
+    public int getSoLuotDanhGia() {
+        return soLuotDanhGia;
+    }
+
+    public void setSoLuotDanhGia(int soLuotDanhGia) {
+        this.soLuotDanhGia = soLuotDanhGia;
+    }
+
+    public float getDanhGiaTB() {
+        return danhGiaTB;
+    }
+
+    public void setDanhGiaTB(float danhGiaTB) {
+        this.danhGiaTB = danhGiaTB;
+    }
+
+    public boolean isYeuThich() {
+        return yeuThich;
+    }
+
+    public void setYeuThich(boolean yeuThich) {
+        this.yeuThich = yeuThich;
     }
 }

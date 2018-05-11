@@ -1,6 +1,8 @@
 package com.example.tieu_nt.vshop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.TrangChu.ChiTietSanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -43,12 +46,20 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SanPham sanPham = dsSanPham.get(position);
+        final SanPham sanPham = dsSanPham.get(position);
         Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP);
         holder.tvTenSanPham.setText(sanPham.getTenSanPham());
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
         holder.tvGiaSP.setText(gia + " đ");
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iChiTietSanPham = new Intent(context, ChiTietSanPhamActivity.class);
+                iChiTietSanPham.putExtra("sanPham", sanPham);
+                context.startActivity(iChiTietSanPham);
+            }
+        });
     }
 
     @Override
@@ -57,10 +68,12 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
         ImageView imgHinhSP;
         TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop;
         public ViewHolder(View itemView) {
             super(itemView);
+            cardView = (CardView) itemView.findViewById(R.id.cardViewSanPham);
             imgHinhSP = (ImageView) itemView.findViewById(R.id.imgHinhSP);
             tvTenSanPham = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);

@@ -1,11 +1,11 @@
 package com.example.tieu_nt.vshop.View.DangNhap.Fragment;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterDanhNhap;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.Model.TaiKhoan;
+import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhap;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,15 +34,15 @@ import java.util.regex.Pattern;
  * Created by tieu_nt on 3/16/2018.
  */
 
-public class FragmentDangNhap extends Fragment implements View.OnClickListener{
+public class FragmentDangNhap extends Fragment implements View.OnClickListener, ViewDangNhap{
     private CallbackManager callbackManager;
     private EditText edtEmail;
     private TextInputEditText edtMatKhau;
     private Button btnDangNhap, btnBoQua, btnDangNhapFB, btnDangNhapGG;
     private View view;
     private TaiKhoan taiKhoan;
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private AlertDialog.Builder builder;
+    private PresenterDanhNhap presenterDanhNhap;
 
 
     @Nullable
@@ -68,6 +70,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener{
         anhXa();
 
         setActions();
+        presenterDanhNhap = new PresenterDanhNhap(this);
 
         //lay key hash cua app
 //        // Add code to print out the key hash
@@ -114,7 +117,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnDangNhap:
-                dangNhap();
+                presenterDanhNhap.kiemTraDangNhap(edtEmail.getText().toString(),  edtMatKhau.getText().toString());
                 break;
             case R.id.btnBoQuaDangNhap:
                 taiKhoan = new TaiKhoan();
@@ -129,62 +132,45 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void dangNhap(){
-        String email = edtEmail.getText().toString();
-        String matKhau = edtMatKhau.getText().toString();
-        String msg = "";
-
-        if(email.equals("") && matKhau.equals("")){
-            msg = "Bạn chưa nhập Email và Mật khẩu";
-        }else if(email.equals("")){
-            msg = "Bạn chưa nhập Email";
-        }else if(matKhau.equals("")){
-            msg = "Bạn chưa nhập Mật khẩu";
-        }else if(!validate(email)){
-            msg = "Email không hợp lệ";
-        }else if(matKhau.length() < 6){
-            msg = "Mật khẩu không hợp lệ , ít nhất 6 ký tự";
-        }
-
-        if(!msg.equals("")){
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            View view = getLayoutInflater().inflate(R.layout.dialog_thongbao_vshop, null, false);
-            TextView tvNoiDung = (TextView) view.findViewById(R.id.tvNoiDung);
-            tvNoiDung.setText(msg);
-            Button btnDong = (Button) view.findViewById(R.id.btnDong);
-
-            builder.setView(view);
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-            btnDong.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alertDialog.dismiss();
-                }
-            });
-
-            //đóng sau 3s
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                        if(alertDialog.isShowing())
-                            alertDialog.dismiss();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            thread.start();
-        }
-
+    @Override
+    public void dangNhapThanhCong(int idKhachHang) {
+        Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
+        iTrangChu.putExtra("idKhachHang", idKhachHang);
+        startActivity(iTrangChu);
     }
 
-    public static boolean validate(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
-        return matcher.find();
-    }
+    @Override
+    public void dangNhapThatBai(String msg) {
+        builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.dialog_thongbao_vshop, null, false);
+        TextView tvNoiDung = (TextView) view.findViewById(R.id.tvNoiDung);
+        tvNoiDung.setText(msg);
+        Button btnDong = (Button) view.findViewById(R.id.btnDong);
 
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        btnDong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        //đóng sau 3s
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    if(alertDialog.isShowing())
+                        alertDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
 }
