@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class CreateLikeProductListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('like_product_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('phone_number')->unique()->nullable();
-            $table->string('address')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->integer('customer_id');
+            $table->integer('product_id');
+
+            $table->index('customer_id');
+            $table->index('product_id');
+            $table->unique(['customer_id','product_id']);
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('like_product_lists');
     }
 }

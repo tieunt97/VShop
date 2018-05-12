@@ -17,7 +17,6 @@ class CreateSaleBillsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->integer('shipper_id')->unsigned();
-            $table->integer('payment_id')->unsigned();
             $table->integer('status_order')->nullable();//trang thai don hang
             $table->dateTime('delivery_date')->nullable();
             $table->dateTime('book_date');

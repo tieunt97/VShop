@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationLikesTable extends Migration
+class CreateCartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateEvaluationLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('evaluation_likes', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id');
-            $table->integer('evaluation_id');
+            $table->integer('product_id');
+            $table->integer('amount_product');
             $table->timestamps();
-
-            $table->index('customer_id');
-            $table->index('evaluation_id');
-            $table->unique(['customer_id','evaluation_id']);
         });
     }
 
@@ -32,6 +29,6 @@ class CreateEvaluationLikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluation_likes');
+        Schema::dropIfExists('carts');
     }
 }

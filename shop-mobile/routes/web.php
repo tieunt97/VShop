@@ -20,3 +20,4 @@ Route::get('{productTypeId}/products','HomeController@getProductByType');
 
 Route::get('products/{id}','ProductController@getProductById')->name('product');
 Route::get('products/search/{keyword}','ProductController@searchProductBy');
+Route::get('test','ProductController@test');

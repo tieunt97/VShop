@@ -14,13 +14,14 @@ class CustomerTableSeeder extends Seeder
     {
         $customers = [];
         $faker = Faker::create();
-        $RECORD_COUNT =30;
+        $RECORD_COUNT =400;
 
         for ($customer_id = 1; $customer_id <= $RECORD_COUNT; $customer_id ++) {
         	$customers[] = [
         		'id' => $customer_id,
         		'name' => $faker->name,
         		'phone_number' => $faker->phoneNumber,
+                'address'       => $faker->address,
         		'email'	=> $faker->email,
         		'created_at' => Carbon::now()
         	];

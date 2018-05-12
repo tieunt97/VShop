@@ -20,4 +20,22 @@ class ProductService {
 		->paginate(Consts::NUM_PRODUCT_IN_PAGE);
 		return $product;
 	}
+
+	public function getStarNumberOfProduct($product_id) {
+		$products = DB::table('evaluations')->where('product_id','=',$product_id)->pluck('star_number')->toArray();
+		$starInfos = [];
+		if(count($products) != 0 ) {
+			$starInfos = [
+			'star_number'	=>	array_sum($products) / count($products),
+			'numbe'			=>	count($products)
+		];
+		}else {
+			$starInfos = [
+			'star_number'	=>	0,
+			'numbe'			=>	0
+		}
+		return $starInfos;
+	}
+
+
 }

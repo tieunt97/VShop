@@ -18,7 +18,7 @@ class ProductTableSeeder extends Seeder
     {
         $products = [];
         $faker = Faker::create();
-        $RECORD_COUNT =500;
+        $RECORD_COUNT =1000;
         $productTypes = ProductType::all()->pluck('id')->toArray();
         $producers = Provider::all()->pluck('id')->toArray();
         $product_trademark = [];

@@ -23,4 +23,8 @@ class ProductController extends AppBaseController
     	$product = $this->productService->searchProductBy($keyword);
     	return $this->sendResponse($product, '200');
     }
+
+    
+
+
 }
