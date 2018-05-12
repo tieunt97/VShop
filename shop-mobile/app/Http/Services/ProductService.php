@@ -27,15 +27,15 @@ class ProductService {
 		if(count($products) != 0 ) {
 			$starInfos = [
 			'star_number'	=>	array_sum($products) / count($products),
-			'numbe'			=>	count($products)
+			'star_count'			=>	count($products)
 		];
 		}else {
 			$starInfos = [
 			'star_number'	=>	0,
-			'numbe'			=>	0
+			'star_count'			=>	0
+		];
 		}
 		return $starInfos;
 	}
-
 
 }

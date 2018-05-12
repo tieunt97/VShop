@@ -16,6 +16,9 @@ class ProductController extends AppBaseController
 
     public function getProductById($id) {
     	$product = Product::where('id', $id)->first();
+        $star_info = $this->productService->getStarNumberOfProduct($id);
+        $product->star_number = $star_info['star_number'];
+        $product->star_count  = $star_info['star_count'];
     	return $this->sendResponse($product, '200');
     }
 
