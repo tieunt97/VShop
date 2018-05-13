@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Schema;
 class MasterdataService
 {
     protected static $tables = [
-        'trademarks',
         'products',
         'employees',
         'providers',

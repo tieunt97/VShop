@@ -31,12 +31,21 @@ class HomeController extends AppBaseController
 
     public function getProductByType($productTypeId) {
         $products = $this->productService->getAllProductsByType($productTypeId);
+        return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
+    }
+
+    public function getProductByProvider($providerId) {
+        $products = $this->productService->getAllProductsByProvider($providerId);
+        return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
+    }
+
+    public function additionStarInfoToProducts($products) {
         foreach ($products as $product) {
             $star_info = $this->productService->getStarNumberOfProduct($product->id);
             $product->star_number = $star_info['star_number'];
             $product->star_count  = $star_info['star_count'];
         }
-        return $this->sendResponse($products, '200');
+        return $products;
     }
 
     public function getAllProductType() {

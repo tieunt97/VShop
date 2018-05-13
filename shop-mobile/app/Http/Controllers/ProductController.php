@@ -17,14 +17,21 @@ class ProductController extends AppBaseController
     public function getProductById($id) {
     	$product = Product::where('id', $id)->first();
         $star_info = $this->productService->getStarNumberOfProduct($id);
-        $product->star_number = $star_info['star_number'];
-        $product->star_count  = $star_info['star_count'];
+        $product->star_info = [
+            'star_number_average'   => $star_info['star_number'],
+            'star_count_average'    => $star_info['star_count'],
+            'star_detail'           => $this->productService->getStarNumberDetailOfProduct($id)
+        ];
     	return $this->sendResponse($product, '200');
     }
 
     public function searchProductBy($keyword) {
     	$product = $this->productService->searchProductBy($keyword);
     	return $this->sendResponse($product, '200');
+    }
+
+    public function test() {
+        
     }
 
     
