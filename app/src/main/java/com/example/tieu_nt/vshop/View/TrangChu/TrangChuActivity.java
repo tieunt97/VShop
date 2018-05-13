@@ -76,6 +76,7 @@ ViewHienThiDanhSachSanPham{
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         drawerToggle = new ActionBarDrawerToggle(TrangChuActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -90,6 +91,7 @@ ViewHienThiDanhSachSanPham{
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
+
             }
         });
 
