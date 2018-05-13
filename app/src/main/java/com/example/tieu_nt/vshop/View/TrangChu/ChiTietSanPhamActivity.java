@@ -66,7 +66,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         setSupportActionBar(toolbar);
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
         presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
-        presenterChiTietSanPham.layChiTietSanPham(sanPham);
+        presenterChiTietSanPham.layChiTietSanPham(sanPham.getIdSanPham());
         setActions();
     }
 
@@ -94,6 +94,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         rbDanhGia1 = (RatingBar) findViewById(R.id.rbDanhGia1);
         imgShare = (ImageView) findViewById(R.id.imgShare);
         imgThich = (ImageView) findViewById(R.id.imgThich);
+        pb5sao = (ProgressBar) findViewById(R.id.pb5Sao);
+        pb4sao = (ProgressBar) findViewById(R.id.pb4Sao);
+        pb3sao = (ProgressBar) findViewById(R.id.pb3Sao);
+        pb2sao = (ProgressBar) findViewById(R.id.pb2Sao);
+        pb1sao = (ProgressBar) findViewById(R.id.pb1Sao);
     }
 
     private void setActions(){
@@ -131,7 +136,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         tvTenSP.setText(sanPham.getTenSanPham());
         NumberFormat numberFormat =  new DecimalFormat("###,###");
         tvGia.setText(numberFormat.format(sanPham.getGiaChuan()) + " đ");
-        rbDanhGia.setRating(sanPham.getDanhGiaTB());
+        if(sanPham.getSoLuotDanhGia() == 0){
+            rbDanhGia.setRating((float) 5.0);
+        }else{
+            rbDanhGia.setRating(sanPham.getDanhGiaTB());
+        }
         tvSoDanhGia.setText("(" + sanPham.getSoLuotDanhGia() + ")");
         if(khachHang != null){
             tvDiaChi.setText(khachHang.getDiaChi());
@@ -163,10 +172,35 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             }
         });
 
-        float danhGiaTb = (float) Math.round((sanPham.getDanhGiaTB()*10)/10);
-        tvDanhGiaTB.setText(String.valueOf(danhGiaTb));
-        rbDanhGia1.setRating(danhGiaTb);
-        tvSoDanhGia1.setText(sanPham.getSoLuotDanhGia());
+        if(sanPham.getDanhGiaTB() > 0){
+            float danhGiaTb = (float) Math.round((sanPham.getDanhGiaTB()*10)/10);
+            tvDanhGiaTB.setText(String.valueOf(danhGiaTb));
+            rbDanhGia1.setRating(danhGiaTb);
+        }else {
+            tvDanhGiaTB.setText(String.valueOf(5.0));
+            rbDanhGia.setRating((float) 5.0);
+        }
+        tvSoDanhGia1.setText(sanPham.getSoLuotDanhGia() + " Đánh giá");
+
+        int soDanhGia = sanPham.getSoLuotDanhGia();
+        if(soDanhGia > 0){
+            int[] dsSoSao = sanPham.getDsSoSao();
+            pb1sao.setMax(soDanhGia);
+            pb1sao.setProgress(dsSoSao[4]);
+            tvDanhGia1.setText(String.valueOf(dsSoSao[4]));
+            pb2sao.setMax(soDanhGia);
+            pb2sao.setProgress(dsSoSao[3]);
+            tvDanhGia2.setText(String.valueOf(dsSoSao[3]));
+            pb3sao.setMax(soDanhGia);
+            pb3sao.setProgress(dsSoSao[2]);
+            tvDanhGia3.setText(String.valueOf(dsSoSao[2]));
+            pb4sao.setMax(soDanhGia);
+            pb4sao.setProgress(dsSoSao[1]);
+            tvDanhGia4.setText(String.valueOf(dsSoSao[1]));
+            pb5sao.setMax(soDanhGia);
+            pb5sao.setProgress(dsSoSao[0]);
+            tvDanhGia5.setText(String.valueOf(dsSoSao[0]));
+        }
     }
 
     @Override

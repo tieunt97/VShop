@@ -128,11 +128,13 @@
                     <RatingBar
                         android:id="@+id/rbDanhGia"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
                         android:scaleY="0.5"
                         android:scaleX="0.5"
                         android:transformPivotX="0dp"
-                        android:rating="4.5"
+                        android:rating="5.0"
+                        android:stepSize="0.1"
+                        android:isIndicator="true"
                         />
 
                     <TextView
@@ -373,12 +375,10 @@
                         <RatingBar
                             android:id="@+id/rbDanhGia1"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
-                            android:scaleY="0.38"
-                            android:scaleX="0.38"
-                            android:transformPivotX="0dp"
-                            android:transformPivotY="15dp"
-                            android:rating="4.5"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:rating="5.0"
+                            android:stepSize="0.1"
                             android:layout_marginLeft="20dp"/>
 
                         <TextView
@@ -386,7 +386,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:text="1100 Đánh giá"
+                            android:text="0 Đánh giá"
                             android:textSize="12sp"/>
                     </LinearLayout>
 
@@ -428,7 +428,7 @@
                                 android:id="@+id/tvSoDanhGia5Sao"
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
-                                android:text="647"
+                                android:text="0"
                                 android:textSize="13sp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_alignParentRight="true"/>
@@ -460,14 +460,14 @@
                                 android:id="@+id/tvSoDanhGia4Sao"
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
-                                android:text="647"
+                                android:text="0"
                                 android:layout_marginLeft="5dp"
                                 android:textSize="13sp"
                                 android:layout_alignParentRight="true"/>
 
                         </RelativeLayout>
 
-                        <!--Layout đánh giá 3 sa-->
+                        <!--Layout đánh giá 3 sao-->
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -492,7 +492,7 @@
                                 android:id="@+id/tvSoDanhGia3Sao"
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
-                                android:text="647"
+                                android:text="0"
                                 android:textSize="13sp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_alignParentRight="true"/>
@@ -524,7 +524,7 @@
                                 android:id="@+id/tvSoDanhGia2Sao"
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
-                                android:text="647"
+                                android:text="0"
                                 android:layout_marginLeft="5dp"
                                 android:textSize="13sp"
                                 android:layout_alignParentRight="true"/>
@@ -556,7 +556,7 @@
                                 android:id="@+id/tvSoDanhGia1Sao"
                                 android:layout_width="45dp"
                                 android:layout_height="wrap_content"
-                                android:text="647"
+                                android:text="0"
                                 android:textSize="13sp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_alignParentRight="true"/>

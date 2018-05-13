@@ -21,8 +21,8 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     }
 
     @Override
-    public void layChiTietSanPham(SanPham sanPham) {
-        modelSanPham.layChiTietSanPham(sanPham);
+    public void layChiTietSanPham(int idSanPham) {
+        SanPham sanPham = modelSanPham.layChiTietSanPham(idSanPham);
         List<String> dsHinhSP = sanPham.getDsHinhSP();
         if(dsHinhSP.size() > 0){
             viewChiTietSanPham.hienThiSliderSP(dsHinhSP);

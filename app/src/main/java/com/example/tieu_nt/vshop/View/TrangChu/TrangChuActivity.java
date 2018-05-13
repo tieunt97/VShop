@@ -105,7 +105,7 @@ ViewHienThiDanhSachSanPham{
         presenterLogicThuongHieu.layDanhSachThuongHieu("");
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
-        presenterLogicSanPham.layDanhSachSanPham("http://172.20.10.7:8080/1/products");
+        presenterLogicSanPham.layDanhSachSanPham("http://172.20.10.7:8080/product_type/1/products");
     }
 
     @Override

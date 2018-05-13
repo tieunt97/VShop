@@ -8,11 +8,12 @@ import java.util.List;
  */
 
 public class SanPham implements Serializable{
-    private int idSanPham, idNguoiBan, giaChuan, soLuotDanhGia;
+    private int idSanPham, giaChuan, soLuotDanhGia, soLuong;
     private String tenSanPham, moTa, hinhSanPham;
     private List<String> dsHinhSP;
     private float danhGiaTB;
     private boolean yeuThich;
+    private int[] dsSoSao;
 
 
     public int getIdSanPham() {
@@ -21,14 +22,6 @@ public class SanPham implements Serializable{
 
     public void setIdSanPham(int idSanPham) {
         this.idSanPham = idSanPham;
-    }
-
-    public int getIdNguoiBan() {
-        return idNguoiBan;
-    }
-
-    public void setIdNguoiBan(int idNguoiBan) {
-        this.idNguoiBan = idNguoiBan;
     }
 
     public int getGiaChuan() {
@@ -93,5 +86,21 @@ public class SanPham implements Serializable{
 
     public void setYeuThich(boolean yeuThich) {
         this.yeuThich = yeuThich;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public int[] getDsSoSao() {
+        return dsSoSao;
+    }
+
+    public void setDsSoSao(int[] dsSoSao) {
+        this.dsSoSao = dsSoSao;
     }
 }

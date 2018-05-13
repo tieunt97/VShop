@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawerLayout">
+    android:id="@+id/drawerLayout"
+    android:theme="@style/CustomDrawerToggle">
 
     <FrameLayout
         android:id="@+id/trangChu"
@@ -25,7 +26,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
+                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap"
+                    app:title="">
 
                 </android.support.v7.widget.Toolbar>
 
@@ -71,10 +73,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-<<<<<<< HEAD
 
-=======
->>>>>>> 23685a3e56d8e3ec349a0004f162da3755f311da
                         <Button
                             android:id="@+id/btnLoc"
                             android:layout_width="wrap_content"
@@ -86,6 +85,7 @@
                             android:text="Lọc"
                             android:textAllCaps="false"
                             android:textColor="@color/colorBlack" />
+
                     </FrameLayout>
 
                     <View
@@ -139,6 +139,13 @@
 
                     </android.support.v7.widget.RecyclerView>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sản phẩm đề xuất"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"/>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerSanPham"
                         android:layout_width="match_parent"
@@ -171,6 +178,5 @@
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
-
 
 </android.support.v4.widget.DrawerLayout>
