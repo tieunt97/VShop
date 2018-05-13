@@ -4,18 +4,11 @@ package com.example.tieu_nt.vshop.Model;
  * Created by tieu_nt on 3/20/2018.
  */
 
-public class KhachHangDTO {
+public class KhachHang {
     private int idKhachHang;
-    private String tenKhachHang, soDT, diaChi;
-    private byte[] anhInfoKH;
+    private String tenKhachHang, soDT, diaChi, anhKhachHang;
+    private TaiKhoan taiKhoan;
 
-    public KhachHangDTO(int idKhachHang, String tenKhachHang, String soDT, String diaChi, byte[] anhInfoKH) {
-        this.idKhachHang = idKhachHang;
-        this.tenKhachHang = tenKhachHang;
-        this.soDT = soDT;
-        this.diaChi = diaChi;
-        this.anhInfoKH = anhInfoKH;
-    }
 
     public int getIdKhachHang() {
         return idKhachHang;
@@ -49,11 +42,19 @@ public class KhachHangDTO {
         this.diaChi = diaChi;
     }
 
-    public byte[] getAnhInfoKH() {
-        return anhInfoKH;
+    public String getAnhKhachHang() {
+        return anhKhachHang;
     }
 
-    public void setAnhInfoKH(byte[] anhInfoKH) {
-        this.anhInfoKH = anhInfoKH;
+    public void setAnhKhachHang(String anhKhachHang) {
+        this.anhKhachHang = anhKhachHang;
+    }
+
+    public TaiKhoan getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setTaiKhoan(TaiKhoan taiKhoan) {
+        this.taiKhoan = taiKhoan;
     }
 }

@@ -39,6 +39,7 @@
                     android:layout_marginBottom="10dp">
 
                     <TextView
+                        android:id="@+id/tvSoAnh"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorWhite"
@@ -50,18 +51,18 @@
 
                     <ImageView
                         android:id="@+id/imgShare"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:src="@drawable/share"
                         android:padding="8dp"
-                        android:layout_toLeftOf="@id/imgLike"
+                        android:layout_toLeftOf="@id/imgThich"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/custom_item_like_share" />
 
                     <ImageView
-                        android:id="@+id/imgLike"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/imgThich"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:src="@drawable/like_false"
                         android:padding="8dp"
                         android:background="@drawable/custom_item_like_share"
@@ -71,6 +72,7 @@
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -353,6 +355,7 @@
                             android:orientation="horizontal"
                             android:layout_marginLeft="20dp">
                             <TextView
+                                android:id="@+id/tvDanhGiaTB"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="4.1"
@@ -368,6 +371,7 @@
                         </LinearLayout>
 
                         <RatingBar
+                            android:id="@+id/rbDanhGia1"
                             android:layout_width="wrap_content"
                             android:layout_height="38dp"
                             android:scaleY="0.38"
@@ -378,6 +382,7 @@
                             android:layout_marginLeft="20dp"/>
 
                         <TextView
+                            android:id="@+id/tvSoDanhGia1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"

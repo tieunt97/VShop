@@ -16,13 +16,15 @@ import android.widget.EditText;
 
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.Model.TaiKhoan;
+import com.example.tieu_nt.vshop.View.DangNhap.ViewDangKy;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 /**
  * Created by tieu_nt on 3/16/2018.
  */
 
-public class FragmentDangKy extends Fragment implements View.OnClickListener, TextWatcher, View.OnTouchListener{
+public class FragmentDangKy extends Fragment implements View.OnClickListener, TextWatcher, View.OnTouchListener,
+        ViewDangKy{
     private View view;
     private EditText edtHoTen, edtEmail;
     private TextInputEditText edtMatKhau, edtXacNhanMatKhau;
@@ -84,5 +86,15 @@ public class FragmentDangKy extends Fragment implements View.OnClickListener, Te
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
+    }
+
+    @Override
+    public void dangKyThanhCong() {
+
+    }
+
+    @Override
+    public void dangKyThatBai(String msg) {
+
     }
 }

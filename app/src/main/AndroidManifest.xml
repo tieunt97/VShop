@@ -51,6 +51,18 @@
         <activity android:name=".View.CaiDat.CaiDatActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".View.TrangChu.GioHangActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.TrungTamHoTro.TrungTamHoTroActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.CaiDat.DiaChiActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.CaiDat.DoiMatKhauActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

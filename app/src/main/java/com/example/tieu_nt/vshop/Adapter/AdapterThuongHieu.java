@@ -25,6 +25,12 @@ import java.util.List;
 public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.ViewHolder>{
     private Context context;
     private List<ThuongHieu> dsThuongHieu;
+
+    public AdapterThuongHieu(Context context, List<ThuongHieu> dsThuongHieu) {
+        this.context = context;
+        this.dsThuongHieu = dsThuongHieu;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

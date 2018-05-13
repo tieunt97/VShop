@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="bgToolbar">#00B8D4</color>
+    <color name="bgToolbar">#183545</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#9E9E9E</color>
@@ -16,4 +16,5 @@
     <color name="colorGreyish">#E0E0E0</color>
     <color name="colorOrange">#E65100</color>
     <color name="colorGreen">#8BC34A</color>
+    <color name="tranparentGreyish">#B2E0E0E0</color>
 </resources>

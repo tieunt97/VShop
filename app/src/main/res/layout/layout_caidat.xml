@@ -47,26 +47,10 @@
                     android:background="@color/colorGreyish"/>
 
                 <TextView
-                    android:id="@+id/tvTrangCuaToi"
+                    android:id="@+id/tvCapNhatDiaChi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trang của tôi"
-                    android:textColor="@color/colorBlack"
-                    android:padding="10dp"
-                    android:drawableLeft="@drawable/home"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="10dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGreyish"/>
-
-                <TextView
-                    android:id="@+id/tvDiaChiCuaToi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Địa chỉ của tôi"
+                    android:text="Cập nhật địa chỉ"
                     android:textColor="@color/colorBlack"
                     android:padding="10dp"
                     android:drawableLeft="@drawable/location_pin"
@@ -86,26 +70,6 @@
                     android:textColor="@color/colorBlack"
                     android:padding="10dp"
                     android:drawableLeft="@drawable/password"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Thông báo"
-                    android:padding="10dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlack"
-                    android:background="@color/colorGreyish"/>
-
-                <TextView
-                    android:id="@+id/tvCaiDatThongBao"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cài đặt nhận thông báo"
-                    android:textColor="@color/colorBlack"
-                    android:padding="10dp"
-                    android:drawableLeft="@drawable/settings"
                     android:gravity="center_vertical"
                     android:drawablePadding="10dp"/>
 
