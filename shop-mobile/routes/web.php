@@ -23,6 +23,6 @@ Route::get('providers','ProviderController@getAllProviders');
 Route::get('products/{id}','ProductController@getProductById')->name('product');
 Route::get('products/search/{keyword}','ProductController@searchProductBy');
 Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
+Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');
 
-
-Route::get('test','SaleBillController@getSaleBillisPending');
+Route::get('test','ProductController@test');

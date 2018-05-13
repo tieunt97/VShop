@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\TradeMark;
 use App\ProductType;
 use App\Provider;
 use Faker\Factory as Faker;
@@ -21,7 +20,6 @@ class ProductTableSeeder extends Seeder
         $RECORD_COUNT =1000;
         $productTypes = ProductType::all()->pluck('id')->toArray();
         $producers = Provider::all()->pluck('id')->toArray();
-        $product_trademark = [];
         for ($product_id = 1; $product_id <= $RECORD_COUNT; $product_id ++) {
         	$products[] = [
         		'id' 				=> 	$product_id,

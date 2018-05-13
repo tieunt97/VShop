@@ -17,4 +17,11 @@ class SaleBillController extends AppBaseController
     	$saleBills = $this->saleBillService->getSaleBillIsPending();
     	return $this->sendResponse($saleBills, '200');
     }
+
+    public function getSaleBillDescriptionBySaleBillId($saleId) {
+    	$saleDes = $this->saleBillService->getSaleDescriptionBySaleBillId($saleId);
+    	return $this->sendResponse($saleDes, '200');
+    }
+
+    
 }

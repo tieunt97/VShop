@@ -43,6 +43,17 @@ class ProductService {
 		return $starInfos;
 	}
 
+	public function getEvaluations($product_id, $limit) {
+
+		$evaluations = DB::table('evaluations')->select('customer_id','title','content','star_number','created_at')->where('product_id','=',$product_id)->limit($limit)->get();
+		if (count($evaluations) == 0) return [];
+		foreach ($evaluations as $evaluation) {
+			$customer = DB::table('users')->select('name')->where('id','=',$product_id)->pluck('name')->toArray();
+			$evaluation->customer_name = $customer[0];
+		}
+		return $evaluations;
+	}
+
 	public function getStarNumberDetailOfProduct($product_id) {
 		$star_detail = DB::table('evaluations')->select(DB::raw('count(star_number) as number, star_number'))->where('product_id','=',$product_id)->groupBy('star_number')->get()->toArray();
 		return $star_detail;

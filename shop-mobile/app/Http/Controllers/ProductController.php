@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Services\ProductService;
 use Illuminate\Http\Request;
+use App\Consts;
 use App\Product;
 
 class ProductController extends AppBaseController
@@ -22,6 +23,7 @@ class ProductController extends AppBaseController
             'star_count_average'    => $star_info['star_count'],
             'star_detail'           => $this->productService->getStarNumberDetailOfProduct($id)
         ];
+        $product->evaluationInfo = $this->productService->getEvaluations($id, Consts::NUM_FIST_EVALUATION_SHOWED);
     	return $this->sendResponse($product, '200');
     }
 
@@ -31,7 +33,7 @@ class ProductController extends AppBaseController
     }
 
     public function test() {
-        
+        // return $this->productService->getEvaluations(, 6);
     }
 
     
