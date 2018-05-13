@@ -38,7 +38,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private TextInputEditText edtMatKhau;
     private Button btnDangNhap, btnBoQua, btnDangNhapFB, btnDangNhapGG;
     private View view;
-    private TaiKhoan taiKhoan;
     private AlertDialog.Builder builder;
     private PresenterLogicDanhNhap presenterDanhNhap;
 
@@ -70,22 +69,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         setActions();
         presenterDanhNhap = new PresenterLogicDanhNhap(this);
 
-        //lay key hash cua app
-//        // Add code to print out the key hash
-//        try {
-//            PackageInfo info = getActivity().getPackageManager().getPackageInfo(
-//                    "com.example.tieu_nt.vshop",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        } catch (NoSuchAlgorithmException e) {
-//
-//        }
         return view;
     }
 
@@ -118,7 +101,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                 presenterDanhNhap.kiemTraDangNhap(edtEmail.getText().toString(),  edtMatKhau.getText().toString());
                 break;
             case R.id.btnBoQuaDangNhap:
-                taiKhoan = new TaiKhoan();
                 Intent intent = new Intent(getActivity(), TrangChuActivity.class);
                 startActivity(intent);
                 break;

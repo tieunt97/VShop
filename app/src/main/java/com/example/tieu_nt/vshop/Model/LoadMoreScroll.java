@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
  */
 
 public class LoadMoreScroll extends RecyclerView.OnScrollListener{
-    int itemAnDauTien = 0;
-    int tongItem = 0;
-    int itemLoadTruoc = 4;
     RecyclerView.LayoutManager layoutManager;
     ILoadMore iLoadMore;
 
@@ -24,15 +21,14 @@ public class LoadMoreScroll extends RecyclerView.OnScrollListener{
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        tongItem = layoutManager.getItemCount();
-
+        int tongItem = layoutManager.getItemCount();
+        int daLoad = 0;
         if (layoutManager instanceof LinearLayoutManager){
-            itemAnDauTien = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+            daLoad = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
         }else if(layoutManager instanceof GridLayoutManager){
-            itemAnDauTien = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
+            daLoad = ((GridLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
         }
-
-        if(tongItem == (itemAnDauTien + itemLoadTruoc)){
+        if(daLoad == tongItem - 1){
             iLoadMore.loadMore("");
         }
     }

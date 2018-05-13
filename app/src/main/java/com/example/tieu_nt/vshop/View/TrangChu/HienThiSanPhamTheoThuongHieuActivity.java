@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Model.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
@@ -88,9 +89,11 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         if(grid) {
             recyclerSanPham.setLayoutManager(layoutGrid);
             adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham);
+            recyclerSanPham.setOnScrollListener(new LoadMoreScroll(layoutGrid, this));
         }else{
             recyclerSanPham.setLayoutManager(layoutList);
             adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
+            recyclerSanPham.setOnScrollListener(new LoadMoreScroll(layoutList, this));
         }
 
         recyclerSanPham.post(new Runnable() {

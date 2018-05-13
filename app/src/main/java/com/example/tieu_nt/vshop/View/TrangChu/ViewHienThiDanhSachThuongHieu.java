@@ -9,7 +9,6 @@ import java.util.List;
  * Created by tieu_nt on 5/11/2018.
  */
 
-public interface ViewTrangChu {
+public interface ViewHienThiDanhSachThuongHieu {
     void hienThiThuongHieu(List<ThuongHieu> dsThuongHieu);
-    void hienThiSanPham(List<SanPham> dsSanPham);
 }

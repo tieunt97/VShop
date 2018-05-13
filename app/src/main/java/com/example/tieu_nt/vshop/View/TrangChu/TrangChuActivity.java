@@ -30,7 +30,8 @@ import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
-import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicTrangChu;
+import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
+import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicThuongHieu;
 import com.example.tieu_nt.vshop.R;
 
 import java.util.List;
@@ -41,7 +42,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 3/15/2018.
  */
 
-public class TrangChuActivity extends AppCompatActivity implements View.OnClickListener, ViewTrangChu{
+public class TrangChuActivity extends AppCompatActivity implements View.OnClickListener, ViewHienThiDanhSachThuongHieu,
+ViewHienThiDanhSachSanPham{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -54,7 +56,8 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
     private ModelKhachHang modelKhachHang;
     private boolean grid = true;
     private List<SanPham> dsSanPham;
-    private PresenterLogicTrangChu presenterTrangChu;
+    private PresenterLogicThuongHieu presenterLogicThuongHieu;
+    private PresenterLogicSanPham presenterLogicSanPham;
 
     public static KhachHang khachHang;
     public static int IMG_GALLERY_REQUEST = 1;
@@ -96,8 +99,11 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
         recyclerView.setAdapter(adapterMenu);
 
         setActions();
-        presenterTrangChu = new PresenterLogicTrangChu(this);
-        presenterTrangChu.layDanhSachSanPham();
+        presenterLogicThuongHieu = new PresenterLogicThuongHieu(this);
+        presenterLogicThuongHieu.layDanhSachThuongHieu("");
+
+        presenterLogicSanPham = new PresenterLogicSanPham(this);
+        presenterLogicSanPham.layDanhSachSanPham("http://172.20.10.7:8080/1/products");
     }
 
     @Override
@@ -134,12 +140,10 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
                 startActivityForResult(intent, IMG_GALLERY_REQUEST);
                 break;
             case R.id.btnSapXep:
-                Toast.makeText(this, "BLABLA", Toast.LENGTH_SHORT).show();
                 Intent iChiTietSP = new Intent(TrangChuActivity.this, ChiTietSanPhamActivity.class);
                 startActivity(iChiTietSP);
                 break;
             case R.id.btnLoc:
-                Log.d("NUMLFDS", "FDSFDS");
                 Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
                 startActivity(iGioHang);
                 break;
@@ -167,7 +171,7 @@ public class TrangChuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void hienThiSanPham(List<SanPham> dsSanPham) {
+    public void hienThiDanhSachSanPham(List<SanPham> dsSanPham) {
         this.dsSanPham = dsSanPham;
         int layout;
         if(grid){
