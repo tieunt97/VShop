@@ -19,7 +19,7 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.Shiper.ShiperActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
