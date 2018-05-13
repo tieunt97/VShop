@@ -16,8 +16,12 @@ class CreateSaleDescriptionsTable extends Migration
         Schema::create('sale_descriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->integer('unit_price')->unsigned();
+            $table->integer('sale_bill_id')->unsigned();
             $table->integer('amount')->unsigned();
+
+            $table->index('product_id');
+            $table->index('sale_bill_id');
+            $table->unique(['product_id','sale_bill_id']);
             $table->timestamps();
         });
     }

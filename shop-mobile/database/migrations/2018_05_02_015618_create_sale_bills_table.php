@@ -16,9 +16,11 @@ class CreateSaleBillsTable extends Migration
         Schema::create('sale_bills', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
-            $table->integer('shipper_id')->unsigned();
-            $table->integer('status_order')->nullable();//trang thai don hang
+            $table->integer('shipper_id')->unsigned()->nullable();
+            $table->string('status_order')->nullable();//trang thai don hang
             $table->dateTime('delivery_date')->nullable();
+            $table->string('destination_address');
+            $table->string('ship_fee');
             $table->dateTime('book_date');
             $table->timestamps();
         });
