@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,27 +15,17 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDanhNhap;
 import com.example.tieu_nt.vshop.R;
-import com.example.tieu_nt.vshop.Model.TaiKhoan;
 import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhap;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-
-import java.util.Arrays;
 
 /**
  * Created by tieu_nt on 3/16/2018.
  */
 
 public class FragmentDangNhap extends Fragment implements View.OnClickListener, ViewDangNhap{
-    private CallbackManager callbackManager;
     private EditText edtEmail;
     private TextInputEditText edtMatKhau;
-    private Button btnDangNhap, btnBoQua, btnDangNhapFB, btnDangNhapGG;
+    private Button btnDangNhap, btnBoQua;
     private View view;
     private AlertDialog.Builder builder;
     private PresenterLogicDanhNhap presenterDanhNhap;
@@ -46,24 +35,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.layout_fragment_dangnhap, container, false);
-        FacebookSdk.sdkInitialize(getContext().getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d("kiemTra", "Thanh cong");
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d("kiemTra", "Thoat");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d("kiemTra", "Loi");
-            }
-        });
         anhXa();
 
         setActions();
@@ -72,26 +43,16 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
     private void anhXa(){
         edtEmail = (EditText) view.findViewById(R.id.edtEmailDangNhap);
         edtMatKhau = (TextInputEditText) view.findViewById(R.id.edtMatKhauDangNhap);
         btnDangNhap = (Button) view.findViewById(R.id.btnDangNhap);
         btnBoQua = (Button) view.findViewById(R.id.btnBoQuaDangNhap);
-        btnDangNhapFB = (Button) view.findViewById(R.id.btnDangNhapFB);
-        btnDangNhapGG = (Button) view.findViewById(R.id.btnDangNhapGG);
     }
 
     private void setActions(){
         btnDangNhap.setOnClickListener(this);
         btnBoQua.setOnClickListener(this);
-        btnDangNhapFB.setOnClickListener(this);
-        btnDangNhapGG.setOnClickListener(this);
     }
 
     @Override
@@ -103,11 +64,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             case R.id.btnBoQuaDangNhap:
                 Intent intent = new Intent(getActivity(), TrangChuActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.btnDangNhapFB:
-                LoginManager.getInstance().logInWithReadPermissions(FragmentDangNhap.this, Arrays.asList("public_profile"));
-                break;
-            case R.id.btnDangNhapGG:
                 break;
         }
     }

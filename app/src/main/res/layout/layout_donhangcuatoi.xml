@@ -26,7 +26,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:title=""
+                    app:title="Quản lý đơn hàng"
                     app:layout_scrollFlags="scroll|enterAlways">
 
                 </android.support.v7.widget.Toolbar>
@@ -49,13 +49,18 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPagerDonHangCuaToi"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:fillViewport="true">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPagerDonHangCuaToi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            </android.support.v4.view.ViewPager>
+                </android.support.v4.view.ViewPager>
+            </android.support.v4.widget.NestedScrollView>
 
         </android.support.design.widget.CoordinatorLayout>
     </FrameLayout>

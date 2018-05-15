@@ -14,8 +14,16 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
+import com.example.tieu_nt.vshop.Adapter.AdapterTinTuc;
+import com.example.tieu_nt.vshop.Model.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.TinTuc;
+import com.example.tieu_nt.vshop.Presenter.TinTuc.PresenterLogicTinTuc;
+import com.example.tieu_nt.vshop.Presenter.TinTuc.ViewHienThiDanhSachTinTuc;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,15 +31,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 4/27/2018.
  */
 
-public class TinTucActivity extends AppCompatActivity{
+public class TinTucActivity extends AppCompatActivity implements ViewHienThiDanhSachTinTuc, ILoadMore{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private RecyclerView recyclerView, recyclerViewTinTuc;
+    private RecyclerView.LayoutManager layoutManager;
+    private AdapterTinTuc adapterTinTuc;
     private AdapterMenu adapterMenu;
     private CircleImageView imgInfo;
-
+    private PresenterLogicTinTuc presenterLogicTinTuc;
+    private List<TinTuc> dsTinTuc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +75,9 @@ public class TinTucActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
+
+        presenterLogicTinTuc = new PresenterLogicTinTuc(this);
+        presenterLogicTinTuc.layDanhSachTinTuc("");
     }
 
     private void anhXa(){
@@ -73,5 +87,34 @@ public class TinTucActivity extends AppCompatActivity{
         recyclerViewTinTuc = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
+    }
+
+    @Override
+    public void hienThiDanhSachTinTuc(List<TinTuc> dsTinTuc) {
+        this.dsTinTuc = dsTinTuc;
+        layoutManager = new LinearLayoutManager(this);
+        recyclerViewTinTuc.setLayoutManager(layoutManager);
+        adapterTinTuc = new AdapterTinTuc(this, dsTinTuc);
+        recyclerViewTinTuc.addOnScrollListener(new LoadMoreScroll(layoutManager, this));
+        recyclerViewTinTuc.post(new Runnable() {
+            @Override
+            public void run() {
+                adapterTinTuc.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void loadMore(String duongDan) {
+        List<TinTuc> tinTucLoadMore = presenterLogicTinTuc.layDanhSachTinTucLoadMore(duongDan);
+        if(tinTucLoadMore.size() > 0){
+            this.dsTinTuc.addAll(tinTucLoadMore);
+            recyclerViewTinTuc.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapterTinTuc.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }

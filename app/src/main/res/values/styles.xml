@@ -14,12 +14,16 @@
     </declare-styleable>
 
     <style name="CustomDrawerToggle" parent="AppTheme">
-        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <item name="android:textColorPrimary">@color/colorWhite</item>
         <item name="drawerArrowStyle">@style/changeColorDrawerToggle</item>
     </style>
 
     <style name="changeColorDrawerToggle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/colorWhite</item>
+    </style>
+
+    <style name="TextColorToolBar" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/colorWhite</item>
     </style>
 
 </resources>

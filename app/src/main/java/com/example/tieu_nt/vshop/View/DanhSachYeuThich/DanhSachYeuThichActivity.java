@@ -14,8 +14,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
+import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
+import com.example.tieu_nt.vshop.Model.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
-import com.example.tieu_nt.vshop.View.TinTuc.TinTucActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.ViewHienThiDanhSachSanPham;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,15 +30,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 4/27/2018.
  */
 
-public class DanhSachYeuThichActivity extends AppCompatActivity {
+public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewHienThiDanhSachSanPham,
+        ILoadMore{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
-    private RecyclerView recyclerView, recyclerViewTinTuc;
+    private RecyclerView recyclerView, recyclerSanPhamYeuThich;
+    private RecyclerView.LayoutManager layoutManager;
     private AdapterMenu adapterMenu;
+    private AdapterSanPham adapterSanPham;
     private CircleImageView imgInfo;
-
+    private PresenterLogicSanPham presenterLogicSanPham;
+    private List<SanPham> dsSanPham;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,14 +75,46 @@ public class DanhSachYeuThichActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
+
+        presenterLogicSanPham = new PresenterLogicSanPham(this);
+        presenterLogicSanPham.layDanhSachSanPham("");
     }
 
     private void anhXa(){
         trangChu = (FrameLayout) findViewById(R.id.trangChu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        recyclerViewTinTuc = (RecyclerView) findViewById(R.id.recyclerTinTuc);
+        recyclerSanPhamYeuThich = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
+    }
+
+    @Override
+    public void hienThiDanhSachSanPham(List<SanPham> dsSanPham) {
+        this.dsSanPham = dsSanPham;
+        layoutManager = new LinearLayoutManager(this);
+        recyclerSanPhamYeuThich.setLayoutManager(layoutManager);
+        adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
+        recyclerSanPhamYeuThich.addOnScrollListener(new LoadMoreScroll(layoutManager, this));
+        recyclerSanPhamYeuThich.post(new Runnable() {
+            @Override
+            public void run() {
+                adapterSanPham.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void loadMore(String duongDan) {
+        List<SanPham> sanPhamLoadMore = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        if(sanPhamLoadMore.size() > 0){
+            this.dsSanPham.addAll(sanPhamLoadMore);
+            recyclerSanPhamYeuThich.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapterSanPham.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }

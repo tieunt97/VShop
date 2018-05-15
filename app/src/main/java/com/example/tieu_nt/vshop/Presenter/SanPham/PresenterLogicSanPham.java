@@ -25,10 +25,6 @@ public class PresenterLogicSanPham implements IPresenterSanPham{
         if(dsSanPham.size() > 0){
             viewHienThiDanhSachSanPham.hienThiDanhSachSanPham(dsSanPham);
         }
-//        List<SanPham> dsSanPham = modelSanPham.layDanhSachSanPham("http://172.20.10.7:8080/1/products");
-//        if(dsSanPham.size() > 0){
-//            viewTrangChu.hienThiSanPham(dsSanPham);
-//        }
     }
 
     @Override

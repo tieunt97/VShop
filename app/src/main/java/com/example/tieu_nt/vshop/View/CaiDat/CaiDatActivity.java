@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.R;
-import com.example.tieu_nt.vshop.View.TinTuc.TinTucActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
