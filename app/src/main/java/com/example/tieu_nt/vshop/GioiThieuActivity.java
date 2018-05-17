@@ -6,7 +6,7 @@ package com.example.tieu_nt.vshop;
 
         import com.example.tieu_nt.vshop.View.DangNhap.DangNhapActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class GioiThieuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500);
-                    Intent intent = new Intent(MainActivity.this, DangNhapActivity.class);
+                    Intent intent = new Intent(GioiThieuActivity.this, DangNhapActivity.class);
                     startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally {
-                    Intent intent = new Intent(MainActivity.this, DangNhapActivity.class);
+                    Intent intent = new Intent(GioiThieuActivity.this, DangNhapActivity.class);
                     startActivity(intent);
                 }
             }

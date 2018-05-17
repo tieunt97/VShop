@@ -1,14 +1,17 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,6 +59,12 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_chitietsanpham);
         anhXa();
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+
         modelKhachHang = ModelKhachHang.getInstance();
         try{
             khachHang = TrangChuActivity.khachHang;
@@ -63,11 +72,19 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             Log.d("DangNhap", "Chưa đăng nhập");
         }
 
-        setSupportActionBar(toolbar);
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
         presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterChiTietSanPham.layChiTietSanPham(sanPham.getIdSanPham());
         setActions();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void anhXa() {

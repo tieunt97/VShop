@@ -26,6 +26,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:title="Cài đặt"
                     app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
 
                 </android.support.v7.widget.Toolbar>

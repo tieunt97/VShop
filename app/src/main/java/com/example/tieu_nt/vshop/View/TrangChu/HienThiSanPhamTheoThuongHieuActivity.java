@@ -1,22 +1,26 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
-import com.example.tieu_nt.vshop.Model.ILoadMore;
-import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 
@@ -34,9 +38,13 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private Button btnSapXep, btnLoc;
     private boolean grid = true;
     private PresenterLogicSanPham presenterLogicSanPham;
-    private RecyclerView.LayoutManager layoutGrid, layoutList;
+    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private AdapterSanPham adapterSanPham;
     private List<SanPham> dsSanPham;
+    private TrangSanPham trangSanPham;
+    private String duongDan = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,12 +52,27 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         setContentView(R.layout.layout_hienthisanphamtheothuonghieu);
         anhXa();
 
-        layoutGrid = new GridLayoutManager(this, 2);
-        layoutList = new LinearLayoutManager(this);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        linearLayoutManager = new LinearLayoutManager(this);
+
         presenterLogicSanPham = new PresenterLogicSanPham(this);
-        presenterLogicSanPham.layDanhSachSanPham("");
+        presenterLogicSanPham.layDanhSachSanPham(duongDan);
         setActions();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setActions() {
@@ -59,7 +82,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 grid = !b;
-                presenterLogicSanPham.layDanhSachSanPham("");
+                presenterLogicSanPham.layDanhSachSanPham(duongDan);
             }
         });
     }
@@ -84,35 +107,39 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     }
 
     @Override
-    public void hienThiDanhSachSanPham(List<SanPham> dsSanPham) {
-        this.dsSanPham = dsSanPham;
+    public void hienThiDanhSachSanPham(TrangSanPham trangSanPham) {
+        this.trangSanPham = trangSanPham;
+        this.dsSanPham = trangSanPham.getDsSanPham();
+        int layout;
         if(grid) {
-            recyclerSanPham.setLayoutManager(layoutGrid);
-            adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham);
-            recyclerSanPham.setOnScrollListener(new LoadMoreScroll(layoutGrid, this));
+            layout = R.layout.custom_layout_sanpham;
+            layoutManager = gridLayoutManager;
         }else{
-            recyclerSanPham.setLayoutManager(layoutList);
-            adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
-            recyclerSanPham.setOnScrollListener(new LoadMoreScroll(layoutList, this));
+            layout = R.layout.custom_layout_sanpham_list;
+            layoutManager = linearLayoutManager;
         }
-
+        recyclerSanPham.setLayoutManager(layoutManager);
+        recyclerSanPham.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
+                this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
+        adapterSanPham = new AdapterSanPham(this, dsSanPham, layout);
+        recyclerSanPham.setAdapter(adapterSanPham);
         recyclerSanPham.post(new Runnable() {
             @Override
             public void run() {
-                recyclerSanPham.setAdapter(adapterSanPham);
+                adapterSanPham.notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public void loadMore(String duongDan) {
-        List<SanPham> dsSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
-        if (dsSanPham.size() > 0){
-            this.dsSanPham.addAll(dsSanPham);
+        trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        if (trangSanPham.getDsSanPham().size() > 0){
+            this.dsSanPham.addAll(trangSanPham.getDsSanPham());
             recyclerSanPham.post(new Runnable() {
                 @Override
                 public void run() {
-                    recyclerSanPham.setAdapter(adapterSanPham);
+                    adapterSanPham.notifyDataSetChanged();
                 }
             });
         }

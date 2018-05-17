@@ -1,6 +1,7 @@
 package com.example.tieu_nt.vshop.Presenter.DonHangCuaToi;
 
 import com.example.tieu_nt.vshop.Model.DonHang;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
 
 public interface IPresenterDonHangCuaToi {
     void layDanhSachDonHang(String duongDan);
-    List<DonHang> layDanhSachDonHangLoadMore(String duongDan);
+    TrangDonHang layDanhSachDonHangLoadMore(String duongDan);
 }

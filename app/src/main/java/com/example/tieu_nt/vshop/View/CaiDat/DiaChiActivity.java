@@ -1,10 +1,13 @@
 package com.example.tieu_nt.vshop.View.CaiDat;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +31,19 @@ public class DiaChiActivity extends AppCompatActivity{
         anhXa();
 
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void anhXa(){

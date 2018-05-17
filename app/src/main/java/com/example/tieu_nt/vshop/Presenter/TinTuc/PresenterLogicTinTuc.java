@@ -1,9 +1,7 @@
 package com.example.tieu_nt.vshop.Presenter.TinTuc;
 
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
-import com.example.tieu_nt.vshop.Model.TinTuc;
-
-import java.util.List;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 
 /**
  * Created by tieu_nt on 4/26/2018.
@@ -20,16 +18,16 @@ public class PresenterLogicTinTuc implements IPresenterTinTuc{
 
     @Override
     public void layDanhSachTinTuc(String duongDan) {
-        List<TinTuc> dsTinTuc = modelKhachHang.layDanhSachTinTuc(duongDan);
-        if (dsTinTuc.size() > 0){
-            viewHienThiDanhSachTinTuc.hienThiDanhSachTinTuc(dsTinTuc);
+        TrangTinTuc trangTinTuc = modelKhachHang.layDanhSachTinTuc(duongDan);
+        if (trangTinTuc.getDsTinTuc().size() > 0){
+            viewHienThiDanhSachTinTuc.hienThiDanhSachTinTuc(trangTinTuc);
         }
     }
 
     @Override
-    public List<TinTuc> layDanhSachTinTucLoadMore(String duongDan) {
-        List<TinTuc> dsTinTuc = modelKhachHang.layDanhSachTinTuc(duongDan);
+    public TrangTinTuc layDanhSachTinTucLoadMore(String duongDan) {
+        TrangTinTuc trangTinTuc = modelKhachHang.layDanhSachTinTuc(duongDan);
 
-        return dsTinTuc;
+        return trangTinTuc;
     }
 }

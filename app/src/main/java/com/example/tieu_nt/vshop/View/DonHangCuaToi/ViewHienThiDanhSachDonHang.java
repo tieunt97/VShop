@@ -1,6 +1,7 @@
 package com.example.tieu_nt.vshop.View.DonHangCuaToi;
 
 import com.example.tieu_nt.vshop.Model.DonHang;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 
 public interface ViewHienThiDanhSachDonHang {
-    void hienThiDanhSachDonHang(List<DonHang> dsDonHang);
+    void hienThiDanhSachDonHang(TrangDonHang trangDonHang);
 }

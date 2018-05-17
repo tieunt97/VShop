@@ -63,6 +63,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                 break;
             case R.id.btnBoQuaDangNhap:
                 Intent intent = new Intent(getActivity(), TrangChuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
         }

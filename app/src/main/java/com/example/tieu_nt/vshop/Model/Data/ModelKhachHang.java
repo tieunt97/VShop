@@ -2,7 +2,9 @@ package com.example.tieu_nt.vshop.Model.Data;
 
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.KhachHang;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 import com.example.tieu_nt.vshop.Model.TinTuc;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,12 @@ public class ModelKhachHang {
         return modelKhachHang;
     }
 
-    public List<DonHang> layDanhSachDonHang(String duongDan){
+    public TrangDonHang layDanhSachDonHang(String duongDan){
+        TrangDonHang trangDonHang = new TrangDonHang();
         List<DonHang> dsDonHang = new ArrayList<>();
 
-        return dsDonHang;
+        trangDonHang.setDsDonHang(dsDonHang);
+        return trangDonHang;
     }
 
     public KhachHang layThongTinKhachHang(int idKhachHang){
@@ -35,10 +39,12 @@ public class ModelKhachHang {
         return khachHang;
     }
 
-    public List<TinTuc> layDanhSachTinTuc(String duongDan){
+    public TrangTinTuc layDanhSachTinTuc(String duongDan){
+        TrangTinTuc trangTinTuc = new TrangTinTuc();
         List<TinTuc> dsTinTuc = new ArrayList<>();
 
-        return dsTinTuc;
+        trangTinTuc.setDsTinTuc(dsTinTuc);
+        return trangTinTuc;
     }
 
     public boolean themSanPhamGioHang(int idKhachHang, int idSanPham){

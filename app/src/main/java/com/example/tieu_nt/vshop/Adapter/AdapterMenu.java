@@ -3,10 +3,12 @@ package com.example.tieu_nt.vshop.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.example.tieu_nt.vshop.Model.DrawerItem;
 import com.example.tieu_nt.vshop.Presenter.ItemClickListener;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.CaiDat.CaiDatActivity;
+import com.example.tieu_nt.vshop.View.DangNhap.DangNhapActivity;
 import com.example.tieu_nt.vshop.View.DanhSachYeuThich.DanhSachYeuThichActivity;
 import com.example.tieu_nt.vshop.View.DonHangCuaToi.DonHangCuaToiActivity;
 import com.example.tieu_nt.vshop.View.TinTuc.TinTucActivity;
@@ -45,8 +48,8 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
         this.position = position;
 
         int length = tenItems.length;
-//        if (khachHang != null) tenItems[length - 1] = "Đăng xuất";
-//        else tenItems[length - 1] = "Đăng nhập";
+        if (TrangChuActivity.khachHang != null) tenItems[length - 1] = "Đăng xuất";
+        else tenItems[length - 1] = "Đăng nhập";
 
         for (int i = 0; i < length; i++){
             dsItems.add(new DrawerItem(hinhItems[i], tenItems[i]));
@@ -100,10 +103,46 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                             Intent iTrungTamHoTro = new Intent(context, TrungTamHoTroActivity.class);
                             context.startActivity(iTrungTamHoTro);
                             break;
+                        case 6:
+                            dangNhapDangXuat();
+                            break;
                     }
                 }
             }
         });
+    }
+
+    private void dangNhapDangXuat(){
+        if(TrangChuActivity.khachHang != null){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao_xacnhan, null);
+            Button btnHuy = (Button) view1.findViewById(R.id.btnHuy);
+            Button btnDongY = (Button) view1.findViewById(R.id.btnDongY);
+
+            builder.setView(view1);
+            final AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            btnHuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            btnDongY.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent iDangNhap = new Intent(context, DangNhapActivity.class);
+                    iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(iDangNhap);
+                }
+            });
+        }else{
+            Intent iDangNhap = new Intent(context, DangNhapActivity.class);
+            iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(iDangNhap);
+        }
     }
 
     @Override

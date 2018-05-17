@@ -1,25 +1,32 @@
 package com.example.tieu_nt.vshop.View.DanhSachYeuThich;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
-import com.example.tieu_nt.vshop.Model.ILoadMore;
-import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.MainActivity;
 import com.example.tieu_nt.vshop.View.TrangChu.ViewHienThiDanhSachSanPham;
 
 import java.util.List;
@@ -30,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 4/27/2018.
  */
 
-public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewHienThiDanhSachSanPham,
+public class DanhSachYeuThichActivity extends MainActivity implements ViewHienThiDanhSachSanPham,
         ILoadMore{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
@@ -42,6 +49,7 @@ public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewH
     private AdapterSanPham adapterSanPham;
     private CircleImageView imgInfo;
     private PresenterLogicSanPham presenterLogicSanPham;
+    private TrangSanPham trangSanPham;
     private List<SanPham> dsSanPham;
 
     @Override
@@ -53,6 +61,7 @@ public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewH
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Danh sách yêu thích");
 
         drawerToggle = new ActionBarDrawerToggle(DanhSachYeuThichActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
@@ -90,12 +99,15 @@ public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewH
     }
 
     @Override
-    public void hienThiDanhSachSanPham(List<SanPham> dsSanPham) {
-        this.dsSanPham = dsSanPham;
+    public void hienThiDanhSachSanPham(TrangSanPham trangSanPham) {
+        this.trangSanPham = trangSanPham;
+        this.dsSanPham = this.trangSanPham.getDsSanPham();
         layoutManager = new LinearLayoutManager(this);
         recyclerSanPhamYeuThich.setLayoutManager(layoutManager);
         adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
-        recyclerSanPhamYeuThich.addOnScrollListener(new LoadMoreScroll(layoutManager, this));
+        recyclerSanPhamYeuThich.setAdapter(adapterSanPham);
+        recyclerSanPhamYeuThich.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
+                this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
         recyclerSanPhamYeuThich.post(new Runnable() {
             @Override
             public void run() {
@@ -106,9 +118,9 @@ public class DanhSachYeuThichActivity extends AppCompatActivity implements ViewH
 
     @Override
     public void loadMore(String duongDan) {
-        List<SanPham> sanPhamLoadMore = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
-        if(sanPhamLoadMore.size() > 0){
-            this.dsSanPham.addAll(sanPhamLoadMore);
+        trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        if(trangSanPham.getDsSanPham().size() > 0){
+            this.dsSanPham.addAll(trangSanPham.getDsSanPham());
             recyclerSanPhamYeuThich.post(new Runnable() {
                 @Override
                 public void run() {

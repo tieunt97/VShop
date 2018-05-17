@@ -1,9 +1,8 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
-import android.util.Log;
-
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +28,8 @@ public class ModelSanPham {
         return modelSanPham;
     }
 
-    public List<SanPham> layDanhSachSanPham(String duongDan){
+    public TrangSanPham layDanhSachSanPham(String duongDan){
+        TrangSanPham trangSanPham = new TrangSanPham();
         List<SanPham> dsSanPham = new ArrayList<>();
         DownloadJSON downloadJSON = new DownloadJSON(duongDan);
         downloadJSON.execute();
@@ -58,7 +58,8 @@ public class ModelSanPham {
             e.printStackTrace();
         }
 
-        return dsSanPham;
+        trangSanPham.setDsSanPham(dsSanPham);
+        return trangSanPham;
     }
 
     public SanPham layChiTietSanPham(int idSanPham){

@@ -78,6 +78,7 @@ public class FragmentDangKy extends Fragment implements View.OnClickListener, Te
             case R.id.btnBoQuaDangKy:
                 taiKhoan = new TaiKhoan();
                 Intent intent = new Intent(getActivity(), TrangChuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
         }

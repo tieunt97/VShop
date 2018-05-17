@@ -16,24 +16,32 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Adapter.AdapterThuongHieu;
+import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
+import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicThuongHieu;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.MainActivity;
 
 import java.util.List;
 
@@ -43,8 +51,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 3/15/2018.
  */
 
-public class TrangChuActivity extends AppCompatActivity implements View.OnClickListener, ViewHienThiDanhSachThuongHieu,
-ViewHienThiDanhSachSanPham{
+public class TrangChuActivity extends MainActivity implements View.OnClickListener, ViewHienThiDanhSachThuongHieu,
+ViewHienThiDanhSachSanPham, ILoadMore{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -54,9 +62,14 @@ ViewHienThiDanhSachSanPham{
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
     private AdapterMenu adapterMenu;
     private CircleImageView imgInfo;
+    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private AdapterSanPham adapterSanPham;
     private ModelKhachHang modelKhachHang;
     private boolean grid = true;
     private List<SanPham> dsSanPham;
+    private TrangSanPham trangSanPham;
     private PresenterLogicThuongHieu presenterLogicThuongHieu;
     private PresenterLogicSanPham presenterLogicSanPham;
     private ImageView[] imgSapXep = new ImageView[5];
@@ -75,6 +88,8 @@ ViewHienThiDanhSachSanPham{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trangchu_layout);
         anhXa();
+        linearLayoutManager = new LinearLayoutManager(this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
         modelKhachHang = ModelKhachHang.getInstance();
         int idKhachHang = getIntent().getIntExtra("idKhachHang", 0);
         if(idKhachHang != 0)
@@ -83,6 +98,7 @@ ViewHienThiDanhSachSanPham{
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("");
 
 
         drawerToggle = new ActionBarDrawerToggle(TrangChuActivity.this, drawerLayout, R.string.open, R.string.close){
@@ -120,6 +136,17 @@ ViewHienThiDanhSachSanPham{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_trangchu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemGioHang:
+                Intent iGioHang = new Intent(this, GioHangActivity.class);
+                startActivity(iGioHang);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void anhXa(){
@@ -310,21 +337,40 @@ ViewHienThiDanhSachSanPham{
     }
 
     @Override
-    public void hienThiDanhSachSanPham(List<SanPham> dsSanPham) {
-        this.dsSanPham = dsSanPham;
+    public void hienThiDanhSachSanPham(TrangSanPham trangSanPham) {
+        this.trangSanPham = trangSanPham;
+        this.dsSanPham = trangSanPham.getDsSanPham();
         int layout;
         if(grid){
             layout = R.layout.custom_layout_sanpham;
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-            recyclerSanPham.setLayoutManager(layoutManager);
+            layoutManager = gridLayoutManager;
         }else{
             layout = R.layout.custom_layout_sanpham_list;
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerSanPham.setLayoutManager(layoutManager);
-
+            layoutManager = linearLayoutManager;
         }
-        AdapterSanPham adapterSanPham = new AdapterSanPham(this,  dsSanPham, layout);
+        recyclerSanPham.setLayoutManager(layoutManager);
+        adapterSanPham = new AdapterSanPham(this,  dsSanPham, layout);
         recyclerSanPham.setAdapter(adapterSanPham);
-        adapterSanPham.notifyDataSetChanged();
+        recyclerSanPham.addOnScrollListener(new LoadMoreScroll(layoutManager, this, this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
+        recyclerSanPham.post(new Runnable() {
+            @Override
+            public void run() {
+                adapterSanPham.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void loadMore(String duongDan) {
+        trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        if(trangSanPham.getDsSanPham().size() > 0){
+            dsSanPham.addAll(trangSanPham.getDsSanPham());
+            recyclerSanPham.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapterSanPham.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }

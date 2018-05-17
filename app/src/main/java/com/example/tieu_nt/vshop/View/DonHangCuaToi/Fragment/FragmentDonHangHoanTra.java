@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterDonHangCuaToi;
 import com.example.tieu_nt.vshop.Model.DonHang;
-import com.example.tieu_nt.vshop.Model.ILoadMore;
-import com.example.tieu_nt.vshop.Model.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
+import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 import com.example.tieu_nt.vshop.Presenter.DonHangCuaToi.PresenterLogicDonHangCuaToi;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.DonHangCuaToi.ViewHienThiDanhSachDonHang;
@@ -31,8 +32,10 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
     private TextView tvThongBao;
     private RecyclerView.LayoutManager layoutManager;
     private AdapterDonHangCuaToi adapterDonHangCuaToi;
+    private TrangDonHang trangDonHang;
     private List<DonHang> dsDonHang;
     private int idKhachHang = 0;
+    private String duongDan = "";
     private PresenterLogicDonHangCuaToi presenterLogicDonHangCuaToi;
 
     @Nullable
@@ -48,18 +51,20 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
             idKhachHang = idKhachHang;
         }
         presenterLogicDonHangCuaToi = new PresenterLogicDonHangCuaToi(this);
-        presenterLogicDonHangCuaToi.layDanhSachDonHang("");
+        presenterLogicDonHangCuaToi.layDanhSachDonHang(duongDan);
 
         return view;
     }
 
     @Override
-    public void hienThiDanhSachDonHang(List<DonHang> dsDonHang) {
-        this.dsDonHang = dsDonHang;
+    public void hienThiDanhSachDonHang(TrangDonHang trangDonHang) {
+        this.trangDonHang = trangDonHang;
+        this.dsDonHang = this.trangDonHang.getDsDonHang();
         tvThongBao.setVisibility(View.GONE);
         adapterDonHangCuaToi = new AdapterDonHangCuaToi(getActivity(), dsDonHang, 1);
         recyclerDonHang.setAdapter(adapterDonHangCuaToi);
-        recyclerDonHang.addOnScrollListener(new LoadMoreScroll(layoutManager, this));
+        recyclerDonHang.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
+                this.trangDonHang.isTrangCuoi(), this.trangDonHang.getNextPage()));
         recyclerDonHang.post(new Runnable() {
             @Override
             public void run() {
@@ -70,9 +75,9 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
 
     @Override
     public void loadMore(String duongDan) {
-        List<DonHang> donHangLoadMore = presenterLogicDonHangCuaToi.layDanhSachDonHangLoadMore(duongDan);
-        if(donHangLoadMore.size() > 0){
-            this.dsDonHang.addAll(donHangLoadMore);
+        trangDonHang = presenterLogicDonHangCuaToi.layDanhSachDonHangLoadMore(duongDan);
+        if(trangDonHang.getDsDonHang().size() > 0){
+            this.dsDonHang.addAll(trangDonHang.getDsDonHang());
             recyclerDonHang.post(new Runnable() {
                 @Override
                 public void run() {
