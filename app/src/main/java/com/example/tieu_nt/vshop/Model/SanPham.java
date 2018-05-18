@@ -8,12 +8,13 @@ import java.util.List;
  */
 
 public class SanPham implements Serializable{
-    private int idSanPham, giaChuan, soLuotDanhGia, soLuong;
+    private int idSanPham, giaChuan, soLuotDanhGia, soLuongTonKho, soLuong;
     private String tenSanPham, moTa, hinhSanPham;
     private List<String> dsHinhSP;
     private float danhGiaTB;
     private boolean yeuThich;
     private int[] dsSoSao;
+    private byte[] hinhSPGioHang;
 
 
     public int getIdSanPham() {
@@ -88,12 +89,12 @@ public class SanPham implements Serializable{
         this.yeuThich = yeuThich;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public int getSoLuongTonKho() {
+        return soLuongTonKho;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setSoLuongTonKho(int soLuongTonKho) {
+        this.soLuongTonKho = soLuongTonKho;
     }
 
     public int[] getDsSoSao() {
@@ -102,5 +103,21 @@ public class SanPham implements Serializable{
 
     public void setDsSoSao(int[] dsSoSao) {
         this.dsSoSao = dsSoSao;
+    }
+
+    public byte[] getHinhSPGioHang() {
+        return hinhSPGioHang;
+    }
+
+    public void setHinhSPGioHang(byte[] hinhSPGioHang) {
+        this.hinhSPGioHang = hinhSPGioHang;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 }

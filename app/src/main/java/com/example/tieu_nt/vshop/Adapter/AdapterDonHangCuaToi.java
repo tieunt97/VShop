@@ -21,13 +21,11 @@ import java.util.List;
 public class AdapterDonHangCuaToi extends RecyclerView.Adapter<AdapterDonHangCuaToi.ViewHolder>{
     private Context context;
     private List<DonHang> dsDonHang;
-    private int loaiDonHang;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
 
-    public AdapterDonHangCuaToi(Context context, List<DonHang> dsDonHang, int loaiDonHang) {
+    public AdapterDonHangCuaToi(Context context, List<DonHang> dsDonHang) {
         this.context = context;
         this.dsDonHang = dsDonHang;
-        this.loaiDonHang = loaiDonHang;
     }
 
     @Override

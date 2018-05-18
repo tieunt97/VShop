@@ -67,7 +67,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         final int viTri = this.position;
         if (viTri == position){
-            holder.textView.setTextColor(context.getResources().getColor(R.color.colorRed));
+            holder.textView.setTextColor(context.getResources().getColor(R.color.colorOrange));
             holder.imgNext.setImageResource(R.drawable.next);
         }
         holder.textView.setText(dsItems.get(position).getTenItem());

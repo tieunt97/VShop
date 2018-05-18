@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamGioHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.R;
 
 import java.util.ArrayList;
@@ -23,13 +26,16 @@ import java.util.List;
  * Created by tieu_nt on 5/9/2018.
  */
 
-public class GioHangActivity extends AppCompatActivity{
+public class GioHangActivity extends AppCompatActivity implements ViewHienThiSanPhamGioHang{
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private TextView tvDiaChi, tvGiaTongSP, tvPhiGiaoHang, tvTongTienTT, tvThongBao;
     private Button btnThanhToan;
     private RelativeLayout relaGioHang;
     private List<SanPham> dsSanPham;
+    private PresenterLogicGioHang presenterLogicGioHang;
+    private AdapterSanPhamGioHang adapterSanPhamGioHang;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     @Override
@@ -44,11 +50,10 @@ public class GioHangActivity extends AppCompatActivity{
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
-        dsSanPham = new ArrayList<>();
-        if(dsSanPham.size() == 0){
-            tvThongBao.setVisibility(View.VISIBLE);
-            relaGioHang.setVisibility(View.GONE);
-        }
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        presenterLogicGioHang = new PresenterLogicGioHang(this, this);
+        presenterLogicGioHang.layDSSanPhamGioHang();
     }
 
     @Override
@@ -70,5 +75,23 @@ public class GioHangActivity extends AppCompatActivity{
         tvThongBao = (TextView) findViewById(R.id.tvThongBao);
         btnThanhToan = (Button) findViewById(R.id.btnThanhToan);
         relaGioHang = (RelativeLayout) findViewById(R.id.relaGioHang);
+    }
+
+    @Override
+    public void hienThiSanPhamGioHang(List<SanPham> dsSanPham) {
+        this.dsSanPham = dsSanPham;
+        if(this.dsSanPham.size() == 0){
+            tvThongBao.setVisibility(View.VISIBLE);
+            relaGioHang.setVisibility(View.GONE);
+        }else{
+            adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, dsSanPham, presenterLogicGioHang);
+            recyclerView.setAdapter(adapterSanPhamGioHang);
+            adapterSanPhamGioHang.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

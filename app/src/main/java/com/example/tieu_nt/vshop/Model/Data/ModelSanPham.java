@@ -74,7 +74,7 @@ public class ModelSanPham {
             sanPham.setTenSanPham(data.getString("product_name"));
             sanPham.setGiaChuan(data.getInt("base_price"));
             sanPham.setMoTa(data.getString("description"));
-            sanPham.setSoLuong(data.getInt("quantity"));
+            sanPham.setSoLuongTonKho(data.getInt("quantity"));
             JSONArray dsHinh = data.getJSONArray("sub_images");
             List<String> dsHinhSP = new ArrayList<>();
             for(int i = 0; i < dsHinh.length(); i++){

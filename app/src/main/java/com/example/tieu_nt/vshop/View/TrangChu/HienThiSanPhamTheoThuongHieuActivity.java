@@ -1,8 +1,10 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
@@ -36,6 +39,8 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private RecyclerView recyclerSanPham;
     private ToggleButton tgLayout;
     private Button btnSapXep, btnLoc;
+    private Menu menu;
+    private TextView tvSoSPGioHang;
     private boolean grid = true;
     private PresenterLogicSanPham presenterLogicSanPham;
     private RecyclerView.LayoutManager layoutManager;
@@ -67,6 +72,25 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        this.menu = menu;
+        MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
+        View itemGioHang = MenuItemCompat.getActionView(iGioHang);
+        tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
+
+        itemGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iGioHang = new Intent(HienThiSanPhamTheoThuongHieuActivity.this, GioHangActivity.class);
+                startActivity(iGioHang);
+            }
+        });
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
             finish();
@@ -85,12 +109,6 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
                 presenterLogicSanPham.layDanhSachSanPham(duongDan);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_trangchu, menu);
-        return true;
     }
 
     private void anhXa(){

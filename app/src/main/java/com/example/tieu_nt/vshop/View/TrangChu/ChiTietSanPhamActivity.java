@@ -1,16 +1,19 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,13 +43,14 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         View.OnClickListener{
     private Toolbar toolbar;
     private ViewPager viewPagerSlider;
-    private TextView tvSoAnh, tvTenSP, tvGia, tvSoDanhGia, tvDiaChi, tvThayDoiDiaChi, tvChiTietSP, tvXemThem,
+    private TextView tvSoAnh, tvTenSP, tvGia, tvSoDanhGia, tvDiaChi, tvThayDoiDiaChi, tvChiTietSP, tvXemThem, tvSoSPGioHang,
             tvXemTatCaDanhGia, tvDanhGia5, tvDanhGia4, tvDanhGia3, tvDanhGia2, tvDanhGia1, tvDanhGiaTB, tvSoDanhGia1;
     private Button btnThemHang;
     private ImageView imgShare, imgThich;
     private RatingBar rbDanhGia, rbDanhGia1;
     private ProgressBar pb5sao, pb4sao, pb3sao, pb2sao, pb1sao;
     private RecyclerView recyclerDanhGia;
+    private Menu menu;
     private List<Fragment> fragmentHinhSP = new ArrayList<>();
     private PresenterLogicChiTietSanPham presenterChiTietSanPham;
     private SanPham sanPham;
@@ -76,6 +80,25 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterChiTietSanPham.layChiTietSanPham(sanPham.getIdSanPham());
         setActions();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        this.menu = menu;
+        MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
+        View itemGioHang = MenuItemCompat.getActionView(iGioHang);
+        tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
+
+        itemGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iGioHang = new Intent(ChiTietSanPhamActivity.this, GioHangActivity.class);
+                startActivity(iGioHang);
+            }
+        });
+
+        return true;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.tieu_nt.vshop.Model.Data;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
+import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.TinTuc;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 
@@ -25,6 +26,17 @@ public class ModelKhachHang {
         return modelKhachHang;
     }
 
+    public boolean huyDonHang(int idDonHang){
+
+        return false;
+    }
+
+    public List<SanPham> layDanhSachSanPhamDonHang(int idDonHang){
+        List<SanPham> dsSanPham = new ArrayList<>();
+
+        return dsSanPham;
+    }
+
     public TrangDonHang layDanhSachDonHang(String duongDan){
         TrangDonHang trangDonHang = new TrangDonHang();
         List<DonHang> dsDonHang = new ArrayList<>();
@@ -45,12 +57,6 @@ public class ModelKhachHang {
 
         trangTinTuc.setDsTinTuc(dsTinTuc);
         return trangTinTuc;
-    }
-
-    public boolean themSanPhamGioHang(int idKhachHang, int idSanPham){
-        boolean b = false;
-
-        return b;
     }
 
     public boolean capNhatSanPhamYeuThich(int idKhachHang, int idSanPham){

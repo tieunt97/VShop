@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
@@ -59,6 +61,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private Toolbar toolbar;
     private ToggleButton tgLayout;
     private Button btnSapXep, btnLoc;
+    private TextView tvSoSPGioHang;
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
     private AdapterMenu adapterMenu;
     private CircleImageView imgInfo;
@@ -67,6 +70,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private GridLayoutManager gridLayoutManager;
     private AdapterSanPham adapterSanPham;
     private ModelKhachHang modelKhachHang;
+    private Menu menu;
     private boolean grid = true;
     private List<SanPham> dsSanPham;
     private TrangSanPham trangSanPham;
@@ -135,18 +139,31 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        this.menu = menu;
+        MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
+        View itemGioHang = MenuItemCompat.getActionView(iGioHang);
+        tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
+
+        itemGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
+                startActivity(iGioHang);
+            }
+        });
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemGioHang:
-                Intent iGioHang = new Intent(this, GioHangActivity.class);
-                startActivity(iGioHang);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+//        switch (item.getItemId()){
+//            case R.id.itemGioHang:
+//                Intent iGioHang = new Intent(this, GioHangActivity.class);
+//                startActivity(iGioHang);
+//                break;
+//        }
+        return true;
     }
 
     private void anhXa(){
@@ -180,8 +197,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
                 sapXep();
                 break;
             case R.id.btnLoc:
-                Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
-                startActivity(iGioHang);
+                Toast.makeText(this, "Lọc", Toast.LENGTH_SHORT);
                 break;
         }
     }

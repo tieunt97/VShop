@@ -61,7 +61,7 @@ public class FragmentDonHangCuaToi extends Fragment implements ViewHienThiDanhSa
         this.trangDonHang = trangDonHang;
         this.dsDonHang = this.trangDonHang.getDsDonHang();
         tvThongBao.setVisibility(View.GONE);
-        adapterDonHangCuaToi = new AdapterDonHangCuaToi(getActivity(), dsDonHang, 1);
+        adapterDonHangCuaToi = new AdapterDonHangCuaToi(getActivity(), dsDonHang);
         recyclerDonHang.setAdapter(adapterDonHangCuaToi);
         recyclerDonHang.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
                 trangDonHang.isTrangCuoi(), trangDonHang.getNextPage()));
