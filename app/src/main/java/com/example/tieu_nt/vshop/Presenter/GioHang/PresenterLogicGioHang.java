@@ -24,6 +24,11 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
         this.modelGioHang.ketNoiSQLite(context);
     }
 
+    public PresenterLogicGioHang(Context context){
+        this.modelGioHang = new ModelGioHang();
+        this.modelGioHang.ketNoiSQLite(context);
+    }
+
     @Override
     public boolean themSanPhamGioHang(SanPham sanPham) {
         return modelGioHang.themSanPhamGioHang(sanPham);

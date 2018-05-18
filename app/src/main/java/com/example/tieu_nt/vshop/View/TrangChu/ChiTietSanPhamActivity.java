@@ -27,6 +27,7 @@ import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
 import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicChiTietSanPham;
 import com.example.tieu_nt.vshop.R;
 
@@ -53,6 +54,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private Menu menu;
     private List<Fragment> fragmentHinhSP = new ArrayList<>();
     private PresenterLogicChiTietSanPham presenterChiTietSanPham;
+    private PresenterLogicGioHang presenterLogicGioHang;
     private SanPham sanPham;
     private KhachHang khachHang;
     private ModelKhachHang modelKhachHang;
@@ -77,6 +79,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         }
 
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
+        presenterLogicGioHang = new PresenterLogicGioHang(this);
         presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterChiTietSanPham.layChiTietSanPham(sanPham.getIdSanPham());
         setActions();
@@ -274,7 +277,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 break;
             case R.id.btnThemVaoGioHang:
                 if (khachHang  != null){
-                    if(modelKhachHang.themSanPhamGioHang(khachHang.getIdKhachHang(), sanPham.getIdSanPham()))
+                    if(presenterLogicGioHang.themSanPhamGioHang(sanPham))
                         Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(this, "Sản phẩm đã được thêm trong giỏ hàng", Toast.LENGTH_SHORT).show();

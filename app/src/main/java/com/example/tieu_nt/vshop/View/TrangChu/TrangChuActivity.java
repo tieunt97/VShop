@@ -12,13 +12,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +40,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicThuongHieu;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.BottomSheetLocSanPham;
 import com.example.tieu_nt.vshop.View.MainActivity;
 
 import java.util.List;
@@ -71,6 +69,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private AdapterSanPham adapterSanPham;
     private ModelKhachHang modelKhachHang;
     private Menu menu;
+    private BottomSheetLocSanPham bottomSheetLocSanPham;
     private boolean grid = true;
     private List<SanPham> dsSanPham;
     private TrangSanPham trangSanPham;
@@ -104,6 +103,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("");
 
+        bottomSheetLocSanPham = new BottomSheetLocSanPham();
 
         drawerToggle = new ActionBarDrawerToggle(TrangChuActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
@@ -197,7 +197,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
                 sapXep();
                 break;
             case R.id.btnLoc:
-                Toast.makeText(this, "Lọc", Toast.LENGTH_SHORT);
+                bottomSheetLocSanPham.show(getSupportFragmentManager(), "LocSanPham");
                 break;
         }
     }
