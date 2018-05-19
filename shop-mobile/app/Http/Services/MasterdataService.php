@@ -12,9 +12,7 @@ class MasterdataService
 {
     protected static $tables = [
         'products',
-        'employees',
-        'providers',
-        'customers'
+        'providers'
     ];
 
     protected static $localData = null;
