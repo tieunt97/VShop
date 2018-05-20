@@ -32,6 +32,11 @@ class ProductController extends AppBaseController
     	return $this->sendResponse($product, '200');
     }
 
+    public function getEvaluationsOfProductId($id) {
+        $valuations = $this->productService->getEvaluations($id, Consts::GET_ALL);
+        return $this->sendResponse($valuations, '200');
+    }
+
     public function test() {
         // return $this->productService->getEvaluations(, 6);
     }

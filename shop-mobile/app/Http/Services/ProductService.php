@@ -44,8 +44,12 @@ class ProductService {
 	}
 
 	public function getEvaluations($product_id, $limit) {
-
-		$evaluations = DB::table('evaluations')->select('customer_id','title','content','star_number','created_at')->where('product_id','=',$product_id)->limit($limit)->get();
+		if ($limit == Consts::GET_ALL) {
+			$evaluations = DB::table('evaluations')->select('customer_id','title','content','star_number','created_at')->where('product_id','=',$product_id)->paginate(Consts::NUM_EVALUATION_IN_TIME);
+		}else {
+			$evaluations = DB::table('evaluations')->select('customer_id','title','content','star_number','created_at')->where('product_id','=',$product_id)->limit($limit)->get();
+		}
+		
 		if (count($evaluations) == 0) return [];
 		foreach ($evaluations as $evaluation) {
 			$customer = DB::table('users')->select('name')->where('id','=',$product_id)->pluck('name')->toArray();

@@ -21,6 +21,9 @@ Route::get('product_provider/{providerId}/products', 'HomeController@getProductB
 Route::get('providers','ProviderController@getAllProviders');
 
 Route::get('products/{id}','ProductController@getProductById')->name('product');
+Route::get('products/{id}/allValuations','ProductController@getEvaluationsOfProductId');
+
+
 Route::get('products/search/{keyword}','ProductController@searchProductBy');
 Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
 Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');
