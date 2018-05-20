@@ -20,6 +20,7 @@ class ProviderTableSeeder extends Seeder
         	$producers[] = [
         		'id' => $producer_id,
         		'name' => $faker->companyName,
+                'icon'  => $faker->imageUrl($width = 180, $height = 180)
         	];
         }
 

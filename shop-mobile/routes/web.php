@@ -26,3 +26,7 @@ Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
 Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');
 
 Route::get('test','ProductController@test');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
