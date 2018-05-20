@@ -3,6 +3,9 @@ package com.example.tieu_nt.vshop.Model.Data;
 import android.util.Log;
 
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
+import com.example.tieu_nt.vshop.Model.ChiTietSanPham;
+import com.example.tieu_nt.vshop.Model.DanhGia;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangDanhGia;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 
@@ -10,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -20,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelSanPham {
     private static ModelSanPham modelSanPham;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     private ModelSanPham(){}
 
@@ -28,6 +34,51 @@ public class ModelSanPham {
             modelSanPham = new ModelSanPham();
 
         return modelSanPham;
+    }
+
+    public TrangDanhGia layDanhSachDanhGia(String duongDan){
+        TrangDanhGia trangDanhGia = new TrangDanhGia();
+        List<DanhGia> dsDanhGia = new ArrayList<>();
+
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan);
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            JSONObject data = object.getJSONObject("data");
+            JSONArray arrayDanhGia = data.getJSONArray("data");
+            for(int i = 0; i < arrayDanhGia.length(); i++){
+                JSONObject obDanhGia = arrayDanhGia.getJSONObject(i);
+                DanhGia danhGia = new DanhGia();
+                danhGia.setTieuDe(obDanhGia.getString("title"));
+                danhGia.setNoiDung(obDanhGia.getString("content"));
+                danhGia.setSoSao((float) obDanhGia.getDouble("star_number"));
+                danhGia.setThoiGian(sdf.parse(obDanhGia.getString("created_at")));
+                danhGia.setTenKhachHang(obDanhGia.getString("customer_name"));
+
+                dsDanhGia.add(danhGia);
+            }
+
+            int current_page = data.getInt("current_page");
+            int last_page = data.getInt("last_page");
+            if(current_page < last_page){
+                trangDanhGia.setTrangCuoi(false);
+            }else{
+                trangDanhGia.setTrangCuoi(true);
+            }
+            trangDanhGia.setNextPage(data.getString("next_page_url"));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        trangDanhGia.setDsDanhGia(dsDanhGia);
+        return trangDanhGia;
     }
 
     public TrangSanPham layDanhSachSanPham(String duongDan){
@@ -57,6 +108,8 @@ public class ModelSanPham {
             int last_page = data.getInt("last_page");
             if(current_page < last_page){
                 trangSanPham.setTrangCuoi(false);
+            }else{
+                trangSanPham.setTrangCuoi(true);
             }
             trangSanPham.setNextPage(data.getString("next_page_url"));
         } catch (InterruptedException e) {
@@ -81,8 +134,10 @@ public class ModelSanPham {
             JSONObject data = object.getJSONObject("data");
             sanPham.setIdSanPham(data.getInt("id"));
             sanPham.setTenSanPham(data.getString("product_name"));
+            sanPham.setHinhSanPham(data.getString("main_image"));
             sanPham.setGiaChuan(data.getInt("base_price"));
             sanPham.setMoTa(data.getString("description"));
+            sanPham.setThuongHieu("Apple");
             sanPham.setSoLuongTonKho(data.getInt("quantity"));
             JSONArray dsHinh = data.getJSONArray("sub_images");
             List<String> dsHinhSP = new ArrayList<>();
@@ -90,6 +145,8 @@ public class ModelSanPham {
                 dsHinhSP.add(dsHinh.getString(i));
             }
             sanPham.setDsHinhSP(dsHinhSP);
+
+            //lay danh sach so sao
             JSONObject star_info = data.getJSONObject("star_info");
             sanPham.setDanhGiaTB((float) star_info.getDouble("star_number_average"));
             sanPham.setSoLuotDanhGia(star_info.getInt("star_count_average"));
@@ -103,11 +160,44 @@ public class ModelSanPham {
                 }
                 sanPham.setDsSoSao(dsSoSao);
             }
+
+            //layDangGiaDauTien
+            List<DanhGia> dsDanhGia = new ArrayList<>();
+            JSONArray arrayDanhGia = data.getJSONArray("evaluationInfo");
+            int soLuongDG = arrayDanhGia.length();
+            for(int i = 0; i < soLuongDG; i++){
+                JSONObject obDanhGia = arrayDanhGia.getJSONObject(i);
+                DanhGia danhGia = new DanhGia();
+                danhGia.setTieuDe(obDanhGia.getString("title"));
+                danhGia.setNoiDung(obDanhGia.getString("content"));
+                danhGia.setSoSao((float) obDanhGia.getDouble("star_number"));
+                danhGia.setThoiGian(sdf.parse(obDanhGia.getString("created_at")));
+                danhGia.setTenKhachHang(obDanhGia.getString("customer_name"));
+
+                dsDanhGia.add(danhGia);
+            }
+            sanPham.setDsDanhGia(dsDanhGia);
+
+            //lay chi tiet san pham
+            JSONArray arrayChiTiet = data.getJSONArray("specificationsInfo");
+            List<ChiTietSanPham> dsChiTietSP = new ArrayList<>();
+            int size = arrayChiTiet.length();
+            for(int i = 0; i < size; i++){
+                JSONObject obChiTiet = arrayChiTiet.getJSONObject(i);
+                ChiTietSanPham ctsp = new ChiTietSanPham();
+                ctsp.setTenChiTiet(obChiTiet.getString("category_name"));
+                ctsp.setGiaTri(obChiTiet.getString("value"));
+
+                dsChiTietSP.add(ctsp);
+            }
+            sanPham.setDsChiTietSanPham(dsChiTietSP);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

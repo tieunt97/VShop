@@ -5,5 +5,5 @@ package com.example.tieu_nt.vshop.Presenter.TrangChu;
  */
 
 public interface IPresenterThuongHieu {
-    void layDanhSachThuongHieu(String duongDan);
+    void layDanhSachThuongHieu();
 }

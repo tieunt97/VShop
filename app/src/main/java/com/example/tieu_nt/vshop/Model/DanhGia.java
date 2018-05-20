@@ -1,30 +1,17 @@
 package com.example.tieu_nt.vshop.Model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * Created by tieu_nt on 4/20/2018.
  */
 
-public class DanhGia {
-    private int idDanhGia, soLuotThich;
+public class DanhGia implements Serializable{
     private float soSao;
-    private String tenKhachHang, tieuDe, noiDung, thoiGian;
+    private String tenKhachHang, tieuDe, noiDung;
+    private Date thoiGian;
 
-
-    public int getIdDanhGia() {
-        return idDanhGia;
-    }
-
-    public void setIdDanhGia(int idDanhGia) {
-        this.idDanhGia = idDanhGia;
-    }
-
-    public int getSoLuotThich() {
-        return soLuotThich;
-    }
-
-    public void setSoLuotThich(int soLuotThich) {
-        this.soLuotThich = soLuotThich;
-    }
 
     public float getSoSao() {
         return soSao;
@@ -58,11 +45,11 @@ public class DanhGia {
         this.noiDung = noiDung;
     }
 
-    public String getThoiGian() {
+    public Date getThoiGian() {
         return thoiGian;
     }
 
-    public void setThoiGian(String thoiGian) {
+    public void setThoiGian(Date thoiGian) {
         this.thoiGian = thoiGian;
     }
 }

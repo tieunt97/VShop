@@ -32,6 +32,9 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
         if(dsHinhSP.size() > 0){
             viewChiTietSanPham.hienThiSliderSP(dsHinhSP);
         }
+        if(sanPham.getDsDanhGia().size() > 0){
+            viewChiTietSanPham.hienThiDSDanhGia(sanPham.getDsDanhGia());
+        }
     }
 
     @Override

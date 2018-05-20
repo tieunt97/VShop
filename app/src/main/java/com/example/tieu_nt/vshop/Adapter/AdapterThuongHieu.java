@@ -42,7 +42,7 @@ public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ThuongHieu thuongHieu = dsThuongHieu.get(position);
+        final ThuongHieu thuongHieu = dsThuongHieu.get(position);
         Picasso.get().load(thuongHieu.getHinhThuongHieu()).into(holder.imgHinhThuongHieu, new Callback() {
             @Override
             public void onSuccess() {
@@ -58,6 +58,7 @@ public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.Vi
             @Override
             public void onClick(View view) {
                 Intent iHienThiSPTheoThuongHieu = new Intent(context, HienThiSanPhamTheoThuongHieuActivity.class);
+                iHienThiSPTheoThuongHieu.putExtra("thuongHieu", thuongHieu);
                 context.startActivity(iHienThiSPTheoThuongHieu);
             }
         });

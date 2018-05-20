@@ -11,20 +11,26 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tieu_nt.vshop.Adapter.AdapterDanhGia;
 import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
+import com.example.tieu_nt.vshop.Model.ChiTietSanPham;
+import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
@@ -51,6 +57,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private Button btnThemHang;
     private ImageView imgShare, imgThich;
     private RatingBar rbDanhGia, rbDanhGia1;
+    private LinearLayout linearXemDanhGia;
     private ProgressBar pb5sao, pb4sao, pb3sao, pb2sao, pb1sao;
     private RecyclerView recyclerDanhGia;
     private Menu menu;
@@ -128,6 +135,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         tvThayDoiDiaChi = (TextView) findViewById(R.id.tvThayDoi);
         tvChiTietSP = (TextView) findViewById(R.id.tvChiTietSanPham);
         tvXemThem = (TextView) findViewById(R.id.tvXemThem);
+        linearXemDanhGia = (LinearLayout) findViewById(R.id.linearXemDanhGia);
         tvXemTatCaDanhGia = (TextView) findViewById(R.id.tvXemTatCaDanhGia);
         tvDanhGia5 = (TextView) findViewById(R.id.tvSoDanhGia5Sao);
         tvDanhGia4 = (TextView) findViewById(R.id.tvSoDanhGia4Sao);
@@ -146,12 +154,14 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         pb3sao = (ProgressBar) findViewById(R.id.pb3Sao);
         pb2sao = (ProgressBar) findViewById(R.id.pb2Sao);
         pb1sao = (ProgressBar) findViewById(R.id.pb1Sao);
+        recyclerDanhGia = (RecyclerView) findViewById(R.id.recyclerDanhGia);
     }
 
     private void setActions(){
         imgShare.setOnClickListener(this);
         imgThich.setOnClickListener(this);
         tvThayDoiDiaChi.setOnClickListener(this);
+        linearXemDanhGia.setOnClickListener(this);
         btnThemHang.setOnClickListener(this);
     }
 
@@ -189,7 +199,12 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         if(khachHang != null){
             tvDiaChi.setText(khachHang.getDiaChi());
         }
-        tvChiTietSP.setText(sanPham.getMoTa());
+        String chiTietSanPham = "&#8226 Thương hiệu: " + sanPham.getThuongHieu();
+        for (ChiTietSanPham ctsp: sanPham.getDsChiTietSanPham()){
+            chiTietSanPham +="<br/>&#8226 " + ctsp.getTenChiTiet() + ": " + ctsp.getGiaTri();
+        }
+
+        tvChiTietSP.setText(Html.fromHtml(chiTietSanPham));
         tvChiTietSP.post(new Runnable() {
             @Override
             public void run() {
@@ -212,17 +227,19 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                             }
                         }
                     });
+                }else{
+                    tvXemThem.setVisibility(View.GONE);
                 }
             }
         });
 
         if(sanPham.getDanhGiaTB() > 0){
-            float danhGiaTb = (float) Math.round((sanPham.getDanhGiaTB()*10)/10);
+            float danhGiaTb = (float) Math.round((sanPham.getDanhGiaTB()*10))/10;
             tvDanhGiaTB.setText(String.valueOf(danhGiaTb));
-            rbDanhGia1.setRating(danhGiaTb);
+            rbDanhGia1.setRating(sanPham.getDanhGiaTB());
         }else {
             tvDanhGiaTB.setText(String.valueOf(5.0));
-            rbDanhGia.setRating((float) 5.0);
+            rbDanhGia1.setRating((float) 5.0);
         }
         tvSoDanhGia1.setText(sanPham.getSoLuotDanhGia() + " Đánh giá");
 
@@ -244,6 +261,17 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             pb5sao.setMax(soDanhGia);
             pb5sao.setProgress(dsSoSao[0]);
             tvDanhGia5.setText(String.valueOf(dsSoSao[0]));
+        }
+    }
+
+    @Override
+    public void hienThiDSDanhGia(List<DanhGia> dsDanhGia) {
+        recyclerDanhGia.setLayoutManager(new LinearLayoutManager(this));
+        AdapterDanhGia adapterDanhGia = new AdapterDanhGia(this, dsDanhGia);
+        recyclerDanhGia.setAdapter(adapterDanhGia);
+        adapterDanhGia.notifyDataSetChanged();
+        if (sanPham.getSoLuotDanhGia() > 3){
+            tvXemTatCaDanhGia.setVisibility(View.VISIBLE);
         }
     }
 
@@ -279,6 +307,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                         changeImgYeuThich();
                     }
                 }
+                break;
+            case R.id.linearXemDanhGia:
+                Intent iDanhGia = new Intent(this, DanhGiaVaNhanXetActivity.class);
+                iDanhGia.putExtra("sanPham", sanPham);
+                startActivity(iDanhGia);
                 break;
             case R.id.btnThemVaoGioHang:
                 themSanPhamGioHang();

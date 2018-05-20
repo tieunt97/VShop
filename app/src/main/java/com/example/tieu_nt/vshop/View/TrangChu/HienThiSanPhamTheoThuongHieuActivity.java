@@ -25,6 +25,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
+import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 
@@ -52,6 +53,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private List<SanPham> dsSanPham;
     private TrangSanPham trangSanPham;
     private String duongDan = "";
+    private ThuongHieu thuongHieu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,11 +61,17 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         setContentView(R.layout.layout_hienthisanphamtheothuonghieu);
         anhXa();
 
+        thuongHieu = (ThuongHieu) getIntent().getSerializableExtra("thuongHieu");
+        if(thuongHieu != null){
+            duongDan = "http://192.168.1.110:8080/VShop/shop-mobile/public/product_provider/" + thuongHieu.getIdThuongHieu() + "/products";
+        }
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+        toolbar.setTitle(thuongHieu.getTenThuongHieu());
 
         gridLayoutManager = new GridLayoutManager(this, 2);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -77,12 +85,13 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
         setActions();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        getMenuInflater().inflate(R.menu.menu_item_giohang, menu);
         this.menu = menu;
         MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);

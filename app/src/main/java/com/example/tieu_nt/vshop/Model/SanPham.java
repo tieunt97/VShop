@@ -9,12 +9,14 @@ import java.util.List;
 
 public class SanPham implements Serializable{
     private int idSanPham, giaChuan, soLuotDanhGia, soLuongTonKho, soLuong;
-    private String tenSanPham, moTa, hinhSanPham;
+    private String tenSanPham, moTa, hinhSanPham, thuongHieu;
     private List<String> dsHinhSP;
     private float danhGiaTB;
     private boolean yeuThich;
     private int[] dsSoSao;
     private byte[] hinhSPGioHang;
+    private List<ChiTietSanPham> dsChiTietSanPham;
+    private List<DanhGia> dsDanhGia;
 
 
     public int getIdSanPham() {
@@ -119,5 +121,29 @@ public class SanPham implements Serializable{
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public List<ChiTietSanPham> getDsChiTietSanPham() {
+        return dsChiTietSanPham;
+    }
+
+    public void setDsChiTietSanPham(List<ChiTietSanPham> dsChiTietSanPham) {
+        this.dsChiTietSanPham = dsChiTietSanPham;
+    }
+
+    public String getThuongHieu() {
+        return thuongHieu;
+    }
+
+    public void setThuongHieu(String thuongHieu) {
+        this.thuongHieu = thuongHieu;
+    }
+
+    public List<DanhGia> getDsDanhGia() {
+        return dsDanhGia;
+    }
+
+    public void setDsDanhGia(List<DanhGia> dsDanhGia) {
+        this.dsDanhGia = dsDanhGia;
     }
 }

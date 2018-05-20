@@ -69,6 +69,9 @@
         <activity android:name=".View.TinTuc.ChiTietTinTucActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".View.TrangChu.DanhGiaVaNhanXetActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextColorToolBar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/imgHinhSP"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvTenSanPham"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dien thoai"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="4">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+                    <TextView
+                        android:id="@+id/tvDanhGiaTB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5.0"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="trên 5"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/rbDanhGia1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SmallRatingbar"
+                    android:rating="5.0"
+                    android:stepSize="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:isIndicator="true"/>
+
+                <TextView
+                    android:id="@+id/tvSoDanhGia1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="0 Đánh giá"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGreyish"
+                android:layout_marginHorizontal="10dp"/>
+
+            <!--Layout thống kê đánh giá-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2">
+
+                <!--Layout đánh giá 5 sa-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv5Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="5 SAO"
+                        android:textSize="13sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb5Sao"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv5Sao"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@id/tvSoDanhGia5Sao"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSoDanhGia5Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <!--Layout đánh giá 4 sa-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv4Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="4 SAO"
+                        android:textSize="13sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb4Sao"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv4Sao"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@id/tvSoDanhGia4Sao"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSoDanhGia4Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="13sp"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <!--Layout đánh giá 3 sao-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv3Sao"
+                        android:layout_width="45dp"
+                        android:textSize="13sp"
+                        android:layout_height="wrap_content"
+                        android:text="3 SAO"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb3Sao"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv3Sao"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@id/tvSoDanhGia3Sao"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSoDanhGia3Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <!--Layout đánh giá 2 sa-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv2Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="2 SAO"
+                        android:textSize="13sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb2Sao"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv2Sao"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@id/tvSoDanhGia2Sao"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSoDanhGia2Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="13sp"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <!--Layout đánh giá 1 sao-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv1Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="1 SAO"
+                        android:textSize="13sp"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb1Sao"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv1Sao"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@id/tvSoDanhGia1Sao"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSoDanhGia1Sao"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDanhGiaSanPham"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:text="Đánh giá sản phẩm này"
+            android:textColor="@color/colorBlue"
+            android:layout_gravity="center"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerDanhGia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="10dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

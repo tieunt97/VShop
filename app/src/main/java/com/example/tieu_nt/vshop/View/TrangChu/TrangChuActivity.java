@@ -85,9 +85,10 @@ ViewHienThiDanhSachSanPham, ILoadMore{
 
     public static NguoiDung nguoiDung;
     public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
-    public static final String API_DANGNHAP = "http://192.168.1.110:8080/VShop/shop-mobile/public/login";
-    public static final String API_DANGKY = "http://192.168.1.110:8080/VShop/shop-mobile/public/register";
-    private String duongDan = "http://192.168.1.110:8080/VShop/shop-mobile/public/product_provider/1/products";
+    public static final String API_DANGNHAP = SERVER + "/login";
+    public static final String API_DANGKY = SERVER + "/register";
+    public static final String API_THUONGHIEU = SERVER + "/providers";
+    private String duongDan = SERVER + "/product_provider/1/products";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,7 +142,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         presenterLogicGioHang = new PresenterLogicGioHang(this);
 
         presenterLogicThuongHieu = new PresenterLogicThuongHieu(this);
-        presenterLogicThuongHieu.layDanhSachThuongHieu("");
+        presenterLogicThuongHieu.layDanhSachThuongHieu();
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
         presenterLogicSanPham.layDanhSachSanPham(duongDan);

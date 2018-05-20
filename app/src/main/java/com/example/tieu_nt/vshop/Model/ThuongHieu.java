@@ -1,10 +1,12 @@
 package com.example.tieu_nt.vshop.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by tieu_nt on 4/19/2018.
  */
 
-public class ThuongHieu {
+public class ThuongHieu implements Serializable{
     private int idThuongHieu;
     private String tenThuongHieu, hinhThuongHieu;
 
