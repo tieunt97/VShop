@@ -71,10 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-<<<<<<< HEAD
 
-=======
->>>>>>> 23685a3e56d8e3ec349a0004f162da3755f311da
                         <Button
                             android:id="@+id/btnLoc"
                             android:layout_width="wrap_content"
