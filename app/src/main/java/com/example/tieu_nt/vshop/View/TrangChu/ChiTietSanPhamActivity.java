@@ -1,6 +1,8 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
+import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
 import com.example.tieu_nt.vshop.Model.KhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -31,10 +34,15 @@ import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicChiTietSanPham;
 import com.example.tieu_nt.vshop.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by tieu_nt on 4/20/2018.
@@ -57,7 +65,6 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private PresenterLogicGioHang presenterLogicGioHang;
     private SanPham sanPham;
     private KhachHang khachHang;
-    private ModelKhachHang modelKhachHang;
     private boolean xemThem = true;
 
     @Override
@@ -71,12 +78,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
-        modelKhachHang = ModelKhachHang.getInstance();
-        try{
-            khachHang = TrangChuActivity.khachHang;
-        }catch (NullPointerException e){
-            Log.d("DangNhap", "Chưa đăng nhập");
-        }
+        khachHang = TrangChuActivity.khachHang;
 
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
         presenterLogicGioHang = new PresenterLogicGioHang(this);
@@ -87,11 +89,19 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        getMenuInflater().inflate(R.menu.menu_item_giohang, menu);
         this.menu = menu;
         MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);
         tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
+
+        int soSP = presenterLogicGioHang.layDSSanPhamGioHang().size();
+        if(soSP == 0) {
+            tvSoSPGioHang.setVisibility(View.GONE);
+        }else{
+            tvSoSPGioHang.setVisibility(View.VISIBLE);
+            tvSoSPGioHang.setText(String.valueOf(soSP));
+        }
 
         itemGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,11 +177,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         adapterViewPagerSlider.notifyDataSetChanged();
         tvSoAnh.setText("1/" + soHinh);
         viewPagerSlider.setOnPageChangeListener(this);
-        if (sanPham.isYeuThich()){
-            imgThich.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.like_true));
-        }else {
-            imgThich.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.like_false));
-        }
+        changeImgYeuThich();
     }
 
     @Override
@@ -270,19 +276,49 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             case R.id.imgShare:
                 break;
             case R.id.imgThich:
-                if (khachHang != null){
-                    sanPham.setYeuThich(!sanPham.isYeuThich());
-                    modelKhachHang.capNhatSanPhamYeuThich(khachHang.getIdKhachHang(), sanPham.getIdSanPham());
+                if(khachHang == null){
+                    Toast.makeText(this, "Bạn cần đăng nhập để sử dụng tính  năng này", Toast.LENGTH_SHORT).show();
+                } else{
+                    if (presenterChiTietSanPham.capNhatSanPhamYeuThich(khachHang.getIdKhachHang(), sanPham.getIdSanPham())){
+                        sanPham.setYeuThich(!sanPham.isYeuThich());
+                        changeImgYeuThich();
+                    }
                 }
                 break;
             case R.id.btnThemVaoGioHang:
-                if (khachHang  != null){
-                    if(presenterLogicGioHang.themSanPhamGioHang(sanPham))
-                        Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(this, "Sản phẩm đã được thêm trong giỏ hàng", Toast.LENGTH_SHORT).show();
-                }
+                themSanPhamGioHang();
                 break;
+        }
+    }
+
+    private void themSanPhamGioHang(){
+        DownloadHinhSanPham downloadHinhSanPham = new DownloadHinhSanPham(sanPham.getHinhSanPham());
+        downloadHinhSanPham.execute();
+        Bitmap bitmap = null;
+        try {
+            bitmap = downloadHinhSanPham.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        if(bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            sanPham.setHinhSPGioHang(outputStream.toByteArray());
+            sanPham.setSoLuong(1);
+        }
+        if(presenterLogicGioHang.themSanPhamGioHang(sanPham))
+            Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
+    }
+
+    private void changeImgYeuThich(){
+        if (sanPham.isYeuThich()){
+            imgThich.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.like_true));
+        }else {
+            imgThich.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.like_false));
         }
     }
 }

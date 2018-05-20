@@ -35,7 +35,6 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private TextView tvCapNhatDiaChi, tvDoiMatKhau;
 
 
@@ -71,6 +70,7 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
         setActions();
+        selectImage();
     }
 
     private void anhXa() {

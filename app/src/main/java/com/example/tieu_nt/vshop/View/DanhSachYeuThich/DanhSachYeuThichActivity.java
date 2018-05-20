@@ -47,7 +47,6 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     private RecyclerView.LayoutManager layoutManager;
     private AdapterMenu adapterMenu;
     private AdapterSanPham adapterSanPham;
-    private CircleImageView imgInfo;
     private PresenterLogicSanPham presenterLogicSanPham;
     private TrangSanPham trangSanPham;
     private List<SanPham> dsSanPham;
@@ -62,6 +61,8 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Danh sách yêu thích");
+
+        selectImage();
 
         drawerToggle = new ActionBarDrawerToggle(DanhSachYeuThichActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override

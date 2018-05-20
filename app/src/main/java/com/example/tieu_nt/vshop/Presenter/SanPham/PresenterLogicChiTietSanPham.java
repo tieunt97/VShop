@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.Presenter.SanPham;
 
+import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.View.TrangChu.ViewChiTietSanPham;
@@ -13,11 +14,14 @@ import java.util.List;
 public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     private ViewChiTietSanPham viewChiTietSanPham;
     private ModelSanPham modelSanPham;
+    private ModelKhachHang modelKhachHang;
+
 
 
     public PresenterLogicChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
         this.viewChiTietSanPham = viewChiTietSanPham;
         this.modelSanPham = ModelSanPham.getInstance();
+        this.modelKhachHang = ModelKhachHang.getInstance();
     }
 
     @Override
@@ -28,5 +32,10 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
             viewChiTietSanPham.hienThiSliderSP(dsHinhSP);
         }
         viewChiTietSanPham.hienThiChiTietSanPham(sanPham);
+    }
+
+    @Override
+    public boolean capNhatSanPhamYeuThich(int idKhachHang, int idSanPham){
+        return modelKhachHang.capNhatSanPhamYeuThich(idKhachHang, idSanPham);
     }
 }

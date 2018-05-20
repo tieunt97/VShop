@@ -3,6 +3,7 @@ package com.example.tieu_nt.vshop.Model.LoadMore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 /**
  * Created by tieu_nt on 4/23/2018.
@@ -36,7 +37,10 @@ public class LoadMoreScroll extends RecyclerView.OnScrollListener{
                 firstVisiblesItems = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
             }
 
+            Log.d("DEMO", totalItemCount + " : " + firstVisiblesItems + " + " + visibleItemCount);
+
             if (!isTrangCuoi && (visibleItemCount + firstVisiblesItems) == totalItemCount) {
+                Log.d("duongDan", duongDan);
                 iLoadMore.loadMore(duongDan);
             }
         }

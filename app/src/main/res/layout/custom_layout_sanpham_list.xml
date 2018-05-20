@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cardViewSanPham">
+    android:id="@+id/cardViewSanPham"
+    android:theme="@style/AppTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,17 +12,27 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imgHinhSP"
-            android:layout_width="142dp"
-            android:layout_height="142dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/xiaomi"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/progress_bar_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/imgHinhSP"
+                android:layout_width="118dp"
+                android:layout_height="138dp"
+                android:scaleType="centerCrop"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
             <TextView
                 android:id="@+id/tvTenSanPham"
                 android:layout_width="match_parent"
@@ -56,7 +67,7 @@
                     android:transformPivotX="0dp"
                     android:stepSize="0.2"
                     android:isIndicator="true"
-                    style="?android:attr/ratingBarStyleSmall"
+                    style="@style/SmallRatingbar"
                     android:layout_centerVertical="true"
                     />
 

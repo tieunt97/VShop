@@ -76,7 +76,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
 
     @Override
     public void hienThiDSSanPhamDonHang(List<SanPham> dsSanPham) {
-         adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, dsSanPham, null);
+         adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, dsSanPham, null, null, null);
          recyclerDonHang.setAdapter(adapterSanPhamGioHang);
          adapterSanPhamGioHang.notifyDataSetChanged();
     }

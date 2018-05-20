@@ -38,7 +38,6 @@ public class DonHangCuaToiActivity extends MainActivity{
     private Toolbar toolbar;
     private RecyclerView recyclerView, recyclerViewTinTuc;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapterDonHangCuaToi viewPagerAdapter;
@@ -79,6 +78,8 @@ public class DonHangCuaToiActivity extends MainActivity{
         viewPagerAdapter = new ViewPagerAdapterDonHangCuaToi(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        selectImage();
     }
 
     private void anhXa(){

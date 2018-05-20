@@ -41,7 +41,6 @@ public class TrungTamHoTroActivity extends MainActivity implements View.OnClickL
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private RelativeLayout relaCall, relaSendMail, relaHuongDanSD, relaChat;
 
 
@@ -78,6 +77,7 @@ public class TrungTamHoTroActivity extends MainActivity implements View.OnClickL
         recyclerView.setAdapter(adapterMenu);
 
         setActions();
+        selectImage();
     }
 
     private void anhXa(){

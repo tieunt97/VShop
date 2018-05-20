@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +17,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,6 +40,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
+import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicThuongHieu;
 import com.example.tieu_nt.vshop.R;
@@ -51,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 3/15/2018.
  */
 
-public class TrangChuActivity extends MainActivity implements View.OnClickListener, ViewHienThiDanhSachThuongHieu,
+public class TrangChuActivity extends MainActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, ViewHienThiDanhSachThuongHieu,
 ViewHienThiDanhSachSanPham, ILoadMore{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
@@ -62,8 +66,8 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private TextView tvSoSPGioHang;
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
     private AdapterSanPham adapterSanPham;
@@ -75,6 +79,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private TrangSanPham trangSanPham;
     private PresenterLogicThuongHieu presenterLogicThuongHieu;
     private PresenterLogicSanPham presenterLogicSanPham;
+    private PresenterLogicGioHang presenterLogicGioHang;
     private ImageView[] imgSapXep = new ImageView[5];
     private RelativeLayout[] relaSapXep = new RelativeLayout[5];
     private int viTriSapXep = -1;
@@ -84,7 +89,8 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private String sapXep = "", giaTri = "";
 
     public static KhachHang khachHang;
-    public static int IMG_GALLERY_REQUEST = 1;
+    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
+    private String duongDan = "http://192.168.1.110:8080/VShop/shop-mobile/public/product_provider/1/products";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,11 +135,23 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         recyclerView.setAdapter(adapterMenu);
 
         setActions();
+        selectImage();
+
+        presenterLogicGioHang = new PresenterLogicGioHang(this);
+
         presenterLogicThuongHieu = new PresenterLogicThuongHieu(this);
         presenterLogicThuongHieu.layDanhSachThuongHieu("");
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
-        presenterLogicSanPham.layDanhSachSanPham("http://172.20.10.7:8080/product_type/1/products");
+        presenterLogicSanPham.layDanhSachSanPham(duongDan);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenterLogicSanPham.layDanhSachSanPham(duongDan);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -143,6 +161,14 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         MenuItem iGioHang = menu.findItem(R.id.itemGioHang);
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);
         tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
+
+        int soSP = presenterLogicGioHang.layDSSanPhamGioHang().size();
+        if(soSP == 0) {
+            tvSoSPGioHang.setVisibility(View.GONE);
+        }else{
+            tvSoSPGioHang.setVisibility(View.VISIBLE);
+            tvSoSPGioHang.setText(String.valueOf(soSP));
+        }
 
         itemGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +199,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerThuongHieu = (RecyclerView) findViewById(R.id.recyclerThuongHieu);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         recyclerSanPham = (RecyclerView) findViewById(R.id.recyclerSanPham);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         btnSapXep = (Button) findViewById(R.id.btnSapXep);
@@ -180,19 +207,14 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     }
 
     private void setActions(){
-        imgInfo.setOnClickListener(this);
         btnSapXep.setOnClickListener(this);
         btnLoc.setOnClickListener(this);
+        tgLayout.setOnCheckedChangeListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.imgInfo:
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                startActivityForResult(intent, IMG_GALLERY_REQUEST);
-                break;
             case R.id.btnSapXep:
                 sapXep();
                 break;
@@ -333,17 +355,6 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            if(requestCode == IMG_GALLERY_REQUEST){
-                Uri uri = data.getData();
-                imgInfo.setImageURI(uri);
-            }
-        }
-    }
-
-    @Override
     public void hienThiThuongHieu(List<ThuongHieu> dsThuongHieu) {
         AdapterThuongHieu adapterThuongHieu = new AdapterThuongHieu(this, dsThuongHieu);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -368,12 +379,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         adapterSanPham = new AdapterSanPham(this,  dsSanPham, layout);
         recyclerSanPham.setAdapter(adapterSanPham);
         recyclerSanPham.addOnScrollListener(new LoadMoreScroll(layoutManager, this, this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
-        recyclerSanPham.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterSanPham.notifyDataSetChanged();
-            }
-        });
+        adapterSanPham.notifyDataSetChanged();
     }
 
     @Override
@@ -388,5 +394,11 @@ ViewHienThiDanhSachSanPham, ILoadMore{
                 }
             });
         }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        grid = !b;
+        presenterLogicSanPham.layDanhSachSanPham(duongDan);
     }
 }

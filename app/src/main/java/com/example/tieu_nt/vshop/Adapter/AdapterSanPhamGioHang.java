@@ -16,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPhamGioHang;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
+import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPhamGioHang;
 import com.example.tieu_nt.vshop.R;
 import com.squareup.picasso.Picasso;
 
@@ -33,12 +35,17 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
     private List<SanPham> dsSanPham;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
     private PresenterLogicGioHang presenterLogicGioHang;
+    private XoaSanPhamGioHang xoaSanPhamGioHang;
+    private CapNhatSoLuongSanPhamGioHang capNhatSoLuongSanPhamGioHang;
 
 
-    public AdapterSanPhamGioHang(Context context, List<SanPham> dsSanPham, PresenterLogicGioHang presenterLogicGioHang) {
+    public AdapterSanPhamGioHang(Context context, List<SanPham> dsSanPham, PresenterLogicGioHang presenterLogicGioHang,
+                                 XoaSanPhamGioHang xoaSanPhamGioHang, CapNhatSoLuongSanPhamGioHang capNhatSoLuongSanPhamGioHang) {
         this.context = context;
         this.dsSanPham = dsSanPham;
         this.presenterLogicGioHang = presenterLogicGioHang;
+        this.xoaSanPhamGioHang = xoaSanPhamGioHang;
+        this.capNhatSoLuongSanPhamGioHang = capNhatSoLuongSanPhamGioHang;
     }
 
     @Override
@@ -51,7 +58,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final SanPham sanPham = dsSanPham.get(position);
         holder.tvTenSP.setText(sanPham.getTenSanPham());
         holder.tvGiaSP.setText(numberFormat.format(sanPham.getGiaChuan()).toString() + " đ");
@@ -66,9 +73,9 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                     View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao_xacnhan, null);
                     Button btnHuy = (Button) view1.findViewById(R.id.btnHuy);
                     Button btnDongY = (Button) view1.findViewById(R.id.btnDongY);
-                    btnDongY.setText("Thoát");
+                    btnDongY.setText("Có xóa");
                     TextView tvNoiDung = (TextView) view1.findViewById(R.id.tvNoiDung);
-                    tvNoiDung.setText("Bạn có chắc muốn thoát ứng dụng?");
+                    tvNoiDung.setText("Bạn có chắc muốn xóa sản phẩm này trong giỏ hàng?");
 
                     builder.setView(view1);
                     final AlertDialog dialogCloseApp = builder.create();
@@ -88,7 +95,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                             if(presenterLogicGioHang.xoaSanPhamGioHang(sanPham.getIdSanPham())){
                                 dsSanPham.remove(sanPham);
                                 notifyDataSetChanged();
-                                Log.d("XoaSPGioHang", "thành công");
+                                xoaSanPhamGioHang.xoaSanPhamGioHang(position);
                             }else{
                                 Log.d("XoaSPGioHang", "thất bại");
                             }
@@ -99,22 +106,31 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
             holder.imgCong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d("CAPNHAT", "CONG");
                     int soLuong = sanPham.getSoLuong();
                     int soLuongTonKho = sanPham.getSoLuongTonKho();
                     if(soLuong < 5){
                         soLuong += 1;
-                        soLuongTonKho -= 1;
-                        if(presenterLogicGioHang.capNhatSoLuongSPGioHang(sanPham.getIdSanPham(), soLuong, soLuongTonKho)){
-                            sanPham.setSoLuong(soLuong);
-                            sanPham.setSoLuong(soLuongTonKho);
-                            notifyDataSetChanged();
+                        if(soLuongTonKho > 0){
+                            soLuongTonKho -= 1;
+                            if(presenterLogicGioHang.capNhatSoLuongSPGioHang(sanPham.getIdSanPham(), soLuong, soLuongTonKho)){
+                                sanPham.setSoLuong(soLuong);
+                                sanPham.setSoLuong(soLuongTonKho);
+                                notifyDataSetChanged();
+                                capNhatSoLuongSanPhamGioHang.capNhatSoLuongSanPhamGioHang(position, true);
+                            }
+                        }else{
+                            capNhatSoLuongSanPhamGioHang.capNhatThatBai("Sản phẩm này đã hết hàng");
                         }
+                    }else{
+                        capNhatSoLuongSanPhamGioHang.capNhatThatBai("Số lượng tối đa cho mỗi sản phẩm là 5 sản phẩm");
                     }
                 }
             });
             holder.imgTru.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d("CAPNHAT", "TRU");
                     int soLuong = sanPham.getSoLuong();
                     int soLuongTonKho = sanPham.getSoLuongTonKho();
                     if(soLuong > 1){
@@ -124,6 +140,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                             sanPham.setSoLuong(soLuong);
                             sanPham.setSoLuong(soLuongTonKho);
                             notifyDataSetChanged();
+                            capNhatSoLuongSanPhamGioHang.capNhatSoLuongSanPhamGioHang(position, false);
                         }
                     }
                 }

@@ -1,5 +1,7 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import android.util.Log;
+
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
@@ -50,6 +52,13 @@ public class ModelSanPham {
 
                 dsSanPham.add(sanPham);
             }
+
+            int current_page = data.getInt("current_page");
+            int last_page = data.getInt("last_page");
+            if(current_page < last_page){
+                trangSanPham.setTrangCuoi(false);
+            }
+            trangSanPham.setNextPage(data.getString("next_page_url"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -64,7 +73,7 @@ public class ModelSanPham {
 
     public SanPham layChiTietSanPham(int idSanPham){
         SanPham sanPham = new SanPham();
-        DownloadJSON downloadJSON = new DownloadJSON("http://172.20.10.7:8080/products/" + idSanPham);
+        DownloadJSON downloadJSON = new DownloadJSON("http://192.168.1.110:8080/VShop/shop-mobile/public/products/" + idSanPham);
         downloadJSON.execute();
         try {
             String dataJSON = downloadJSON.get();

@@ -16,7 +16,7 @@ public class GioiThieuActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     Intent intent = new Intent(GioiThieuActivity.this, DangNhapActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

@@ -46,7 +46,6 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
     private RecyclerView.LayoutManager layoutManager;
     private AdapterTinTuc adapterTinTuc;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private PresenterLogicTinTuc presenterLogicTinTuc;
     private List<TinTuc> dsTinTuc;
     private TrangTinTuc trangTinTuc;
@@ -85,6 +84,8 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
+
+        selectImage();
 
         presenterLogicTinTuc = new PresenterLogicTinTuc(this);
         presenterLogicTinTuc.layDanhSachTinTuc("");

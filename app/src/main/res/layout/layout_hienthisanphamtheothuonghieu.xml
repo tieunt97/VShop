@@ -101,27 +101,24 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
-
+            android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerSanPham"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

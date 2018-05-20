@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,6 +37,7 @@ import java.util.List;
 public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity implements View.OnClickListener,
         ViewHienThiDanhSachSanPham, ILoadMore{
     private Toolbar toolbar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerSanPham;
     private ToggleButton tgLayout;
     private Button btnSapXep, btnLoc;
@@ -68,6 +70,13 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
         presenterLogicSanPham.layDanhSachSanPham(duongDan);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenterLogicSanPham.layDanhSachSanPham(duongDan);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         setActions();
     }
 
@@ -113,6 +122,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
     private void anhXa(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         recyclerSanPham = (RecyclerView) findViewById(R.id.recyclerSanPham);
         tgLayout = (ToggleButton) findViewById(R.id.tgLayout);
         btnSapXep = (Button) findViewById(R.id.btnSapXep);

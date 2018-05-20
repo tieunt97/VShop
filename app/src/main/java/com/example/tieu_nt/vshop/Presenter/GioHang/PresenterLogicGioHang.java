@@ -24,7 +24,8 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
         this.modelGioHang.ketNoiSQLite(context);
     }
 
-    public PresenterLogicGioHang(Context context){
+    public PresenterLogicGioHang(Context context) {
+        this.context = context;
         this.modelGioHang = new ModelGioHang();
         this.modelGioHang.ketNoiSQLite(context);
     }
@@ -47,7 +48,8 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
     @Override
     public List<SanPham> layDSSanPhamGioHang() {
         List<SanPham> dsSanPham = modelGioHang.layDSSanPhamGioHang();
-        viewHienThiSanPhamGioHang.hienThiSanPhamGioHang(dsSanPham);
+        if(viewHienThiSanPhamGioHang != null) viewHienThiSanPhamGioHang.hienThiSanPhamGioHang(dsSanPham);
+
         return dsSanPham;
     }
 }

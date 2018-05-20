@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="165dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/backgroundmeterial">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -11,8 +11,15 @@
         android:layout_height="80dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/images"
+        android:src="@drawable/user"
+        app:border_color="@color/colorWhite"
+        app:border_width="1dp"
+        android:scaleType="centerCrop"
         />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,17 +33,17 @@
             android:id="@+id/tvTaiKhoan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tieunt"
-            android:textSize="18sp"
+            android:text="Xin chào"
+            android:textSize="16sp"
             android:textStyle="bold"
             />
 
         <TextView
-            android:id="@+id/tvEmail"
+            android:id="@+id/tvHoTen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tieunt.bk97@gmail.com"
-            android:textSize="14sp"/>
+            android:text="Nguyễn Tài Tiêu"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
