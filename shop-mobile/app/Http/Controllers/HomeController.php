@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ProductService;
 use Illuminate\Http\Request;
+use App\ProductType;
+use App\Http\Services\TypeProductService;
 
-class HomeController extends Controller
+class HomeController extends AppBaseController
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    protected $productService;
+    protected $typeProductService;
+
+    public function __construct(ProductService $productService, TypeProductService $typeProductService)
     {
+        $this->productService = $productService;
+        $this->typeProductService = $typeProductService;
         $this->middleware('auth');
     }
 
@@ -25,4 +33,15 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function getProductByType($productTypeId) {
+        $products = $this->productService->getAllProductsByType($productTypeId);
+        return $this->sendResponse($products, '200');
+    }
+    
+    public function getAllProductType() {
+        $productTypes =  $this->typeProductService->getAllTypes();
+        return $this->sendResponse($productTypes, '200');
+    }
+
 }
