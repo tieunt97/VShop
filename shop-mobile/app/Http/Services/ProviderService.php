@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProviderService {
 	public function getProvidersInfo() {
-		$providers = Provider::select('id', 'name')->get()->toArray();
+		$providers = Provider::select('id', 'name','icon')->get()->toArray();
 		return $providers;
 	}
 }

@@ -21,7 +21,7 @@ class HomeController extends AppBaseController
     {
         $this->productService = $productService;
         $this->typeProductService = $typeProductService;
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -38,7 +38,7 @@ class HomeController extends AppBaseController
         $products = $this->productService->getAllProductsByType($productTypeId);
         return $this->sendResponse($products, '200');
     }
-    
+
     public function getAllProductType() {
         $productTypes =  $this->typeProductService->getAllTypes();
         return $this->sendResponse($productTypes, '200');
