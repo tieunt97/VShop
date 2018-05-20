@@ -24,6 +24,7 @@ class ProductController extends AppBaseController
             'star_detail'           => $this->productService->getStarNumberDetailOfProduct($id)
         ];
         $product->evaluationInfo = $this->productService->getEvaluations($id, Consts::NUM_FIST_EVALUATION_SHOWED);
+        $product->specificationsInfo = $this->productService->getProductSpecificationsOfProduct($id);
     	return $this->sendResponse($product, '200');
     }
 
@@ -38,7 +39,7 @@ class ProductController extends AppBaseController
     }
 
     public function test() {
-        // return $this->productService->getEvaluations(, 6);
+        
     }
 
     

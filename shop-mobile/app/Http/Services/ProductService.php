@@ -58,6 +58,17 @@ class ProductService {
 		return $evaluations;
 	}
 
+	public function getProductSpecificationsOfProduct($id) {
+		$productAttribute = DB::table('attribute_values')
+		->select('attribute_values.value','category_attributes.category_name')
+		->join('product_attributes', 'product_attributes.id', '=', 'attribute_values.attribute_product_id')
+		->join('category_attributes','category_attributes.id','=','product_attributes.category_attribute_id')
+		->where('attribute_values.product_id','=',$id)
+		->get();
+
+		return $productAttribute;
+	}
+
 	public function getStarNumberDetailOfProduct($product_id) {
 		$star_detail = DB::table('evaluations')->select(DB::raw('count(star_number) as number, star_number'))->where('product_id','=',$product_id)->groupBy('star_number')->get()->toArray();
 		return $star_detail;
