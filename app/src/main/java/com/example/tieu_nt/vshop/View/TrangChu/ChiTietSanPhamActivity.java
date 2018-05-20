@@ -2,7 +2,6 @@ package com.example.tieu_nt.vshop.View.TrangChu;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,17 +25,13 @@ import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
-import com.example.tieu_nt.vshop.Model.KhachHang;
-import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
+import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicChiTietSanPham;
 import com.example.tieu_nt.vshop.R;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -64,7 +58,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private PresenterLogicChiTietSanPham presenterChiTietSanPham;
     private PresenterLogicGioHang presenterLogicGioHang;
     private SanPham sanPham;
-    private KhachHang khachHang;
+    private NguoiDung khachHang;
     private boolean xemThem = true;
 
     @Override
@@ -78,12 +72,12 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
-        khachHang = TrangChuActivity.khachHang;
+        khachHang = TrangChuActivity.nguoiDung;
 
-        sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
+        int idSanPham = getIntent().getIntExtra("idSanPham", 0);
         presenterLogicGioHang = new PresenterLogicGioHang(this);
         presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
-        presenterChiTietSanPham.layChiTietSanPham(sanPham.getIdSanPham());
+        presenterChiTietSanPham.layChiTietSanPham(idSanPham);
         setActions();
     }
 
@@ -182,6 +176,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     @Override
     public void hienThiChiTietSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
         tvTenSP.setText(sanPham.getTenSanPham());
         NumberFormat numberFormat =  new DecimalFormat("###,###");
         tvGia.setText(numberFormat.format(sanPham.getGiaChuan()) + " đ");
@@ -279,7 +274,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 if(khachHang == null){
                     Toast.makeText(this, "Bạn cần đăng nhập để sử dụng tính  năng này", Toast.LENGTH_SHORT).show();
                 } else{
-                    if (presenterChiTietSanPham.capNhatSanPhamYeuThich(khachHang.getIdKhachHang(), sanPham.getIdSanPham())){
+                    if (presenterChiTietSanPham.capNhatSanPhamYeuThich(khachHang.getIdNguoiDung(), sanPham.getIdSanPham())){
                         sanPham.setYeuThich(!sanPham.isYeuThich());
                         changeImgYeuThich();
                     }

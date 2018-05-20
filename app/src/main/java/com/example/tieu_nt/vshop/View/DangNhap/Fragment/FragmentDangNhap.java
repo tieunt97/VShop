@@ -13,16 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDanhNhap;
 import com.example.tieu_nt.vshop.R;
-import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhap;
+import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhapDangKy;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 /**
  * Created by tieu_nt on 3/16/2018.
  */
 
-public class FragmentDangNhap extends Fragment implements View.OnClickListener, ViewDangNhap{
+public class FragmentDangNhap extends Fragment implements View.OnClickListener, ViewDangNhapDangKy {
     private EditText edtEmail;
     private TextInputEditText edtMatKhau;
     private Button btnDangNhap, btnBoQua;
@@ -70,14 +71,16 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void dangNhapThanhCong(int idKhachHang) {
-        Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
-        iTrangChu.putExtra("idKhachHang", idKhachHang);
-        startActivity(iTrangChu);
+    public void thaoTacThanhCong(NguoiDung nguoiDung) {
+        if(nguoiDung.getLevel() == NguoiDung.LEVEL_KHACHHANG){
+            Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
+            iTrangChu.putExtra("nguoiDung", nguoiDung);
+            startActivity(iTrangChu);
+        }
     }
 
     @Override
-    public void dangNhapThatBai(String msg) {
+    public void thaoTacThatBai(String msg) {
         builder = new AlertDialog.Builder(getActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog_thongbao_vshop, null, false);
         TextView tvNoiDung = (TextView) view.findViewById(R.id.tvNoiDung);

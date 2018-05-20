@@ -21,7 +21,6 @@ public class DangNhapActivity extends AppCompatActivity{
     private TabLayout tabLayout;
     private ViewPager  viewPager;
     private Toolbar toolbar;
-    private boolean dangNhap = true;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 

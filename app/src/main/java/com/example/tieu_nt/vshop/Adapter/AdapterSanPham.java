@@ -75,7 +75,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
             @Override
             public void onClick(View view) {
                 Intent iChiTietSanPham = new Intent(context, ChiTietSanPhamActivity.class);
-                iChiTietSanPham.putExtra("sanPham", sanPham);
+                iChiTietSanPham.putExtra("idSanPham", sanPham.getIdSanPham());
                 context.startActivity(iChiTietSanPham);
             }
         });

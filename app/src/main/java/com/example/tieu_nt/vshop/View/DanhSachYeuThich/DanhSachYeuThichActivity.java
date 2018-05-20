@@ -27,6 +27,7 @@ import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 import com.example.tieu_nt.vshop.View.TrangChu.ViewHienThiDanhSachSanPham;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     private PresenterLogicSanPham presenterLogicSanPham;
     private TrangSanPham trangSanPham;
     private List<SanPham> dsSanPham;
+    private TextView tvHoTen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +83,12 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
             }
         });
 
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
+
         adapterMenu = new AdapterMenu(DanhSachYeuThichActivity.this, drawerLayout, 2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -97,6 +105,7 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         recyclerSanPhamYeuThich = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 
     @Override

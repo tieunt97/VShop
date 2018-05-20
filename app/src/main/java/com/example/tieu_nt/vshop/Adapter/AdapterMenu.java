@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Model.DrawerItem;
 import com.example.tieu_nt.vshop.Presenter.ItemClickListener;
@@ -48,7 +47,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
         this.position = position;
 
         int length = tenItems.length;
-        if (TrangChuActivity.khachHang != null) tenItems[length - 1] = "Đăng xuất";
+        if (TrangChuActivity.nguoiDung != null) tenItems[length - 1] = "Đăng xuất";
         else tenItems[length - 1] = "Đăng nhập";
 
         for (int i = 0; i < length; i++){
@@ -81,26 +80,32 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                     switch (position){
                         case 0:
                             Intent iTrangChu = new Intent(context, TrangChuActivity.class);
+                            iTrangChu.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTrangChu);
                             break;
                         case 1:
                             Intent iTinTuc = new Intent(context, TinTucActivity.class);
+                            iTinTuc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTinTuc);
                             break;
                         case 2:
                             Intent iDSYeuThich = new Intent(context, DanhSachYeuThichActivity.class);
+                            iDSYeuThich.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iDSYeuThich);
                             break;
                         case 3:
                             Intent iDonHangCuaToi = new Intent(context, DonHangCuaToiActivity.class);
+                            iDonHangCuaToi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iDonHangCuaToi);
                             break;
                         case 4:
                             Intent iCaiDat = new Intent(context, CaiDatActivity.class);
+                            iCaiDat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iCaiDat);
                             break;
                         case 5:
                             Intent iTrungTamHoTro = new Intent(context, TrungTamHoTroActivity.class);
+                            iTrungTamHoTro.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTrungTamHoTro);
                             break;
                         case 6:
@@ -113,7 +118,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
     }
 
     private void dangNhapDangXuat(){
-        if(TrangChuActivity.khachHang != null){
+        if(TrangChuActivity.nguoiDung != null){
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao_xacnhan, null);
             Button btnHuy = (Button) view1.findViewById(R.id.btnHuy);

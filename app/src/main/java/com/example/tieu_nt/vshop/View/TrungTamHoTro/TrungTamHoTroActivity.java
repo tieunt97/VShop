@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,6 +43,7 @@ public class TrungTamHoTroActivity extends MainActivity implements View.OnClickL
     private RecyclerView recyclerView;
     private AdapterMenu adapterMenu;
     private RelativeLayout relaCall, relaSendMail, relaHuongDanSD, relaChat;
+    private TextView tvHoTen;
 
 
     @Override
@@ -71,6 +73,12 @@ public class TrungTamHoTroActivity extends MainActivity implements View.OnClickL
             }
         });
 
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
+
         adapterMenu = new AdapterMenu(TrungTamHoTroActivity.this, drawerLayout, 5);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -90,6 +98,7 @@ public class TrungTamHoTroActivity extends MainActivity implements View.OnClickL
         relaChat = (RelativeLayout) findViewById(R.id.relaChat);
         relaCall = (RelativeLayout) findViewById(R.id.relaCall);
         relaSendMail = (RelativeLayout) findViewById(R.id.relaSendMail);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 
     private void setActions(){

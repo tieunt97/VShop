@@ -1,10 +1,7 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -17,7 +14,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,14 +23,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Adapter.AdapterThuongHieu;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
-import com.example.tieu_nt.vshop.Model.KhachHang;
+import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -63,7 +58,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private Toolbar toolbar;
     private ToggleButton tgLayout;
     private Button btnSapXep, btnLoc;
-    private TextView tvSoSPGioHang;
+    private TextView tvSoSPGioHang, tvHoTen;
     private RecyclerView recyclerView, recyclerThuongHieu, recyclerSanPham;
     private AdapterMenu adapterMenu;
     private RecyclerView.LayoutManager layoutManager;
@@ -88,8 +83,10 @@ ViewHienThiDanhSachSanPham, ILoadMore{
 
     private String sapXep = "", giaTri = "";
 
-    public static KhachHang khachHang;
+    public static NguoiDung nguoiDung;
     public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
+    public static final String API_DANGNHAP = "http://192.168.1.110:8080/VShop/shop-mobile/public/login";
+    public static final String API_DANGKY = "http://192.168.1.110:8080/VShop/shop-mobile/public/register";
     private String duongDan = "http://192.168.1.110:8080/VShop/shop-mobile/public/product_provider/1/products";
 
     @Override
@@ -100,9 +97,13 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         linearLayoutManager = new LinearLayoutManager(this);
         gridLayoutManager = new GridLayoutManager(this, 2);
         modelKhachHang = ModelKhachHang.getInstance();
-        int idKhachHang = getIntent().getIntExtra("idKhachHang", 0);
-        if(idKhachHang != 0)
-            khachHang = modelKhachHang.layThongTinKhachHang(idKhachHang);
+        nguoiDung = (NguoiDung) getIntent().getSerializableExtra("nguoiDung");
+
+        if(nguoiDung != null){
+            tvHoTen.setText(nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -204,6 +205,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         btnSapXep = (Button) findViewById(R.id.btnSapXep);
         btnLoc = (Button) findViewById(R.id.btnLoc);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 
     private void setActions(){

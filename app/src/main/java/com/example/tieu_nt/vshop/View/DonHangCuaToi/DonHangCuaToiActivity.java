@@ -24,6 +24,7 @@ import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.ViewPagerAdapterDonHangCuaToi;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,6 +42,7 @@ public class DonHangCuaToiActivity extends MainActivity{
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapterDonHangCuaToi viewPagerAdapter;
+    private TextView tvHoTen;
 
 
     @Override
@@ -70,6 +72,12 @@ public class DonHangCuaToiActivity extends MainActivity{
             }
         });
 
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
+
         adapterMenu = new AdapterMenu(DonHangCuaToiActivity.this, drawerLayout, 3);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -91,5 +99,6 @@ public class DonHangCuaToiActivity extends MainActivity{
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewPagerDonHangCuaToi);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 }

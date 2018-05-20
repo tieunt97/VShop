@@ -47,7 +47,7 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerDonHang.setLayoutManager(layoutManager);
-        if(TrangChuActivity.khachHang != null){
+        if(TrangChuActivity.nguoiDung != null){
             idKhachHang = idKhachHang;
         }
         presenterLogicDonHangCuaToi = new PresenterLogicDonHangCuaToi(this);

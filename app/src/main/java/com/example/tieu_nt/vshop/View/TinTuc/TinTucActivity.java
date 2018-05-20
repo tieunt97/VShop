@@ -28,6 +28,7 @@ import com.example.tieu_nt.vshop.Presenter.TinTuc.PresenterLogicTinTuc;
 import com.example.tieu_nt.vshop.Presenter.TinTuc.ViewHienThiDanhSachTinTuc;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
     private PresenterLogicTinTuc presenterLogicTinTuc;
     private List<TinTuc> dsTinTuc;
     private TrangTinTuc trangTinTuc;
+    private TextView tvHoTen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,12 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
             }
         });
 
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
+
         layoutManager = new LinearLayoutManager(this);
 
         adapterMenu = new AdapterMenu(TinTucActivity.this, drawerLayout, 1);
@@ -98,6 +106,7 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
         recyclerViewTinTuc = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 
     @Override

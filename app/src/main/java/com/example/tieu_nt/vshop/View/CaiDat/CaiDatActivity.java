@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +36,7 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private AdapterMenu adapterMenu;
-    private TextView tvCapNhatDiaChi, tvDoiMatKhau;
+    private TextView tvCapNhatDiaChi, tvDoiMatKhau, tvHoTen;
 
 
     @Override
@@ -55,6 +56,7 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
                 trangChu.setTranslationX(slideOffset * drawerView.getWidth());
             }
         };
+
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
@@ -64,6 +66,12 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
 
         adapterMenu = new AdapterMenu(CaiDatActivity.this, drawerLayout, 4);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -81,6 +89,7 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         tvCapNhatDiaChi =  (TextView) findViewById(R.id.tvCapNhatDiaChi);
         tvDoiMatKhau =  (TextView) findViewById(R.id.tvDoiMatKhau);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 
     private void setActions(){

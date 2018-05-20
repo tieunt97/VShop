@@ -1,7 +1,7 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
 import com.example.tieu_nt.vshop.Model.DonHang;
-import com.example.tieu_nt.vshop.Model.KhachHang;
+import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.TinTuc;
@@ -43,12 +43,6 @@ public class ModelKhachHang {
 
         trangDonHang.setDsDonHang(dsDonHang);
         return trangDonHang;
-    }
-
-    public KhachHang layThongTinKhachHang(int idKhachHang){
-        KhachHang khachHang = new KhachHang();
-
-        return khachHang;
     }
 
     public TrangTinTuc layDanhSachTinTuc(String duongDan){

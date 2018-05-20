@@ -108,6 +108,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
             for(SanPham sp: dsSanPham){
                 giaTong += sp.getGiaChuan()*sp.getSoLuong();
                 soSP += sp.getSoLuong();
+                Log.d("SOLUONGTONKHO", sp.getSoLuongTonKho() + "");
             }
             tvSoSanPham.setText("Tạm tính (" + soSP + " sản phẩm)");
             tvGiaTongSP.setText(numberFormat.format(giaTong).toString() + " đ");
