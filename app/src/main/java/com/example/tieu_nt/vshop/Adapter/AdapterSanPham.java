@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TrangChu.ChiTietSanPhamActivity;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -46,20 +48,34 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final SanPham sanPham = dsSanPham.get(position);
-        Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP);
+        Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP, new Callback() {
+            @Override
+            public void onSuccess() {
+                holder.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
         holder.tvTenSanPham.setText(sanPham.getTenSanPham());
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
         holder.tvGiaSP.setText(gia + " đ");
-        holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
-        holder.tvSoDanhGia.setText(sanPham.getSoLuotDanhGia());
+        if(sanPham.getDanhGiaTB() == 0 && sanPham.getSoLuotDanhGia() == 0){
+            holder.rbDanhGia.setRating((float) 5.0);
+        }else{
+            holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
+        }
+        holder.tvSoDanhGia.setText("(" + String.valueOf(sanPham.getSoLuotDanhGia()) + ")");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent iChiTietSanPham = new Intent(context, ChiTietSanPhamActivity.class);
-                iChiTietSanPham.putExtra("sanPham", sanPham);
+                iChiTietSanPham.putExtra("idSanPham", sanPham.getIdSanPham());
                 context.startActivity(iChiTietSanPham);
             }
         });
@@ -75,9 +91,11 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
         ImageView imgHinhSP;
         TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop, tvSoDanhGia;
         RatingBar rbDanhGia;
+        ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardViewSanPham);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar_download);
             imgHinhSP = (ImageView) itemView.findViewById(R.id.imgHinhSP);
             tvTenSanPham = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);

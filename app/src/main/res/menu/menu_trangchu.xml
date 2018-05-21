@@ -6,10 +6,6 @@
         android:title="Tìm kiếm"
         app:showAsAction="always"
         android:icon="@drawable/search"/>
-    <item android:id="@+id/itemTinNhan"
-        android:title="Tin nhắn"
-        app:showAsAction="always"
-        android:icon="@drawable/chat"/>
     <item android:id="@+id/itemThongBao"
         android:title="Tìm kiếm"
         app:showAsAction="always"
@@ -17,6 +13,6 @@
     <item android:id="@+id/itemGioHang"
         android:title="Giỏ hàng"
         app:showAsAction="always"
-        android:icon="@drawable/cart"/>
+        app:actionLayout="@layout/custom_item_giohang"/>
 
 </menu>

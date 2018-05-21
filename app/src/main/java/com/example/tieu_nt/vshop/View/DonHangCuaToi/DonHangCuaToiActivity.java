@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.View.DonHangCuaToi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,16 +9,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.ViewPagerAdapterDonHangCuaToi;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,17 +32,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 4/27/2018.
  */
 
-public class DonHangCuaToiActivity extends AppCompatActivity{
+public class DonHangCuaToiActivity extends MainActivity{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private RecyclerView recyclerView, recyclerViewTinTuc;
     private AdapterMenu adapterMenu;
-    private CircleImageView imgInfo;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapterDonHangCuaToi viewPagerAdapter;
+    private TextView tvHoTen;
 
 
     @Override
@@ -65,6 +72,12 @@ public class DonHangCuaToiActivity extends AppCompatActivity{
             }
         });
 
+        if(TrangChuActivity.nguoiDung != null){
+            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        }else{
+            tvHoTen.setText("Bạn chưa đăng nhập");
+        }
+
         adapterMenu = new AdapterMenu(DonHangCuaToiActivity.this, drawerLayout, 3);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -73,6 +86,8 @@ public class DonHangCuaToiActivity extends AppCompatActivity{
         viewPagerAdapter = new ViewPagerAdapterDonHangCuaToi(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        selectImage();
     }
 
     private void anhXa(){
@@ -84,5 +99,6 @@ public class DonHangCuaToiActivity extends AppCompatActivity{
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewPagerDonHangCuaToi);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
 }

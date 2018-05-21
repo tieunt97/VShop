@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,50 +48,111 @@
                 android:layout_alignBottom="@+id/linearLayout"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="198.000 đ -55%" />
+                android:text="198.000 đ -55%"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <RatingBar
+                    android:id="@+id/rbDanhGia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:transformPivotX="0dp"
+                    android:stepSize="0.2"
+                    android:isIndicator="true"
+                    style="@style/SmallRatingbar"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tvSoDanhGia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(0)"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="2dp"
+                    android:layout_toRightOf="@id/rbDanhGia"
+                    android:layout_centerVertical="true"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="5dp"/>
+            </RelativeLayout>
 
         </LinearLayout>
-        
-        <LinearLayout
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imgHinhSP"
             android:layout_marginTop="110dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-            
-            <ImageButton
-                android:id="@+id/imgXoa"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/delete"/>
+            >
 
-            <ImageButton
-                android:id="@+id/imgTru"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/minus"
-                android:background="@color/colorGreyish"
-                android:layout_marginLeft="25dp"/>
-
-            <TextView
-                android:id="@+id/tvSoSanPham"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:text="1"
-                android:textSize="18sp"
-                android:textColor="@color/colorBlack"
-                android:textStyle="bold"
+            <LinearLayout
+                android:id="@+id/linearChiTiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginHorizontal="5dp"/>
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng mua: "
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
 
-            <ImageButton
-                android:id="@+id/imgCong"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/add"
-                android:background="@color/colorGreyish"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tvSoLuong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorOrange"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearGioHang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageButton
+                    android:id="@+id/imgXoa"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/delete"
+                    android:background="@color/colorGreyish"/>
+
+                <ImageButton
+                    android:id="@+id/imgTru"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/minus"
+                    android:background="@color/colorGreyish"
+                    android:layout_marginLeft="25dp"/>
+
+                <TextView
+                    android:id="@+id/tvSoSanPham"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="1"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/imgCong"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/add"
+                    android:background="@color/colorGreyish"/>
+            </LinearLayout>
+
+        </FrameLayout>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

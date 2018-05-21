@@ -1,6 +1,7 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
 
+import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.SanPham;
 
 import java.util.List;
@@ -12,4 +13,5 @@ import java.util.List;
 public interface ViewChiTietSanPham {
     void hienThiSliderSP(List<String> dsHinhSP);
     void hienThiChiTietSanPham(SanPham sanPham);
+    void hienThiDSDanhGia(List<DanhGia> dsDanhGia);
 }

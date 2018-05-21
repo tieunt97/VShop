@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawerLayout">
+    android:id="@+id/drawerLayout"
+    android:theme="@style/CustomDrawerToggle">
 
     <FrameLayout
         android:id="@+id/trangChu"
@@ -25,7 +26,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
+                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap"
+                    app:title="">
 
                 </android.support.v7.widget.Toolbar>
 
@@ -83,6 +85,7 @@
                             android:text="Lọc"
                             android:textAllCaps="false"
                             android:textColor="@color/colorBlack" />
+
                     </FrameLayout>
 
                     <View
@@ -108,46 +111,51 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:fillViewport="true">
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thương hiệu"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerThuongHieu"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="10dp">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sản phẩm đề xuất"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"/>
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipeRefreshLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Thương hiệu"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerThuongHieu"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_marginTop="10dp">
-
-                    </android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="10dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerSanPham"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp">
+                        android:layout_height="match_parent">
 
                     </android.support.v7.widget.RecyclerView>
 
-                </LinearLayout>
-
-            </android.support.v4.widget.NestedScrollView>
-
+                </android.support.v4.widget.SwipeRefreshLayout>
+            </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
     </FrameLayout>
 
@@ -168,6 +176,5 @@
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
-
 
 </android.support.v4.widget.DrawerLayout>

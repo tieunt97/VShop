@@ -1,13 +1,11 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
-import com.example.tieu_nt.vshop.Model.SanPham;
-
-import java.util.List;
+import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 
 /**
  * Created by tieu_nt on 5/11/2018.
  */
 
 public interface ViewHienThiDanhSachSanPham {
-    void hienThiDanhSachSanPham(List<SanPham> dsSanPham);
+    void hienThiDanhSachSanPham(TrangSanPham trangSanPham);
 }

@@ -5,12 +5,29 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/bgToolbar</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorOrange</item>
         <item name="android:textColorPrimary">@color/colorBlack</item>
     </style>
 
     <declare-styleable name="PasswordEditText">
         <attr name="useStrike" format="boolean"/>
     </declare-styleable>
+
+    <style name="CustomDrawerToggle" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="drawerArrowStyle">@style/ChangeColorDrawerToggle</item>
+    </style>
+
+    <style name="ChangeColorDrawerToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/colorWhite</item>
+    </style>
+
+    <style name="TextColorToolBar" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+    </style>
+    
+    <style name="SmallRatingbar" parent="Base.Widget.AppCompat.RatingBar.Small">
+        <item name="colorControlActivated">@color/colorYellow</item>
+    </style>
 
 </resources>

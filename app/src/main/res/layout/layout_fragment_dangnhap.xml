@@ -61,57 +61,22 @@
         <Button
             android:id="@+id/btnDangNhap"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:text="Đăng nhập"
             android:layout_weight="1"
             android:layout_marginRight="20dp"
+            android:background="@drawable/custom_button_hotro"
+            android:textColor="@color/colorWhite"
             />
 
         <Button
             android:id="@+id/btnBoQuaDangNhap"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Bỏ qua"
-            />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hoặc đăng nhập bằng"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <Button
-            android:id="@+id/btnDangNhapFB"
-            android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/facebookiconsmall"
-            android:text="Facebook"
-            android:textColor="@color/colorFacebook"
-            android:background="@drawable/vienfacebook"
-            android:layout_marginRight="20dp"
-            />
-
-        <Button
-            android:id="@+id/btnDangNhapGG"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/heightBtnDangNhap"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/googleplussmall"
-            android:text="Google"
-            android:textColor="@color/colorGoogle"
-            android:background="@drawable/viengoogle"
+            android:text="Bỏ qua"
+            android:background="@drawable/custom_button_hotro"
+            android:textColor="@color/colorWhite"
             />
 
     </LinearLayout>
