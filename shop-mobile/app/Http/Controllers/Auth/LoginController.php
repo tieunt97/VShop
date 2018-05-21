@@ -19,7 +19,16 @@ class LoginController extends AppBaseController
     		$user = Auth::user();
     		return $this->sendResponse($user, 'login success');
     	}else {
-    		return "login failure";
+    		return $this->sendResponse(false, 'login failure');
     	}
+    }
+
+    public function logout() {
+        Auth::logout();
+        return $this->sendResponse(true,'logout success!');
+    }
+
+    public function showLoginForm() {
+        return $this->sendResponse(false,'you need to login!');
     }
 }

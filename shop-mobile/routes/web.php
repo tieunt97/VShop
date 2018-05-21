@@ -25,6 +25,12 @@ Route::get('products/{id}/allValuations','ProductController@getEvaluationsOfProd
 Route::get('product_type/{productTypeId}/filter/products','HomeController@search');
 Route::get('customers/check_is_liked/product','ProductController@checkCustommerLikedProduct');
 
+
+
+Route::group(['middleware'	=>	'auth'], function() {
+	Route::get('logout','Auth\LoginController@logout');
+});
+
 Route::get('products/search/{keyword}','ProductController@searchProductBy');
 Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
 Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');
