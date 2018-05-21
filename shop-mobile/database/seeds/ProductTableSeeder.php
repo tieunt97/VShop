@@ -31,7 +31,8 @@ class ProductTableSeeder extends Seeder
         		'quantity'			=> 	$faker->numberBetween(15,300),
         		'product_type_id' 		=> 	$faker->randomElement($productTypes),
                 'main_image'            =>  $faker->imageUrl($width = 640, $height = 480),
-                'sub_images'            =>  json_encode($this->getImages(10))
+                'sub_images'            =>  json_encode($this->getImages(10)),
+                'created_at'            =>  $faker->dateTimeBetween($startDate = '-2 years', $endDate = 'now', $timezone = null)
         	];
         }
 

@@ -69,9 +69,46 @@ class ProductService {
 		return $productAttribute;
 	}
 
+	public function sortProducts($request, $productTyleId) {
+		$query = DB::table('products')->where('product_type_id','=',$productTyleId);
+		$sort = $request->sort;
+		switch ($sort) {
+			case 'new':
+				$query = $query->orderBy('created_at','desc');
+				break;
+			case 'top':
+				$query = $query->orderBy('base_price','desc');
+				break;
+			case 'last':
+				$query = $query->orderBy('base_price','asc');
+				break;
+			default:
+				break;
+		}
+		$products = $query->select('id','product_name','main_image','base_price')->paginate(Consts::NUM_PRODUCT_IN_PAGE);
+		return $products;
+	}
+
+	public function getProductsbyStarNumberLarger($request, $productTyleId) {
+		$star_number = $request->star_number;
+		$query = DB::table('products')->where('product_type_id','=',$productTyleId);
+		$products = $query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select('products.id', 'product_name','main_image','base_price', DB::raw('avg(star_number) as star_number, count(product_id) as star_count'))->where('star_number', '>=', $star_number)->orderBy('star_number','desc')->paginate(Consts::NUM_PRODUCT_IN_PAGE);
+		return $products;
+	}
+
 	public function getStarNumberDetailOfProduct($product_id) {
 		$star_detail = DB::table('evaluations')->select(DB::raw('count(star_number) as number, star_number'))->where('product_id','=',$product_id)->groupBy('star_number')->get()->toArray();
 		return $star_detail;
 	}
+
+	public function getTest() {
+		// return "1";
+		// $evaluations = DB::table('evaluations')->groupBy('product_id')->select(DB::raw('avg(star_number) as star_number, count(product_id) as star_count'), 'product_id')->get();
+		$query = DB::table('products')->where('product_type_id','=', 2);
+		$query = $query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select( DB::raw('avg(star_number) as star_number, count(product_id) as star_count'), 'product_id')->select('products.*')->get();
+		return $query;
+	}
+
+
 
 }

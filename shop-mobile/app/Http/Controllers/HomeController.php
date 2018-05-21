@@ -43,7 +43,24 @@ class HomeController extends AppBaseController
         $products = $this->productService->getAllProductsByProvider($providerId);
         return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
     }
-    
+
+    public function search(Request $request, $productTypeId) {
+        $sort = $request->sort;
+        if ($sort != "evaluation") {
+            $products = $this->productService->sortProducts($request, $productTypeId);
+            return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
+        }else {
+            return $this->filterProductByStarNumber($request, $productTypeId);
+        }
+          
+    }
+
+    public function filterProductByStarNumber(Request $request, $productTypeId) {
+        $request->star_number = 1;
+        $products = $this->productService->getProductsbyStarNumberLarger($request, $productTypeId);
+        return $this->sendResponse($products, '200');
+    }
+
     public function additionStarInfoToProducts($products) {
         foreach ($products as $product) {
             $star_info = $this->productService->getStarNumberOfProduct($product->id);

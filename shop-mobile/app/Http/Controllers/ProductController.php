@@ -39,7 +39,8 @@ class ProductController extends AppBaseController
     }
 
     public function test() {
-        
+        $valuations =  $this->productService->getTest();
+        return $this->sendResponse($valuations, '200');
     }
 
     
