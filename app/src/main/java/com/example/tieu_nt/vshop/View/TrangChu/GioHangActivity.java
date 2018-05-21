@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,7 +45,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     private AdapterSanPhamGioHang adapterSanPhamGioHang;
     private RecyclerView.LayoutManager layoutManager;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
-    private int phiGiaoHang = 65000;
+    private int phiGiaoHang = 65000, giaTong = 0, soSP = 0;
 
 
     @Override
@@ -63,6 +64,17 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         recyclerView.setLayoutManager(layoutManager);
         presenterLogicGioHang = new PresenterLogicGioHang(this, this);
         presenterLogicGioHang.layDSSanPhamGioHang();
+
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TrangChuActivity.nguoiDung == null){
+                    Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập thanh toán", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(GioHangActivity.this, "Thanh toán", Toast.LENGTH_SHORT);
+                }
+            }
+        });
     }
 
     @Override
@@ -95,7 +107,6 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
             tvThongBao.setVisibility(View.VISIBLE);
             relaGioHang.setVisibility(View.GONE);
         }else{
-            toolbar.setTitle("Giỏ hàng của tôi(" + dsSanPham.size() + ")");
             tvThongBao.setVisibility(View.GONE);
             relaGioHang.setVisibility(View.VISIBLE);
             adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, this.dsSanPham, presenterLogicGioHang,
@@ -103,37 +114,61 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
             recyclerView.setAdapter(adapterSanPhamGioHang);
             adapterSanPhamGioHang.notifyDataSetChanged();
 
-            int giaTong = 0;
-            int soSP = 0;
             for(SanPham sp: dsSanPham){
                 giaTong += sp.getGiaChuan()*sp.getSoLuong();
                 soSP += sp.getSoLuong();
                 Log.d("SOLUONGTONKHO", sp.getSoLuongTonKho() + "");
             }
-            tvSoSanPham.setText("Tạm tính (" + soSP + " sản phẩm)");
-            tvGiaTongSP.setText(numberFormat.format(giaTong).toString() + " đ");
-            tvPhiGiaoHang.setText(numberFormat.format(phiGiaoHang).toString() + " đ");
-            tvTongTienTT.setText(numberFormat.format(giaTong + phiGiaoHang).toString()  + " đ");
+            setContent();
+        }
+    }
+
+    private void setContent(){
+        toolbar.setTitle("Giỏ hàng của tôi(" + soSP + ")");
+        tvSoSanPham.setText("Tạm tính (" + soSP + " sản phẩm)");
+        tvGiaTongSP.setText(numberFormat.format(giaTong).toString() + " đ");
+        tvPhiGiaoHang.setText(numberFormat.format(phiGiaoHang).toString() + " đ");
+        tvTongTienTT.setText(numberFormat.format(giaTong + phiGiaoHang).toString()  + " đ");
+    }
+
+    @Override
+    public void xoaSanPhamGioHang(SanPham sanPham) {
+        if(dsSanPham.size() == 0){
+            toolbar.setTitle("Giỏ hàng của tôi");
+            tvThongBao.setVisibility(View.VISIBLE);
+            relaGioHang.setVisibility(View.GONE);
+        }else{
+            int tongXoa = sanPham.getSoLuong();
+            soSP -= tongXoa;
+            giaTong -= tongXoa*sanPham.getGiaChuan();
+            setContent();
         }
     }
 
     @Override
-    public void xoaSanPhamGioHang(int position) {
-        Log.d("SOLUONGSP", dsSanPham.size() + "");
-    }
-
-    @Override
     public void capNhatSoLuongSanPhamGioHang(int positon, boolean them) {
-        int soLuong = dsSanPham.get(positon).getSoLuong();
+        SanPham sanPham = dsSanPham.get(positon);
         if(them) {
-            Log.d("CAPNHATSOLUONG", "THEM");
+            soSP += 1;
+            giaTong += sanPham.getGiaChuan();
+            setContent();
         }else{
-            Log.d("CAPNHATSOLUONG", "XOA");
+            soSP -= 1;
+            giaTong -= sanPham.getGiaChuan();
+            setContent();
         }
     }
 
     @Override
     public void capNhatThatBai(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("soSP", soSP);
+        setResult(RESULT_OK, data);
+        super.finish();
     }
 }

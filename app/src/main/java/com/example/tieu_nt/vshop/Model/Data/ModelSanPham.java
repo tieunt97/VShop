@@ -8,6 +8,7 @@ import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDanhGia;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -126,7 +127,7 @@ public class ModelSanPham {
 
     public SanPham layChiTietSanPham(int idSanPham){
         SanPham sanPham = new SanPham();
-        DownloadJSON downloadJSON = new DownloadJSON("http://192.168.1.110:8080/VShop/shop-mobile/public/products/" + idSanPham);
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham);
         downloadJSON.execute();
         try {
             String dataJSON = downloadJSON.get();

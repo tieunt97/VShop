@@ -1,6 +1,8 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,6 +85,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
             SAPXEP_DANHGIA = "soDanhGia", SAPXEP_GIAM = "DESC", SAPXEP_TANG = "ASC";
 
     private String sapXep = "", giaTri = "";
+    public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
     public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
@@ -164,10 +168,14 @@ ViewHienThiDanhSachSanPham, ILoadMore{
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);
         tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
 
-        int soSP = presenterLogicGioHang.layDSSanPhamGioHang().size();
-        if(soSP == 0) {
+        List<SanPham> dsSanPhamGioHang = presenterLogicGioHang.layDSSanPhamGioHang();
+        if(dsSanPhamGioHang.size() == 0) {
             tvSoSPGioHang.setVisibility(View.GONE);
         }else{
+            int soSP = 0;
+            for(SanPham sp: dsSanPhamGioHang){
+                soSP += sp.getSoLuong();
+            }
             tvSoSPGioHang.setVisibility(View.VISIBLE);
             tvSoSPGioHang.setText(String.valueOf(soSP));
         }
@@ -176,7 +184,7 @@ ViewHienThiDanhSachSanPham, ILoadMore{
             @Override
             public void onClick(View v) {
                 Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
-                startActivity(iGioHang);
+                startActivityForResult(iGioHang, REQUEST_GIOHANG);
             }
         });
 
@@ -403,5 +411,34 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         grid = !b;
         presenterLogicSanPham.layDanhSachSanPham(duongDan);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            if(requestCode == IMG_GALLERY_REQUEST){
+                Uri uri = data.getData();
+                imgInfo.setImageURI(uri);
+            }else if(requestCode == REQUEST_CHITIETSANPHAM){
+                int soSP = data.getIntExtra("soSP", 0);
+                if(soSP == 1){
+                    tvSoSPGioHang.setVisibility(View.VISIBLE);
+                }
+                tvSoSPGioHang.setText(String.valueOf(soSP));
+            }else if(requestCode == REQUEST_GIOHANG){
+                int soSP = data.getIntExtra("soSP", 0);
+                if(soSP == 0){
+                    tvSoSPGioHang.setVisibility(View.GONE);
+                }
+                tvSoSPGioHang.setText(String.valueOf(soSP));
+            }else if(requestCode == REQUEST_THUONGHIEU){
+                int soSP = data.getIntExtra("soSP", 0);
+                if(soSP == 0){
+                    tvSoSPGioHang.setVisibility(View.GONE);
+                }
+                tvSoSPGioHang.setText(String.valueOf(soSP));
+            }
+        }
     }
 }

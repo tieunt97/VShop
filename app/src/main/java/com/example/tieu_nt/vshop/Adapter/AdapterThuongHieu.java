@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TrangChu.HienThiSanPhamTheoThuongHieuActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +61,7 @@ public class AdapterThuongHieu extends RecyclerView.Adapter<AdapterThuongHieu.Vi
             public void onClick(View view) {
                 Intent iHienThiSPTheoThuongHieu = new Intent(context, HienThiSanPhamTheoThuongHieuActivity.class);
                 iHienThiSPTheoThuongHieu.putExtra("thuongHieu", thuongHieu);
-                context.startActivity(iHienThiSPTheoThuongHieu);
+                ((Activity) context).startActivityForResult(iHienThiSPTheoThuongHieu, TrangChuActivity.REQUEST_THUONGHIEU);
             }
         });
     }

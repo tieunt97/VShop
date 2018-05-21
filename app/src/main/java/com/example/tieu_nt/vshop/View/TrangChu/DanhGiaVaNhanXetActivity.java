@@ -51,6 +51,7 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
     private AdapterDanhGia adapterDanhGia;
     private PresenterLogicDanhGiaSanPham presenterLogicDanhGiaSanPham;
     private String duongDan;
+    private BottomSheetDanhGiaSanPham bottomSheetDanhGiaSanPham;
 
 
     @Override
@@ -73,6 +74,7 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
 
         setAction();
 
+        bottomSheetDanhGiaSanPham = new BottomSheetDanhGiaSanPham();
         presenterLogicDanhGiaSanPham = new PresenterLogicDanhGiaSanPham(this);
         presenterLogicDanhGiaSanPham.layDanhSachDanhGia(duongDan);
 
@@ -158,7 +160,11 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvDanhGiaSanPham:
-                Toast.makeText(this, "Đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
+                if(TrangChuActivity.nguoiDung == null){
+                    Toast.makeText(this, "Bạn cần đăng nhập để có thể đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
+                }else{
+                    bottomSheetDanhGiaSanPham.show(getSupportFragmentManager(), "DanhGiaSP");
+                }
                 break;
         }
     }

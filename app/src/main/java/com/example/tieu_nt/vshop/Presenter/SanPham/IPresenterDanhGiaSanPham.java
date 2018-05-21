@@ -12,4 +12,5 @@ import java.util.List;
 public interface IPresenterDanhGiaSanPham {
     void layDanhSachDanhGia(String duongDan);
     TrangDanhGia layDSDanhGiaLoadMore(String duongDan);
+    boolean danhGiaSanPham(DanhGia danhGia);
 }

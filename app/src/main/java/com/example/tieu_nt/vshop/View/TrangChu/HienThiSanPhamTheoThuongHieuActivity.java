@@ -1,7 +1,9 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -26,6 +28,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Model.ThuongHieu;
+import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 
@@ -46,6 +49,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private TextView tvSoSPGioHang;
     private boolean grid = true;
     private PresenterLogicSanPham presenterLogicSanPham;
+    private PresenterLogicGioHang presenterLogicGioHang;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -54,6 +58,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private TrangSanPham trangSanPham;
     private String duongDan = "";
     private ThuongHieu thuongHieu;
+    private int soSP;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
         thuongHieu = (ThuongHieu) getIntent().getSerializableExtra("thuongHieu");
         if(thuongHieu != null){
-            duongDan = "http://192.168.1.110:8080/VShop/shop-mobile/public/product_provider/" + thuongHieu.getIdThuongHieu() + "/products";
+            duongDan = TrangChuActivity.SERVER + "/product_provider/" + thuongHieu.getIdThuongHieu() + "/products";
         }
 
         setSupportActionBar(toolbar);
@@ -75,6 +80,8 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
         gridLayoutManager = new GridLayoutManager(this, 2);
         linearLayoutManager = new LinearLayoutManager(this);
+
+        presenterLogicGioHang = new PresenterLogicGioHang(this);
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
         presenterLogicSanPham.layDanhSachSanPham(duongDan);
@@ -97,11 +104,22 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);
         tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
 
+        List<SanPham> dsSanPhamGioHang = presenterLogicGioHang.layDSSanPhamGioHang();
+        if(dsSanPhamGioHang.size() == 0) {
+            tvSoSPGioHang.setVisibility(View.GONE);
+        }else{
+            for(SanPham sp: dsSanPhamGioHang){
+                soSP += sp.getSoLuong();
+            }
+            tvSoSPGioHang.setVisibility(View.VISIBLE);
+            tvSoSPGioHang.setText(String.valueOf(soSP));
+        }
+
         itemGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent iGioHang = new Intent(HienThiSanPhamTheoThuongHieuActivity.this, GioHangActivity.class);
-                startActivity(iGioHang);
+                startActivityForResult(iGioHang, TrangChuActivity.REQUEST_GIOHANG);
             }
         });
 
@@ -180,5 +198,32 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
                 }
             });
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK){
+            if(requestCode == TrangChuActivity.REQUEST_CHITIETSANPHAM){
+                soSP = data.getIntExtra("soSP", 0);
+                if(soSP == 1){
+                    tvSoSPGioHang.setVisibility(View.VISIBLE);
+                }
+                tvSoSPGioHang.setText(String.valueOf(soSP));
+            }else if(requestCode == TrangChuActivity.REQUEST_GIOHANG){
+                soSP = data.getIntExtra("soSP", 0);
+                if(soSP == 0){
+                    tvSoSPGioHang.setVisibility(View.GONE);
+                }
+                tvSoSPGioHang.setText(String.valueOf(soSP));
+            }
+        }
+    }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("soSP", soSP);
+        setResult(RESULT_OK, data);
+        super.finish();
     }
 }

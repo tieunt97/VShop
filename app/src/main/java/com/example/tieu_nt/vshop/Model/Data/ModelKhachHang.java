@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
@@ -27,6 +28,15 @@ public class ModelKhachHang {
     }
 
     public boolean huyDonHang(int idDonHang){
+
+        return false;
+    }
+
+    public boolean xacNhanMuaHang(int idKhachHang, int idSanPham){
+        return false;
+    }
+
+    public boolean danhGiaSanPham(DanhGia danhGia){
 
         return false;
     }

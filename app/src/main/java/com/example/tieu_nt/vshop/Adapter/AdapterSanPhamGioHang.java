@@ -95,7 +95,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                             if(presenterLogicGioHang.xoaSanPhamGioHang(sanPham.getIdSanPham())){
                                 dsSanPham.remove(sanPham);
                                 notifyDataSetChanged();
-                                xoaSanPhamGioHang.xoaSanPhamGioHang(position);
+                                xoaSanPhamGioHang.xoaSanPhamGioHang(sanPham);
                             }else{
                                 Log.d("XoaSPGioHang", "thất bại");
                             }
@@ -106,7 +106,6 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
             holder.imgCong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("CAPNHAT", "CONG");
                     int soLuong = sanPham.getSoLuong();
                     int soLuongTonKho = sanPham.getSoLuongTonKho();
                     if(soLuong < 5){
@@ -115,7 +114,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                             soLuongTonKho -= 1;
                             if(presenterLogicGioHang.capNhatSoLuongSPGioHang(sanPham.getIdSanPham(), soLuong, soLuongTonKho)){
                                 sanPham.setSoLuong(soLuong);
-                                sanPham.setSoLuong(soLuongTonKho);
+                                sanPham.setSoLuongTonKho(soLuongTonKho);
                                 notifyDataSetChanged();
                                 capNhatSoLuongSanPhamGioHang.capNhatSoLuongSanPhamGioHang(position, true);
                             }
@@ -130,7 +129,6 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
             holder.imgTru.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("CAPNHAT", "TRU");
                     int soLuong = sanPham.getSoLuong();
                     int soLuongTonKho = sanPham.getSoLuongTonKho();
                     if(soLuong > 1){
@@ -138,7 +136,7 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                         soLuongTonKho += 1;
                         if(presenterLogicGioHang.capNhatSoLuongSPGioHang(sanPham.getIdSanPham(), soLuong, soLuongTonKho)){
                             sanPham.setSoLuong(soLuong);
-                            sanPham.setSoLuong(soLuongTonKho);
+                            sanPham.setSoLuongTonKho(soLuongTonKho);
                             notifyDataSetChanged();
                             capNhatSoLuongSanPhamGioHang.capNhatSoLuongSanPhamGioHang(position, false);
                         }

@@ -67,6 +67,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private SanPham sanPham;
     private NguoiDung khachHang;
     private boolean xemThem = true;
+    private int soSP = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,10 +97,13 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         View itemGioHang = MenuItemCompat.getActionView(iGioHang);
         tvSoSPGioHang = (TextView) itemGioHang.findViewById(R.id.tvSoSPGioHang);
 
-        int soSP = presenterLogicGioHang.layDSSanPhamGioHang().size();
-        if(soSP == 0) {
+        List<SanPham> dsSanPhamGioHang = presenterLogicGioHang.layDSSanPhamGioHang();
+        if(dsSanPhamGioHang.size() == 0) {
             tvSoSPGioHang.setVisibility(View.GONE);
         }else{
+            for(SanPham sp: dsSanPhamGioHang){
+                soSP += sp.getSoLuong();
+            }
             tvSoSPGioHang.setVisibility(View.VISIBLE);
             tvSoSPGioHang.setText(String.valueOf(soSP));
         }
@@ -108,7 +112,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             @Override
             public void onClick(View v) {
                 Intent iGioHang = new Intent(ChiTietSanPhamActivity.this, GioHangActivity.class);
-                startActivity(iGioHang);
+                startActivityForResult(iGioHang, TrangChuActivity.REQUEST_GIOHANG);
             }
         });
 
@@ -336,10 +340,16 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             sanPham.setHinhSPGioHang(outputStream.toByteArray());
             sanPham.setSoLuong(1);
         }
-        if(presenterLogicGioHang.themSanPhamGioHang(sanPham))
+        if(presenterLogicGioHang.themSanPhamGioHang(sanPham)){
+            if(soSP == 0){
+                tvSoSPGioHang.setVisibility(View.VISIBLE);
+            }
+            soSP += 1;
+            tvSoSPGioHang.setText(String.valueOf(soSP));
             Toast.makeText(this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-        else
+        }else{
             Toast.makeText(this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void changeImgYeuThich(){
@@ -348,5 +358,24 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         }else {
             imgThich.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.like_false));
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == TrangChuActivity.REQUEST_GIOHANG){
+            int soSP = data.getIntExtra("soSP", 0);
+            if(soSP == 0){
+                tvSoSPGioHang.setVisibility(View.GONE);
+            }
+            tvSoSPGioHang.setText(String.valueOf(soSP));
+        }
+    }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("soSP", soSP);
+        setResult(RESULT_OK, data);
+        super.finish();
     }
 }
