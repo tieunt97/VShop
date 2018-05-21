@@ -5,6 +5,7 @@ use App\Http\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Consts;
 use App\Product;
+use App\Provider;
 
 class ProductController extends AppBaseController
 {
@@ -18,14 +19,24 @@ class ProductController extends AppBaseController
     public function getProductById($id) {
     	$product = Product::where('id', $id)->first();
         $star_info = $this->productService->getStarNumberOfProduct($id);
+        $provider = Provider::where('id', '=', $product->provider)->pluck('name')->first();
+        
         $product->star_info = [
             'star_number_average'   => $star_info['star_number'],
             'star_count_average'    => $star_info['star_count'],
             'star_detail'           => $this->productService->getStarNumberDetailOfProduct($id)
         ];
+        $product->provider = $provider;
         $product->evaluationInfo = $this->productService->getEvaluations($id, Consts::NUM_FIST_EVALUATION_SHOWED);
         $product->specificationsInfo = $this->productService->getProductSpecificationsOfProduct($id);
     	return $this->sendResponse($product, '200');
+    }
+
+    public function checkCustommerLikedProduct(Request $request) {
+        $customer_id = $request->customer_id;
+        $product_id = $request->product_id;
+        $isLiked = $this->productService->checkCustommerLikedProduct($customer_id, $product_id);
+        return $this->sendResponse($isLiked, '200');
     }
 
     public function searchProductBy($keyword) {

@@ -43,6 +43,20 @@ class ProductService {
 		return $starInfos;
 	}
 
+	public function checkCustommerLikedProduct($customer_id, $product_id) {
+		$customerIds = DB::table('like_product_lists')->select('customer_id')->where('product_id', '=', $product_id)->pluck('customer_id')->toArray();
+		if (count($customerIds) == 0) {
+			return false;
+		}else {
+			foreach ($customerIds as $customerId) {
+				if ($customerId == $customer_id) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
 	public function getEvaluations($product_id, $limit) {
 		if ($limit == Consts::GET_ALL) {
 			$evaluations = DB::table('evaluations')->select('customer_id','title','content','star_number','created_at')->where('product_id','=',$product_id)->paginate(Consts::NUM_EVALUATION_IN_TIME);
