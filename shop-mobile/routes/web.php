@@ -38,7 +38,7 @@ Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySal
 Route::get('likes/customer','LikeProductController@getLikeOfCustomer');
 Route::get('likes/customer/is_liked','LikeProductController@checkIsLikeOfCustomer');
 Route::get('likes/customer/like','LikeProductController@like');
-
+Route::get('likes/customer/dislike','LikeProductController@disLike');
 // Route::get('test','HomeController@test');
 
 Auth::routes();
