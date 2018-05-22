@@ -29,6 +29,8 @@ Route::group(['middleware'	=>	'auth'], function() {
 	Route::get('logout','Auth\LoginController@logout');
 });
 
+Route::get('posters/getPosters','PosterController@getNewPostersByLimit');
+
 Route::get('products/search/{keyword}','ProductController@searchProductBy');
 Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
 Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');

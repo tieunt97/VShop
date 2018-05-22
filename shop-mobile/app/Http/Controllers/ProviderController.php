@@ -10,7 +10,9 @@ class ProviderController extends AppBaseController
     protected $providerService;
 
     public function __construct(ProviderService $providerService) {
+
     	$this->providerService = $providerService;
+    	
     }
 
     public function getAllProviders() {
