@@ -7,13 +7,8 @@ use Illuminate\Support\Facades\Log;
 
 class PosterService {
 
-	public function getNewPostersByLimit($limit) {
-		if ($limit == 'all') {
-			$posters = Poster::select('*')->orderBy('created_at')->paginate(10);
-		}else {
-			$posters = Poster::select('*')->orderBy('created_at')->limit($limit)->paginate(10);
-		}
-		
+	public function getNewPostersByLimit() {
+		$posters = Poster::select('*')->orderBy('created_at')->paginate(10);
 		return $posters;
 	}
 

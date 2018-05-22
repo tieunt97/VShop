@@ -16,12 +16,8 @@ class PosterController extends AppBaseController
     	$this->posterService = $posterService;
     }
 
-    public function getNewPostersByLimit(Request $request) {
-    	$params = $request->all();
-    	if(isset($params['limit']) && !is_null($params['limit'])) {
-    		$posters = $this->posterService->getNewPostersByLimit($params['limit']);
-    		return $posters;
-    	}
-    	return [];
+    public function getNewPostersByLimit() {
+		$posters = $this->posterService->getNewPostersByLimit();
+		return $posters;
     }
 }
