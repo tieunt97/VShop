@@ -52,6 +52,7 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     private TrangSanPham trangSanPham;
     private List<SanPham> dsSanPham;
     private TextView tvHoTen;
+    private LoadMoreScroll loadMoreScroll;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,8 +117,10 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         recyclerSanPhamYeuThich.setLayoutManager(layoutManager);
         adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
         recyclerSanPhamYeuThich.setAdapter(adapterSanPham);
-        recyclerSanPhamYeuThich.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
-                this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
+        loadMoreScroll = new LoadMoreScroll(layoutManager, this);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
+        recyclerSanPhamYeuThich.addOnScrollListener(loadMoreScroll);
         recyclerSanPhamYeuThich.post(new Runnable() {
             @Override
             public void run() {
@@ -129,6 +132,8 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     @Override
     public void loadMore(String duongDan) {
         trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
         if(trangSanPham.getDsSanPham().size() > 0){
             this.dsSanPham.addAll(trangSanPham.getDsSanPham());
             recyclerSanPhamYeuThich.post(new Runnable() {

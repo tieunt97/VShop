@@ -37,6 +37,7 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
     private int idKhachHang = 0;
     private String duongDan = "";
     private PresenterLogicDonHangCuaToi presenterLogicDonHangCuaToi;
+    private LoadMoreScroll loadMoreScroll;
 
     @Nullable
     @Override
@@ -63,8 +64,10 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
         tvThongBao.setVisibility(View.GONE);
         adapterDonHangCuaToi = new AdapterDonHangCuaToi(getActivity(), dsDonHang);
         recyclerDonHang.setAdapter(adapterDonHangCuaToi);
-        recyclerDonHang.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
-                this.trangDonHang.isTrangCuoi(), this.trangDonHang.getNextPage()));
+        loadMoreScroll = new LoadMoreScroll(layoutManager, this);
+        loadMoreScroll.setTrangCuoi(trangDonHang.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangDonHang.getNextPage());
+        recyclerDonHang.addOnScrollListener(loadMoreScroll);
         recyclerDonHang.post(new Runnable() {
             @Override
             public void run() {
@@ -76,6 +79,8 @@ public class FragmentDonHangHoanTra extends Fragment implements ViewHienThiDanhS
     @Override
     public void loadMore(String duongDan) {
         trangDonHang = presenterLogicDonHangCuaToi.layDanhSachDonHangLoadMore(duongDan);
+        loadMoreScroll.setTrangCuoi(trangDonHang.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangDonHang.getNextPage());
         if(trangDonHang.getDsDonHang().size() > 0){
             this.dsDonHang.addAll(trangDonHang.getDsDonHang());
             recyclerDonHang.post(new Runnable() {

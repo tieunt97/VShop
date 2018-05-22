@@ -17,11 +17,9 @@ public class LoadMoreScroll extends RecyclerView.OnScrollListener{
     private boolean isTrangCuoi;
     private String duongDan;
 
-    public LoadMoreScroll(RecyclerView.LayoutManager layoutManager, ILoadMore iLoadMore, boolean isTrangCuoi, String duongDan){
+    public LoadMoreScroll(RecyclerView.LayoutManager layoutManager, ILoadMore iLoadMore){
         this.layoutManager = layoutManager;
         this.iLoadMore = iLoadMore;
-        this.isTrangCuoi = isTrangCuoi;
-        this.duongDan = duongDan;
     }
 
     @Override
@@ -49,5 +47,13 @@ public class LoadMoreScroll extends RecyclerView.OnScrollListener{
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
+    }
+
+    public void setTrangCuoi(boolean trangCuoi) {
+        isTrangCuoi = trangCuoi;
+    }
+
+    public void setDuongDan(String duongDan) {
+        this.duongDan = duongDan;
     }
 }

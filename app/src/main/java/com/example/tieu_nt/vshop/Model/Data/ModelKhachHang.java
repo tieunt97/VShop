@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
@@ -8,8 +9,15 @@ import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.TinTuc;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by tieu_nt on 5/11/2018.
@@ -17,6 +25,7 @@ import java.util.List;
 
 public class ModelKhachHang {
     private static ModelKhachHang modelKhachHang;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     private ModelKhachHang(){}
 
@@ -58,6 +67,40 @@ public class ModelKhachHang {
     public TrangTinTuc layDanhSachTinTuc(String duongDan){
         TrangTinTuc trangTinTuc = new TrangTinTuc();
         List<TinTuc> dsTinTuc = new ArrayList<>();
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan);
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            JSONArray arrayTinTuc = object.getJSONArray("data");
+            for(int i = 0; i < arrayTinTuc.length(); i++){
+                JSONObject obTinTuc = arrayTinTuc.getJSONObject(i);
+                TinTuc tinTuc = new TinTuc();
+                tinTuc.setIdTinTuc(obTinTuc.getInt("id"));
+                tinTuc.setTieuDe(obTinTuc.getString("title"));
+                tinTuc.setNoiDung(obTinTuc.getString("content"));
+                tinTuc.setThoiGian(simpleDateFormat.parse(obTinTuc.getString("created_at")));
+
+                dsTinTuc.add(tinTuc);
+            }
+
+            int current_page = object.getInt("current_page");
+            int last_page = object.getInt("last_page");
+            if(current_page < last_page){
+                trangTinTuc.setTrangCuoi(false);
+            }else{
+                trangTinTuc.setTrangCuoi(true);
+            }
+            trangTinTuc.setNextPage(object.getString("next_page_url"));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         trangTinTuc.setDsTinTuc(dsTinTuc);
         return trangTinTuc;

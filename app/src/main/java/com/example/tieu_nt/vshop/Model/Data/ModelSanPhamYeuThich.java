@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
 
@@ -12,22 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tieu_nt on 5/18/2018.
+ * Created by tieu_nt on 5/22/2018.
  */
 
-public class ModelGioHang {
-    private static ModelGioHang modelGioHang;
+public class ModelSanPhamYeuThich {
+    private static ModelSanPhamYeuThich modelSanPhamYeuThich;
     private SQLiteDatabase database;
 
-    private ModelGioHang(){
+    private ModelSanPhamYeuThich(){
 
     }
 
-    public static ModelGioHang getInstance(){
-        if(modelGioHang == null)
-            modelGioHang = new ModelGioHang();
+    public static ModelSanPhamYeuThich getInstance(){
+        if(modelSanPhamYeuThich == null)
+            modelSanPhamYeuThich = new ModelSanPhamYeuThich();
 
-        return modelGioHang;
+        return modelSanPhamYeuThich;
     }
 
     public void ketNoiSQLite(Context context){
@@ -35,34 +34,8 @@ public class ModelGioHang {
         database = databaseSanPham.getWritableDatabase();
     }
 
-    public boolean themDiaChi(String diaChi){
-        boolean b = false;
-        String sql = "SELECT * FROM " + DatabaseSanPham.TB_DIACHI;
-        Cursor cursor =  database.rawQuery(sql, null);
-        int count = cursor.getCount();
-        ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.TB_DIACHI_MADC, 1);
-        values.put(DatabaseSanPham.TB_DIACHI_TEN, diaChi);
-
-        if(count == 0){
-            long id = database.insert(DatabaseSanPham.TB_DIACHI, null, values);
-            if (id > 0){
-                b = true;
-            }
-        }else if(count == 1){
-            int id = database.update(DatabaseSanPham.TB_DIACHI, values, DatabaseSanPham.TB_DIACHI_MADC + " = " + 1, null);
-            if (id > 0){
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-        return b;
-    }
-
-    public boolean xoaSanPhamTrongGioHang(int idSanPham){
-        int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, DatabaseSanPham.MASP + " = " + idSanPham, null);
+    public boolean xoaSanPhamYeuThich(int idSanPham){
+        int kiemTra = database.delete(DatabaseSanPham.TB_YEUTHICH, DatabaseSanPham.MASP + " = " + idSanPham, null);
         if (kiemTra > 0){
             return true;
         }else{
@@ -70,20 +43,7 @@ public class ModelGioHang {
         }
     }
 
-    public boolean capNhatSoLuongSanPhamGioHang(int idSanPham, int soLuong, int soLuongTonKho){
-        ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.SOLUONG, soLuong);
-        values.put(DatabaseSanPham.SOLUONGTONKHO, soLuongTonKho);
-
-        int id = database.update(DatabaseSanPham.TB_GIOHANG, values, DatabaseSanPham.MASP + " = " + idSanPham, null);
-        if (id > 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean themSanPhamGioHang(SanPham sanPham){
+    public boolean themSanPhamYeuThich(SanPham sanPham){
         ContentValues values = new ContentValues();
         values.put(DatabaseSanPham.MASP, sanPham.getIdSanPham());
         values.put(DatabaseSanPham.TENSP, sanPham.getTenSanPham());
@@ -93,7 +53,7 @@ public class ModelGioHang {
         values.put(DatabaseSanPham.DANHGIATB, sanPham.getDanhGiaTB());
         values.put(DatabaseSanPham.SOLUONGTONKHO, sanPham.getSoLuongTonKho());
 
-        long id = database.insert(DatabaseSanPham.TB_GIOHANG, null, values);
+        long id = database.insert(DatabaseSanPham.TB_YEUTHICH, null, values);
         if (id > 0){
             return true;
         }else{
@@ -102,10 +62,10 @@ public class ModelGioHang {
 
     }
 
-    public List<SanPham> layDSSanPhamGioHang(){
+    public List<SanPham> layDSSanPhamYeuThich(){
         List<SanPham> dsSanPham = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DatabaseSanPham.TB_GIOHANG;
+        String sql = "SELECT * FROM " + DatabaseSanPham.TB_YEUTHICH;
         Cursor cursor =  database.rawQuery(sql, null);
         while (cursor.moveToNext()){
             SanPham sanPham = new SanPham();

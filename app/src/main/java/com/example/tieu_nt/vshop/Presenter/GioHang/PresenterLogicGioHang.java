@@ -20,13 +20,13 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
     public PresenterLogicGioHang(Context context, ViewHienThiSanPhamGioHang viewHienThiSanPhamGioHang) {
         this.context = context;
         this.viewHienThiSanPhamGioHang = viewHienThiSanPhamGioHang;
-        this.modelGioHang = new ModelGioHang();
+        this.modelGioHang = ModelGioHang.getInstance();
         this.modelGioHang.ketNoiSQLite(context);
     }
 
     public PresenterLogicGioHang(Context context) {
         this.context = context;
-        this.modelGioHang = new ModelGioHang();
+        this.modelGioHang = ModelGioHang.getInstance();
         this.modelGioHang.ketNoiSQLite(context);
     }
 

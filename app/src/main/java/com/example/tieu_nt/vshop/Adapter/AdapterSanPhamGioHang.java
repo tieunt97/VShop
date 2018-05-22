@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,6 +73,8 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
                 context.startActivity(intent);
             }
         });
+        holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
+        holder.tvSoDanhGia.setText("(" + sanPham.getSoLuotDanhGia() + ")");
         if(this.presenterLogicGioHang != null){
             byte[] hinh = sanPham.getHinhSPGioHang();
             holder.imgHinhSP.setImageBitmap(BitmapFactory.decodeByteArray(hinh, 0, hinh.length));
@@ -169,18 +172,21 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
     public class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout relaSanPham;
         ImageView imgHinhSP;
-        TextView tvTenSP, tvGiaSP, tvGiamGia, tvSoSP, tvSoLuong;
+        RatingBar rbDanhGia;
+        TextView tvTenSP, tvGiaSP, tvGiamGia, tvSoSP, tvSoLuong, tvSoDanhGia;
         ImageButton imgXoa, imgCong, imgTru;
         LinearLayout linearGioHang, linearChiTiet;
         public ViewHolder(View itemView) {
             super(itemView);
             relaSanPham = (RelativeLayout) itemView.findViewById(R.id.relaSanPham);
             imgHinhSP = (ImageView) itemView.findViewById(R.id.imgHinhSP);
+            rbDanhGia = (RatingBar) itemView.findViewById(R.id.rbDanhGia);
             tvTenSP = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);
             tvGiamGia = (TextView) itemView.findViewById(R.id.tvGiamGia);
             tvSoSP = (TextView) itemView.findViewById(R.id.tvSoSanPham);
             tvSoLuong = (TextView) itemView.findViewById(R.id.tvSoLuong);
+            tvSoDanhGia = (TextView) itemView.findViewById(R.id.tvSoDanhGia);
             imgXoa = (ImageButton) itemView.findViewById(R.id.imgXoa);
             imgCong = (ImageButton) itemView.findViewById(R.id.imgCong);
             imgTru = (ImageButton) itemView.findViewById(R.id.imgTru);

@@ -1,6 +1,7 @@
 package com.example.tieu_nt.vshop.Model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by tieu_nt on 4/11/2018.
@@ -9,8 +10,7 @@ import java.io.Serializable;
 public class TinTuc implements Serializable{
     private int idTinTuc;
     private String tieuDe, noiDung;
-    String[] ngayDang, gioDang;
-
+    private Date thoiGian;
 
     public int getIdTinTuc() {
         return idTinTuc;
@@ -36,19 +36,11 @@ public class TinTuc implements Serializable{
         this.noiDung = noiDung;
     }
 
-    public String[] getNgayDang() {
-        return ngayDang;
+    public Date getThoiGian() {
+        return thoiGian;
     }
 
-    public void setNgayDang(String[] ngayDang) {
-        this.ngayDang = ngayDang;
-    }
-
-    public String[] getGioDang() {
-        return gioDang;
-    }
-
-    public void setGioDang(String[] gioDang) {
-        this.gioDang = gioDang;
+    public void setThoiGian(Date thoiGian) {
+        this.thoiGian = thoiGian;
     }
 }

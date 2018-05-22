@@ -60,6 +60,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private String duongDan = "";
     private ThuongHieu thuongHieu;
     private int soSP;
+    private LoadMoreScroll loadMoreScroll;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
         thuongHieu = (ThuongHieu) getIntent().getSerializableExtra("thuongHieu");
         if(thuongHieu != null){
-            duongDan = TrangChuActivity.SERVER + "/product_provider/" + thuongHieu.getIdThuongHieu() + "/products";
+            duongDan = TrangChuActivity.SERVER + "/sort&filter/products?provider_id=" + thuongHieu.getIdThuongHieu();
         }
 
         setSupportActionBar(toolbar);
@@ -179,8 +180,10 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
             layoutManager = linearLayoutManager;
         }
         recyclerSanPham.setLayoutManager(layoutManager);
-        recyclerSanPham.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
-                this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
+        loadMoreScroll = new LoadMoreScroll(layoutManager, this);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
+        recyclerSanPham.addOnScrollListener(loadMoreScroll);
         adapterSanPham = new AdapterSanPham(this, dsSanPham, layout);
         recyclerSanPham.setAdapter(adapterSanPham);
         recyclerSanPham.post(new Runnable() {
@@ -194,6 +197,8 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     @Override
     public void loadMore(String duongDan) {
         trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
         if (trangSanPham.getDsSanPham().size() > 0){
             this.dsSanPham.addAll(trangSanPham.getDsSanPham());
             recyclerSanPham.post(new Runnable() {

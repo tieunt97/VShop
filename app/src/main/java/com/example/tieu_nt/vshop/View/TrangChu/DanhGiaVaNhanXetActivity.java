@@ -52,6 +52,7 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
     private PresenterLogicDanhGiaSanPham presenterLogicDanhGiaSanPham;
     private String duongDan;
     private BottomSheetDanhGiaSanPham bottomSheetDanhGiaSanPham;
+    private LoadMoreScroll loadMoreScroll;
 
 
     @Override
@@ -172,6 +173,8 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
     @Override
     public void loadMore(String duongDan) {
         trangDanhGia = presenterLogicDanhGiaSanPham.layDSDanhGiaLoadMore(duongDan);
+        loadMoreScroll.setTrangCuoi(trangDanhGia.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangDanhGia.getNextPage());
         if(trangDanhGia.getDsDanhGia().size() > 0){
             dsDanhGia.addAll(trangDanhGia.getDsDanhGia());
             recyclerDanhGia.post(new Runnable() {
@@ -190,8 +193,10 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
         recyclerDanhGia.setLayoutManager(layoutManager);
         adapterDanhGia = new AdapterDanhGia(this, this.dsDanhGia);
         recyclerDanhGia.setAdapter(adapterDanhGia);
-        recyclerDanhGia.addOnScrollListener(new LoadMoreScroll(layoutManager, this, this.trangDanhGia.isTrangCuoi(),
-                this.trangDanhGia.getNextPage()));
+        loadMoreScroll = new LoadMoreScroll(layoutManager, this);
+        loadMoreScroll.setTrangCuoi(trangDanhGia.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangDanhGia.getNextPage());
+        recyclerDanhGia.addOnScrollListener(loadMoreScroll);
         adapterDanhGia.notifyDataSetChanged();
     }
 }

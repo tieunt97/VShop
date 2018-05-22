@@ -15,6 +15,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,13 +76,6 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     private PresenterLogicThuongHieu presenterLogicThuongHieu;
     private PresenterLogicSanPham presenterLogicSanPham;
     private PresenterLogicGioHang presenterLogicGioHang;
-//    private ImageView[] imgSapXep = new ImageView[4];
-//    private RelativeLayout[] relaSapXep = new RelativeLayout[4];
-//    private int viTriSapXep = -1;
-//    private final String SAPXEP_SPMOI = "idSanPham", SAPXEP_GIA = "giaChuan", SAPXEP_YEUTHICH = "soLuotThich",
-//            SAPXEP_DANHGIA = "soDanhGia", SAPXEP_GIAM = "DESC", SAPXEP_TANG = "ASC";
-//
-//    private String sapXep = "", giaTri = "";
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
@@ -89,7 +83,8 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
     public static final String API_THUONGHIEU = SERVER + "/providers";
-    private String duongDan = SERVER + "/product_provider/1/products";
+    private String duongDan = SERVER + "/sort&filter/products?product_type_id=1";
+    private LoadMoreScroll loadMoreScroll;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -251,13 +246,18 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
         recyclerSanPham.setLayoutManager(layoutManager);
         adapterSanPham = new AdapterSanPham(this,  dsSanPham, layout);
         recyclerSanPham.setAdapter(adapterSanPham);
-        recyclerSanPham.addOnScrollListener(new LoadMoreScroll(layoutManager, this, this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
+        loadMoreScroll = new LoadMoreScroll(layoutManager, this);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
+        recyclerSanPham.addOnScrollListener(loadMoreScroll);
         adapterSanPham.notifyDataSetChanged();
     }
 
     @Override
     public void loadMore(String duongDan) {
         trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
+        loadMoreScroll.setTrangCuoi(trangSanPham.isTrangCuoi());
+        loadMoreScroll.setDuongDan(trangSanPham.getNextPage());
         if(trangSanPham.getDsSanPham().size() > 0){
             dsSanPham.addAll(trangSanPham.getDsSanPham());
             recyclerSanPham.post(new Runnable() {
