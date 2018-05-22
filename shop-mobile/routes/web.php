@@ -16,15 +16,12 @@ Route::get('/', function () {
 });
 
 Route::get('product_type','HomeController@getAllProductType')->name('types');
-Route::get('product_type/{productTypeId}/products','HomeController@getProductByType');
-Route::get('product_provider/{providerId}/products', 'HomeController@getProductByProvider');
 Route::get('providers','ProviderController@getAllProviders');
 
 Route::get('products/{id}','ProductController@getProductById')->name('product');
 Route::get('products/{id}/allValuations','ProductController@getEvaluationsOfProductId');
-Route::get('product_type/{productTypeId}/filter/products','HomeController@search');
-Route::get('customers/check_is_liked/product','ProductController@checkCustommerLikedProduct');
-
+// Route::get('product_type/{productTypeId}/filter/products','HomeController@search');
+Route::get('sort&filter/products','HomeController@sortAndFilterProduct');
 
 
 Route::group(['middleware'	=>	'auth'], function() {
@@ -35,7 +32,7 @@ Route::get('products/search/{keyword}','ProductController@searchProductBy');
 Route::get('sale_bills/pending','SaleBillController@getSaleBillisPending');
 Route::get('sale_bills/{saleId}','SaleBillController@getSaleBillDescriptionBySaleBillId');
 
-Route::get('test','ProductController@test');
+// Route::get('test','HomeController@test');
 
 Auth::routes();
 

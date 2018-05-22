@@ -49,8 +49,8 @@ class ProductController extends AppBaseController
         return $this->sendResponse($valuations, '200');
     }
 
-    public function test() {
-        $valuations =  $this->productService->getTest();
+    public function test(Request $request) {
+        $valuations =  $this->productService->sortAndFilterProducts($request);
         return $this->sendResponse($valuations, '200');
     }
 

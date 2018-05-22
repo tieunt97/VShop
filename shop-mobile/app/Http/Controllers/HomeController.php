@@ -34,32 +34,17 @@ class HomeController extends AppBaseController
         return view('home');
     }
 
-    public function getProductByType($productTypeId) {
-        $products = $this->productService->getAllProductsByType($productTypeId);
-        return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
-    }
 
-    public function getProductByProvider($providerId) {
-        $products = $this->productService->getAllProductsByProvider($providerId);
-        return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
-    }
-
-    public function search(Request $request, $productTypeId) {
-        $sort = $request->sort;
-        if ($sort != "evaluation") {
-            $products = $this->productService->sortProducts($request, $productTypeId);
-            return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
-        }else {
-            return $this->filterProductByStarNumber($request, $productTypeId);
-        }
+    // public function search(Request $request, $productTypeId) {
+    //     $sort = $request->sort;
+    //     if ($sort != "evaluation") {
+    //         $products = $this->productService->sortProducts($request, $productTypeId);
+    //         return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
+    //     }else {
+    //         return $this->filterProductByStarNumber($request, $productTypeId);
+    //     }
           
-    }
-
-    public function filterProductByStarNumber(Request $request, $productTypeId) {
-        $request->star_number = 1;
-        $products = $this->productService->getProductsbyStarNumberLarger($request, $productTypeId);
-        return $this->sendResponse($products, '200');
-    }
+    // }
 
     public function additionStarInfoToProducts($products) {
         foreach ($products as $product) {
@@ -73,6 +58,11 @@ class HomeController extends AppBaseController
     public function getAllProductType() {
         $productTypes =  $this->typeProductService->getAllTypes();
         return $this->sendResponse($productTypes, '200');
+    }
+
+    public function sortAndFilterProduct(Request $request) {
+        $products =  $this->productService->sortAndFilterProducts($request);
+       return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
     }
 
 }

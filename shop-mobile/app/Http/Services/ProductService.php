@@ -83,10 +83,23 @@ class ProductService {
 		return $productAttribute;
 	}
 
-	public function sortProducts($request, $productTyleId) {
-		$query = DB::table('products')->where('product_type_id','=',$productTyleId);
-		$sort = $request->sort;
-		switch ($sort) {
+	public function sortAndFilterProducts($request) {
+		$params = $request->all();
+		$query = DB::table('products');
+		if(isset($params["product_type_id"]) && !is_null($params["product_type_id"])) {
+			$query->where('product_type_id','=',$params["product_type_id"]);
+		}
+
+		if(isset($params["provider_id"]) && !is_null($params["provider_id"])) {
+			$query->where('provider','=',$params["provider_id"]);
+		}
+
+		if(isset($params["evaluation"]) && !is_null($params["evaluation"])) {
+			$query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select('products.id', 'products.product_name','products.main_image','products.base_price','avg(star_number) as star_number')->where('star_number', '>=', $params["evaluation"]);
+		}
+
+		if(isset($params["sort"]) && !is_null($params["sort"])) {
+			switch ($params["sort"]) {
 			case 'new':
 				$query = $query->orderBy('created_at','desc');
 				break;
@@ -98,8 +111,9 @@ class ProductService {
 				break;
 			default:
 				break;
+			}
 		}
-		$products = $query->select('id','product_name','main_image','base_price')->paginate(Consts::NUM_PRODUCT_IN_PAGE);
+		$products = $query->select('products.id', 'products.product_name','products.main_image','products.base_price')->paginate(Consts::NUM_PRODUCT_IN_PAGE);
 		return $products;
 	}
 
