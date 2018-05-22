@@ -133,14 +133,14 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
 
     @Override
     public void xoaSanPhamGioHang(SanPham sanPham) {
+        int tongXoa = sanPham.getSoLuong();
+        soSP -= tongXoa;
+        giaTong -= tongXoa*sanPham.getGiaChuan();
         if(dsSanPham.size() == 0){
             toolbar.setTitle("Giỏ hàng của tôi");
             tvThongBao.setVisibility(View.VISIBLE);
             relaGioHang.setVisibility(View.GONE);
         }else{
-            int tongXoa = sanPham.getSoLuong();
-            soSP -= tongXoa;
-            giaTong -= tongXoa*sanPham.getGiaChuan();
             setContent();
         }
     }

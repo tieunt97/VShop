@@ -35,7 +35,7 @@
             android:id="@+id/relaGioHang"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v4.widget.NestedScrollView
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/linearThanhToan">
@@ -138,7 +138,7 @@
 
                 </LinearLayout>
 
-            </android.support.v4.widget.NestedScrollView>
+            </ScrollView>
 
             <LinearLayout
                 android:id="@+id/linearThanhToan"
@@ -182,7 +182,7 @@
                     android:id="@+id/btnThanhToan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorOrange"
+                    android:background="@drawable/custom_btn_them"
                     android:textColor="@color/colorWhite"
                     android:text="Tiến hành thanh toán"
                     android:textSize="17sp"/>

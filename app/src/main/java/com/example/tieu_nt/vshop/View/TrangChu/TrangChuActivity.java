@@ -11,21 +11,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
@@ -54,7 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TrangChuActivity extends MainActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, ViewHienThiDanhSachThuongHieu,
-ViewHienThiDanhSachSanPham, ILoadMore{
+ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -78,13 +75,13 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private PresenterLogicThuongHieu presenterLogicThuongHieu;
     private PresenterLogicSanPham presenterLogicSanPham;
     private PresenterLogicGioHang presenterLogicGioHang;
-    private ImageView[] imgSapXep = new ImageView[5];
-    private RelativeLayout[] relaSapXep = new RelativeLayout[5];
-    private int viTriSapXep = -1;
-    private final String SAPXEP_SPMOI = "idSanPham", SAPXEP_GIA = "giaChuan", SAPXEP_YEUTHICH = "soLuotThich",
-            SAPXEP_DANHGIA = "soDanhGia", SAPXEP_GIAM = "DESC", SAPXEP_TANG = "ASC";
-
-    private String sapXep = "", giaTri = "";
+//    private ImageView[] imgSapXep = new ImageView[4];
+//    private RelativeLayout[] relaSapXep = new RelativeLayout[4];
+//    private int viTriSapXep = -1;
+//    private final String SAPXEP_SPMOI = "idSanPham", SAPXEP_GIA = "giaChuan", SAPXEP_YEUTHICH = "soLuotThich",
+//            SAPXEP_DANHGIA = "soDanhGia", SAPXEP_GIAM = "DESC", SAPXEP_TANG = "ASC";
+//
+//    private String sapXep = "", giaTri = "";
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
@@ -193,12 +190,6 @@ ViewHienThiDanhSachSanPham, ILoadMore{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.itemGioHang:
-//                Intent iGioHang = new Intent(this, GioHangActivity.class);
-//                startActivity(iGioHang);
-//                break;
-//        }
         return true;
     }
 
@@ -227,142 +218,13 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnSapXep:
-                sapXep();
+                DialogSapXep dialogSapXep = new DialogSapXep(this, this);
+                dialogSapXep.show();
                 break;
             case R.id.btnLoc:
                 bottomSheetLocSanPham.show(getSupportFragmentManager(), "LocSanPham");
                 break;
         }
-    }
-
-    private void sapXep(){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(TrangChuActivity.this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_sapxep, null, false);
-        relaSapXep[0] = view.findViewById(R.id.relaGiaCaoDenThap);
-        relaSapXep[1] = view.findViewById(R.id.relaGiaThapDenCao);
-        relaSapXep[2] = view.findViewById(R.id.relaSanPhamMoi);
-        relaSapXep[3] = view.findViewById(R.id.relaYeuThichNhat);
-        relaSapXep[4] = view.findViewById(R.id.relaDanhGia);
-
-        imgSapXep[0] = view.findViewById(R.id.imgGiaCaoDenThap);
-        imgSapXep[1] = view.findViewById(R.id.imgGiaThapDenCao);
-        imgSapXep[2] = view.findViewById(R.id.imgSanPhamMoi);
-        imgSapXep[3] = view.findViewById(R.id.imgYeuThich);
-        imgSapXep[4] = view.findViewById(R.id.imgDanhGia);
-
-        Button btnHuy = (Button) view.findViewById(R.id.btnHuy);
-        Button btnApDung = (Button) view.findViewById(R.id.btnApDung);
-
-        builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-        relaSapXep[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 0){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 0;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_GIA;
-                    sapXep = SAPXEP_GIAM;
-                }
-            }
-        });
-
-        relaSapXep[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 1){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 1;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_GIA;
-                    sapXep = SAPXEP_TANG;
-                }
-            }
-        });
-
-        relaSapXep[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 2){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 2;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_SPMOI;
-                    sapXep = SAPXEP_GIAM;
-                }
-            }
-        });
-
-        relaSapXep[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 3){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 3;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_YEUTHICH;
-                    sapXep = SAPXEP_GIAM;
-                }
-            }
-        });
-
-        relaSapXep[4].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 4){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 4;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_DANHGIA;
-                    sapXep = SAPXEP_GIAM;
-                }
-            }
-        });
-
-        btnHuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (viTriSapXep != -1){
-                    viTriSapXep = -1;
-                    giaTri = "";
-                    sapXep = "";
-                }
-                alertDialog.dismiss();
-            }
-        });
-
-        btnApDung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == -1) alertDialog.dismiss();
-                else{
-                    alertDialog.dismiss();
-                }
-            }
-        });
     }
 
     @Override
@@ -440,5 +302,10 @@ ViewHienThiDanhSachSanPham, ILoadMore{
                 tvSoSPGioHang.setText(String.valueOf(soSP));
             }
         }
+    }
+
+    @Override
+    public void sapXep(String giaTri, String sapXep) {
+        Toast.makeText(this, giaTri + ": " + sapXep, Toast.LENGTH_SHORT).show();
     }
 }

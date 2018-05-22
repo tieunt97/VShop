@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -20,6 +21,7 @@ import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPhamGioHang;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPhamGioHang;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.TrangChu.ChiTietSanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -62,6 +64,14 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
         final SanPham sanPham = dsSanPham.get(position);
         holder.tvTenSP.setText(sanPham.getTenSanPham());
         holder.tvGiaSP.setText(numberFormat.format(sanPham.getGiaChuan()).toString() + " đ");
+        holder.relaSanPham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChiTietSanPhamActivity.class);
+                intent.putExtra("idSanPham", sanPham.getIdSanPham());
+                context.startActivity(intent);
+            }
+        });
         if(this.presenterLogicGioHang != null){
             byte[] hinh = sanPham.getHinhSPGioHang();
             holder.imgHinhSP.setImageBitmap(BitmapFactory.decodeByteArray(hinh, 0, hinh.length));
@@ -157,12 +167,14 @@ public class AdapterSanPhamGioHang extends RecyclerView.Adapter<AdapterSanPhamGi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout relaSanPham;
         ImageView imgHinhSP;
         TextView tvTenSP, tvGiaSP, tvGiamGia, tvSoSP, tvSoLuong;
         ImageButton imgXoa, imgCong, imgTru;
         LinearLayout linearGioHang, linearChiTiet;
         public ViewHolder(View itemView) {
             super(itemView);
+            relaSanPham = (RelativeLayout) itemView.findViewById(R.id.relaSanPham);
             imgHinhSP = (ImageView) itemView.findViewById(R.id.imgHinhSP);
             tvTenSP = (TextView) itemView.findViewById(R.id.tvTenSanPham);
             tvGiaSP = (TextView) itemView.findViewById(R.id.tvGiaSP);

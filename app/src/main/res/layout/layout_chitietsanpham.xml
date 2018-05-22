@@ -20,18 +20,19 @@
             app:titleEnabled="false">
 
             <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_collapseMode="parallax">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
-            <android.support.v4.view.ViewPager
+                <android.support.v4.view.ViewPager
                 android:id="@+id/viewPagerSlider"
                 android:layout_width="match_parent"
                 android:layout_height="345dp"
                 android:layout_marginTop="?attr/actionBarSize" />
 
-            <RelativeLayout
+                <RelativeLayout
                 android:id="@+id/layoutDots"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
 
                 <TextView
                     android:id="@+id/tvSoAnh"
-                    android:layout_width="40dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorWhite"
                     android:text="1/5"
@@ -70,7 +71,7 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
 
-        </FrameLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -78,7 +79,8 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 android:background="@color/bgToolbar"
-                app:title="Chi tiết sản phẩm">
+                app:title="Chi tiết sản phẩm"
+                app:layout_scrollFlags="scroll|enterAlways">
 
             </android.support.v7.widget.Toolbar>
 
@@ -592,7 +594,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="THÊM VÀO GIỎ HÀNG"
-        android:background="@color/colorOrange"
+        android:background="@drawable/custom_btn_them"
         android:layout_gravity="bottom"
         android:textColor="@color/colorWhite"/>
 </android.support.design.widget.CoordinatorLayout>

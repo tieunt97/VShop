@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
@@ -39,7 +40,7 @@ import java.util.List;
  */
 
 public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity implements View.OnClickListener,
-        ViewHienThiDanhSachSanPham, ILoadMore{
+        ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerSanPham;
@@ -158,7 +159,11 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.btnSapXep:
+                DialogSapXep dialogSapXep = new DialogSapXep(this, this);
+                dialogSapXep.show();
+        }
     }
 
     @Override
@@ -225,5 +230,10 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         data.putExtra("soSP", soSP);
         setResult(RESULT_OK, data);
         super.finish();
+    }
+
+    @Override
+    public void sapXep(String giaTri, String sapXep) {
+        Toast.makeText(this, giaTri + ": " + sapXep, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,68 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearDanhGia">
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá: "
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+        <RatingBar
+            android:id="@+id/rbDanhGia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.85"
+            android:scaleY="0.85"
+            />
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đánh giá: "
-                    android:textColor="@color/colorBlack"
-                    android:textSize="18sp"/>
+    <EditText
+        android:id="@+id/edtTieuDe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tiêu đề"
+        android:background="@color/colorWhite"
+        android:padding="10dp"
+        />
 
-                <RatingBar
-                    android:id="@+id/rbDanhGia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX="0.85"
-                    android:scaleY="0.85"
-                    />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/edtTieuDe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Tiêu đề"
-                android:background="@color/colorWhite"
-                android:padding="10dp"
-                />
-
-            <EditText
-                android:id="@+id/edtNoiDung"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:inputType="textMultiLine"
-                android:background="@drawable/custom_edt_gia"
-                android:hint="Nội dung"
-                android:padding="10dp"
-                android:gravity="left"/>
-        </LinearLayout>
-
-    </ScrollView>
-
+    <EditText
+        android:id="@+id/edtNoiDung"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:inputType="textMultiLine"
+        android:background="@drawable/custom_edt_gia"
+        android:hint="Nội dung"
+        android:padding="10dp"
+        android:gravity="left"/>
 
     <LinearLayout
         android:id="@+id/linearDanhGia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_alignParentBottom="true">
+        android:layout_marginVertical="10dp">
         <Button
             android:id="@+id/btnHuy"
             android:layout_width="match_parent"
@@ -82,4 +69,4 @@
             android:textColor="@color/colorWhite"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

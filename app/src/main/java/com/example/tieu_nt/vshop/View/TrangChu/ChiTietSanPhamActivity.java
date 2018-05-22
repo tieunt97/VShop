@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private NguoiDung khachHang;
     private boolean xemThem = true;
     private int soSP = 0;
+    private int soHinh = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,7 +173,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     @Override
     public void hienThiSliderSP(List<String> dsHinhSP) {
-        int soHinh = dsHinhSP.size();
+        soHinh = dsHinhSP.size();
         for (int i = 0; i < soHinh; i++){
             FragmentHinhSanPham fragmentHinhSanPham = new FragmentHinhSanPham();
             Bundle bundle = new Bundle();
@@ -180,6 +182,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
             fragmentHinhSP.add(fragmentHinhSanPham);
         }
+
         AdapterViewPagerSlider adapterViewPagerSlider = new AdapterViewPagerSlider(getSupportFragmentManager(), fragmentHinhSP);
         viewPagerSlider.setAdapter(adapterViewPagerSlider);
         adapterViewPagerSlider.notifyDataSetChanged();
@@ -281,13 +284,13 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        String text = tvSoAnh.getText().toString();
-        tvSoAnh.setText(position + 1 + text.substring(1));
+
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        String text = tvSoAnh.getText().toString();
+        tvSoAnh.setText(position + 1 + "/" + soHinh);
     }
 
     @Override

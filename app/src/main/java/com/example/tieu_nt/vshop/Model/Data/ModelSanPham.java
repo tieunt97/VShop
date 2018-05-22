@@ -143,7 +143,8 @@ public class ModelSanPham {
             JSONArray dsHinh = data.getJSONArray("sub_images");
             List<String> dsHinhSP = new ArrayList<>();
             for(int i = 0; i < dsHinh.length(); i++){
-                dsHinhSP.add(dsHinh.getString(i));
+                JSONArray arrayHinh = dsHinh.getJSONArray(i);
+                dsHinhSP.add(arrayHinh.getString(0));
             }
             sanPham.setDsHinhSP(dsHinhSP);
 

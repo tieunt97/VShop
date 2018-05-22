@@ -9,84 +9,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
-        <ImageView
-            android:id="@+id/imgHinhSP"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
-            android:src="@drawable/xiaomi"
-            android:scaleType="centerCrop"/>
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/relaSanPham"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/imgHinhSP"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/linearLayout">
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgHinhSP"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:src="@drawable/xiaomi"
+                android:scaleType="centerCrop"/>
 
-            <TextView
-                android:id="@+id/tvTenSanPham"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:text="Điện thoại Xiaomi"
-                android:maxLines="2"/>
-
-            <TextView
-                android:id="@+id/tvGiaSP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3.290.000 đ"
-                android:textColor="@color/colorOrange"
-                android:textSize="18sp"
-                android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:id="@+id/tvGiamGia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/linearLayout"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="198.000 đ -55%"
-                android:visibility="gone"/>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <RatingBar
-                    android:id="@+id/rbDanhGia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:transformPivotX="0dp"
-                    android:stepSize="0.2"
-                    android:isIndicator="true"
-                    style="@style/SmallRatingbar"
-                    android:layout_centerVertical="true"
-                    />
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/imgHinhSP"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/linearLayout">
 
                 <TextView
-                    android:id="@+id/tvSoDanhGia"
+                    android:id="@+id/tvTenSanPham"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Điện thoại Xiaomi"
+                    android:maxLines="2"/>
+
+                <TextView
+                    android:id="@+id/tvGiaSP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3.290.000 đ"
+                    android:textColor="@color/colorOrange"
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/tvGiamGia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/linearLayout"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="198.000 đ -55%"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(0)"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="2dp"
-                    android:layout_toRightOf="@id/rbDanhGia"
-                    android:layout_centerVertical="true"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="5dp"/>
-            </RelativeLayout>
+                    android:layout_marginTop="10dp">
+                    <RatingBar
+                        android:id="@+id/rbDanhGia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:transformPivotX="0dp"
+                        android:stepSize="0.2"
+                        android:isIndicator="true"
+                        style="@style/SmallRatingbar"
+                        android:layout_centerVertical="true"
+                        />
 
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvSoDanhGia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(0)"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="2dp"
+                        android:layout_toRightOf="@id/rbDanhGia"
+                        android:layout_centerVertical="true"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/imgHinhSP"
-            android:layout_marginTop="110dp"
-            >
+            android:layout_marginTop="110dp">
 
             <LinearLayout
                 android:id="@+id/linearChiTiet"

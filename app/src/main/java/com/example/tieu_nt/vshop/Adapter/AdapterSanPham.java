@@ -67,8 +67,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
         holder.tvGiaSP.setText(gia + " đ");
-        if(sanPham.getDanhGiaTB() == 0 && sanPham.getSoLuotDanhGia() == 0){
-            holder.rbDanhGia.setRating((float) 5.0);
+        if(sanPham.getSoLuotDanhGia() == 0){
+            holder.rbDanhGia.setRating(0);
         }else{
             holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
         }
