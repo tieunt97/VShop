@@ -20,6 +20,7 @@ Route::get('providers','ProviderController@getAllProviders');
 
 Route::get('products/{id}','ProductController@getProductById')->name('product');
 Route::get('products/{id}/allValuations','ProductController@getEvaluationsOfProductId');
+Route::get('products/{id}/getRestOfAmount','ProductController@getRestOfProductsInStock');
 // Route::get('product_type/{productTypeId}/filter/products','HomeController@search');
 Route::get('sort&filter/products','HomeController@sortAndFilterProduct');
 

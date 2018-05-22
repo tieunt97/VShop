@@ -43,19 +43,6 @@ class ProductService {
 		return $starInfos;
 	}
 
-	public function checkCustommerLikedProduct($customer_id, $product_id) {
-		$customerIds = DB::table('like_product_lists')->select('customer_id')->where('product_id', '=', $product_id)->pluck('customer_id')->toArray();
-		if (count($customerIds) == 0) {
-			return false;
-		}else {
-			foreach ($customerIds as $customerId) {
-				if ($customerId == $customer_id) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}
 
 	public function getEvaluations($product_id, $limit) {
 		if ($limit == Consts::GET_ALL) {
@@ -83,6 +70,11 @@ class ProductService {
 		return $productAttribute;
 	}
 
+	public function getRestOfProductsInStock($product_id) {
+    	$amount = DB::table('products')->where('id', $product_id)->pluck('quantity')->first();
+    	return $amount;
+    }
+
 	public function sortAndFilterProducts($request) {
 		$params = $request->all();
 		$query = DB::table('products');
@@ -97,6 +89,7 @@ class ProductService {
 		if(isset($params["evaluation"]) && !is_null($params["evaluation"])) {
 			$query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select('products.id', 'products.product_name','products.main_image','products.base_price','avg(star_number) as star_number')->where('star_number', '>=', $params["evaluation"]);
 		}
+
 
 		if(isset($params["sort"]) && !is_null($params["sort"])) {
 			switch ($params["sort"]) {
@@ -117,24 +110,9 @@ class ProductService {
 		return $products;
 	}
 
-	public function getProductsbyStarNumberLarger($request, $productTyleId) {
-		$star_number = $request->star_number;
-		$query = DB::table('products')->where('product_type_id','=',$productTyleId);
-		$products = $query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select('products.id', 'product_name','main_image','base_price', DB::raw('avg(star_number) as star_number, count(product_id) as star_count'))->where('star_number', '>=', $star_number)->orderBy('star_number','desc')->paginate(Consts::NUM_PRODUCT_IN_PAGE);
-		return $products;
-	}
-
 	public function getStarNumberDetailOfProduct($product_id) {
 		$star_detail = DB::table('evaluations')->select(DB::raw('count(star_number) as number, star_number'))->where('product_id','=',$product_id)->groupBy('star_number')->get()->toArray();
 		return $star_detail;
-	}
-
-	public function getTest() {
-		// return "1";
-		// $evaluations = DB::table('evaluations')->groupBy('product_id')->select(DB::raw('avg(star_number) as star_number, count(product_id) as star_count'), 'product_id')->get();
-		$query = DB::table('products')->where('product_type_id','=', 2);
-		$query = $query->join('evaluations','products.id','=','evaluations.product_id')->groupBy('product_id')->select( DB::raw('avg(star_number) as star_number, count(product_id) as star_count'), 'product_id')->select('products.*')->get();
-		return $query;
 	}
 
 
