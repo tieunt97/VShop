@@ -36,14 +36,11 @@ public class ClearEdittext extends android.support.v7.widget.AppCompatEditText{
     }
 
     private void cauhinh(){
-        setInputType(InputType.TYPE_CLASS_TEXT);
         if(visible){
             clearDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black_24dp, null);
             clearDrawable.setAlpha(ALPHA);
             setCompoundDrawablesWithIntrinsicBounds(null, null, clearDrawable, null);
-//            setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_clear_black_24dp, 0);
         }else{
-//            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
     }
@@ -67,6 +64,5 @@ public class ClearEdittext extends android.support.v7.widget.AppCompatEditText{
             visible = true;
             cauhinh();
         }
-
     }
 }

@@ -26,7 +26,6 @@ import com.example.tieu_nt.vshop.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +70,9 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
                 if(TrangChuActivity.nguoiDung == null){
                     Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập thanh toán", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(GioHangActivity.this, "Thanh toán", Toast.LENGTH_SHORT);
+                    Intent iThanhToan = new Intent(GioHangActivity.this, XacNhanMuaHangActivity.class);
+                    iThanhToan.putExtra("phiShip", phiGiaoHang);
+                    startActivity(iThanhToan);
                 }
             }
         });

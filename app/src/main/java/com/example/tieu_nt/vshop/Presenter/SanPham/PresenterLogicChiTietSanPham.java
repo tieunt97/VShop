@@ -1,5 +1,7 @@
 package com.example.tieu_nt.vshop.Presenter.SanPham;
 
+import android.content.Context;
+
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -15,10 +17,11 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     private ViewChiTietSanPham viewChiTietSanPham;
     private ModelSanPham modelSanPham;
     private ModelKhachHang modelKhachHang;
+    private Context context;
 
 
-
-    public PresenterLogicChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
+    public PresenterLogicChiTietSanPham(Context context, ViewChiTietSanPham viewChiTietSanPham) {
+        this.context = context;
         this.viewChiTietSanPham = viewChiTietSanPham;
         this.modelSanPham = ModelSanPham.getInstance();
         this.modelKhachHang = ModelKhachHang.getInstance();
@@ -38,7 +41,12 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     }
 
     @Override
-    public boolean capNhatSanPhamYeuThich(int idKhachHang, int idSanPham){
-        return modelKhachHang.capNhatSanPhamYeuThich(idKhachHang, idSanPham);
+    public boolean themSanPhamYeuThich(int idSanPham) {
+        return modelKhachHang.themSanPhamYeuThich(idSanPham);
+    }
+
+    @Override
+    public boolean xoaSanPhamYeuThich(int idSanPham) {
+        return false;
     }
 }

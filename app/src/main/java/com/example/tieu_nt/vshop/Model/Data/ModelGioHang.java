@@ -35,32 +35,6 @@ public class ModelGioHang {
         database = databaseSanPham.getWritableDatabase();
     }
 
-    public boolean themDiaChi(String diaChi){
-        boolean b = false;
-        String sql = "SELECT * FROM " + DatabaseSanPham.TB_DIACHI;
-        Cursor cursor =  database.rawQuery(sql, null);
-        int count = cursor.getCount();
-        ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.TB_DIACHI_MADC, 1);
-        values.put(DatabaseSanPham.TB_DIACHI_TEN, diaChi);
-
-        if(count == 0){
-            long id = database.insert(DatabaseSanPham.TB_DIACHI, null, values);
-            if (id > 0){
-                b = true;
-            }
-        }else if(count == 1){
-            int id = database.update(DatabaseSanPham.TB_DIACHI, values, DatabaseSanPham.TB_DIACHI_MADC + " = " + 1, null);
-            if (id > 0){
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-        return b;
-    }
-
     public boolean xoaSanPhamTrongGioHang(int idSanPham){
         int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, DatabaseSanPham.MASP + " = " + idSanPham, null);
         if (kiemTra > 0){
@@ -99,7 +73,6 @@ public class ModelGioHang {
         }else{
             return false;
         }
-
     }
 
     public List<SanPham> layDSSanPhamGioHang(){

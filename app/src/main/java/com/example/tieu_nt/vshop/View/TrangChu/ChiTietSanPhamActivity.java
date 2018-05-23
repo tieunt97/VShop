@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +52,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         View.OnClickListener{
     private Toolbar toolbar;
     private ViewPager viewPagerSlider;
-    private TextView tvSoAnh, tvTenSP, tvGia, tvSoDanhGia, tvDiaChi, tvThayDoiDiaChi, tvChiTietSP, tvXemThem, tvSoSPGioHang,
+    private TextView tvSoAnh, tvTenSP, tvGia, tvSoDanhGia, tvDiaChi, tvChiTietSP, tvXemThem, tvSoSPGioHang,
             tvXemTatCaDanhGia, tvDanhGia5, tvDanhGia4, tvDanhGia3, tvDanhGia2, tvDanhGia1, tvDanhGiaTB, tvSoDanhGia1;
     private Button btnThemHang;
     private ImageView imgShare, imgThich;
@@ -86,7 +85,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
         int idSanPham = getIntent().getIntExtra("idSanPham", 0);
         presenterLogicGioHang = new PresenterLogicGioHang(this);
-        presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this);
+        presenterChiTietSanPham = new PresenterLogicChiTietSanPham(this, this);
         presenterChiTietSanPham.layChiTietSanPham(idSanPham);
         setActions();
     }
@@ -138,7 +137,6 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         tvGia = (TextView) findViewById(R.id.tvGiaSP);
         tvSoDanhGia = (TextView) findViewById(R.id.tvSoDanhGia);
         tvDiaChi = (TextView) findViewById(R.id.tvDiaChi);
-        tvThayDoiDiaChi = (TextView) findViewById(R.id.tvThayDoi);
         tvChiTietSP = (TextView) findViewById(R.id.tvChiTietSanPham);
         tvXemThem = (TextView) findViewById(R.id.tvXemThem);
         linearXemDanhGia = (LinearLayout) findViewById(R.id.linearXemDanhGia);
@@ -166,7 +164,6 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private void setActions(){
         imgShare.setOnClickListener(this);
         imgThich.setOnClickListener(this);
-        tvThayDoiDiaChi.setOnClickListener(this);
         linearXemDanhGia.setOnClickListener(this);
         btnThemHang.setOnClickListener(this);
     }
@@ -306,14 +303,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             case R.id.imgShare:
                 break;
             case R.id.imgThich:
-                if(khachHang == null){
-                    Toast.makeText(this, "Bạn cần đăng nhập để sử dụng tính  năng này", Toast.LENGTH_SHORT).show();
-                } else{
-                    if (presenterChiTietSanPham.capNhatSanPhamYeuThich(khachHang.getIdNguoiDung(), sanPham.getIdSanPham())){
-                        sanPham.setYeuThich(!sanPham.isYeuThich());
-                        changeImgYeuThich();
-                    }
-                }
+                capNhatSanPhamYeuThich();
                 break;
             case R.id.linearXemDanhGia:
                 Intent iDanhGia = new Intent(this, DanhGiaVaNhanXetActivity.class);
@@ -323,6 +313,26 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             case R.id.btnThemVaoGioHang:
                 themSanPhamGioHang();
                 break;
+        }
+    }
+
+    private void capNhatSanPhamYeuThich(){
+        if(khachHang == null){
+            Toast.makeText(this, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
+        }else{
+            if(sanPham.isYeuThich()){
+                if(presenterChiTietSanPham.themSanPhamYeuThich(sanPham.getIdSanPham())){
+                    sanPham.setYeuThich(!sanPham.isYeuThich());
+                    changeImgYeuThich();
+                    Toast.makeText(this, "Đã thêm sản phẩm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                if(presenterChiTietSanPham.xoaSanPhamYeuThich(sanPham.getIdSanPham())){
+                    sanPham.setYeuThich(!sanPham.isYeuThich());
+                    changeImgYeuThich();
+                    Toast.makeText(this, "Đã xóa sản phẩm khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 

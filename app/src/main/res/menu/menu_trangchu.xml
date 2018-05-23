@@ -4,8 +4,9 @@
 
     <item android:id="@+id/itemTimKiem"
         android:title="Tìm kiếm"
-        app:showAsAction="always"
-        android:icon="@drawable/search"/>
+        app:showAsAction="always|collapseActionView"
+        android:icon="@drawable/search"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item android:id="@+id/itemThongBao"
         android:title="Tìm kiếm"
         app:showAsAction="always"

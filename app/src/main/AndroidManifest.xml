@@ -60,7 +60,7 @@
         <activity android:name=".View.TrungTamHoTro.TrungTamHoTroActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".View.CaiDat.DiaChiActivity"
+        <activity android:name=".View.CaiDat.CapNhatThongTinActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".View.CaiDat.DoiMatKhauActivity"
@@ -70,6 +70,9 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".View.TrangChu.DanhGiaVaNhanXetActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".View.TrangChu.XacNhanMuaHangActivity"
             android:screenOrientation="portrait"/>
 
     </application>

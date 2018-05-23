@@ -7,14 +7,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -87,7 +83,7 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
-        tvCapNhatDiaChi =  (TextView) findViewById(R.id.tvCapNhatDiaChi);
+        tvCapNhatDiaChi =  (TextView) findViewById(R.id.tvCapNhatThongTin);
         tvDoiMatKhau =  (TextView) findViewById(R.id.tvDoiMatKhau);
         tvHoTen = (TextView) findViewById(R.id.tvHoTen);
     }
@@ -100,8 +96,8 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tvCapNhatDiaChi:
-                Intent iDiaChi = new Intent(CaiDatActivity.this, DiaChiActivity.class);
+            case R.id.tvCapNhatThongTin:
+                Intent iDiaChi = new Intent(CaiDatActivity.this, CapNhatThongTinActivity.class);
                 startActivity(iDiaChi);
                 break;
             case R.id.tvDoiMatKhau:

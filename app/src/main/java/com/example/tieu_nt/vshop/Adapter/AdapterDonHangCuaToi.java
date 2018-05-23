@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Model.DonHang;
+import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ public class AdapterDonHangCuaToi extends RecyclerView.Adapter<AdapterDonHangCua
     private Context context;
     private List<DonHang> dsDonHang;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public AdapterDonHangCuaToi(Context context, List<DonHang> dsDonHang) {
         this.context = context;
@@ -40,9 +43,13 @@ public class AdapterDonHangCuaToi extends RecyclerView.Adapter<AdapterDonHangCua
     @Override
     public void onBindViewHolder(AdapterDonHangCuaToi.ViewHolder holder, int position) {
         DonHang donHang = dsDonHang.get(position);
-        holder.tvNgayPhatSinh.setText(donHang.getNgayDatHang());
+        holder.tvNgayPhatSinh.setText(sdf.format(donHang.getNgayDat()).toString());
         holder.tvDiaChi.setText(donHang.getDiaChi());
-        holder.tvTongTienTT.setText(numberFormat.format(donHang.getTongTienTT()).toString() + " đ");
+        int tongTien = donHang.getPhiShip();
+        for(SanPham sp: donHang.getDsSanPham()){
+            tongTien += sp.getGiaChuan()*sp.getSoLuong();
+        }
+        holder.tvTongTienTT.setText(numberFormat.format(tongTien).toString() + " đ");
         holder.tvPhiGiaoHang.setText(numberFormat.format(donHang.getPhiShip()).toString() + " đ");
         switch (donHang.getTrangThai()){
             case DonHang.TRANGTHAI_DADATHANG:

@@ -21,25 +21,21 @@ public class DatabaseSanPham extends SQLiteOpenHelper {
     public static final String DANHGIATB = "DANHGIATB";
     public static final String SOLUONGTONKHO = "SOLUONGTONKHO";
 
-    public static final String TB_YEUTHICH = "YEUTHICH";
-
-    public static final String TB_DIACHI = "DIACHI";
-    public static final String TB_DIACHI_MADC = "MADIACHI";
-    public static final String TB_DIACHI_TEN = "DIACHI";
+    public static final String TB_NGUOIDUNG = "NGUOIDUNG";
+    public static final String TB_NGUOIDUNG_ID = "ID";
+    public static final String TB_NGUOIDUNG_MAND = "MAND";
+    public static final String TB_NGUOIDUNG_LEVEL = "LEVEL";
+    public static final String TB_NGUOIDUNG_DIACHI = "DIACHI";
 
     private static final String CREATE_TB_GIOHANG = "CREATE TABLE " + TB_GIOHANG + " (" + MASP + " INTEGER PRIMARY KEY , "
             + TENSP + " TEXT, " + GIATIEN + " REAL, " + HINHANH + "  BLOB, " + SOLUONG + " INTEGER, "
             + DANHGIATB + " REAL, " + SOLUONGTONKHO + " INTEGER );";
 
-    private static final String CREATE_TB_YEUTHICH = "CREATE TABLE " + TB_YEUTHICH + " (" + MASP + " INTEGER PRIMARY KEY , "
-            + TENSP + " TEXT, " + GIATIEN + " REAL, " + HINHANH + "  BLOB, " + SOLUONG + " INTEGER, "
-            + DANHGIATB + " REAL, " + SOLUONGTONKHO + " INTEGER );";
-
-    private static final String CREATE_TB_DIACHI = "CREATE TABLE " + TB_DIACHI + " (" + TB_DIACHI_MADC + " INTEGER PRIMARY KEY , "
-            + TB_DIACHI_TEN + " TEXT);";
+    private static final String CREATE_TB_NGUOIDUNG = "CREATE TABLE " + TB_NGUOIDUNG + " (" + TB_NGUOIDUNG_ID + " INTEGER PRIMARY KEY , "
+            + TB_NGUOIDUNG_MAND + " INTEGER, " + TB_NGUOIDUNG_LEVEL + " INTEGER, " + TB_NGUOIDUNG_DIACHI + " TEXT);";
 
     private static final String DELETE_TB_GIOHANG = "DROP TABLE IF EXISTS "  + TB_GIOHANG;
-    private static final String DELETE_TB_YEUTHICH = "DROP TABLE IF EXISTS "  + TB_YEUTHICH;
+    private static final String DELETE_TB_NGUOIDUNG = "DROP TABLE IF EXISTS "  + TB_NGUOIDUNG;
 
 
     public DatabaseSanPham(Context context) {
@@ -48,15 +44,14 @@ public class DatabaseSanPham extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TB_DIACHI);
+        db.execSQL(CREATE_TB_NGUOIDUNG);
         db.execSQL(CREATE_TB_GIOHANG);
-        db.execSQL(CREATE_TB_YEUTHICH);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DELETE_TB_NGUOIDUNG);
         db.execSQL(DELETE_TB_GIOHANG);
-        db.execSQL(DELETE_TB_YEUTHICH);
         onCreate(db);
     }
 

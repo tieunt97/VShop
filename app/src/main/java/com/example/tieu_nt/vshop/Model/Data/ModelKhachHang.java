@@ -1,5 +1,11 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.DonHang;
@@ -8,6 +14,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.TinTuc;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelKhachHang {
     private static ModelKhachHang modelKhachHang;
+    private SQLiteDatabase database;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     private ModelKhachHang(){}
@@ -36,9 +44,43 @@ public class ModelKhachHang {
         return modelKhachHang;
     }
 
+    public void ketNoiSQLite(Context context){
+        DatabaseSanPham databaseSanPham = new DatabaseSanPham(context);
+        database = databaseSanPham.getWritableDatabase();
+    }
+
     public boolean huyDonHang(int idDonHang){
 
         return false;
+    }
+
+    public boolean capNhatThongTinNguoiDung(int idNguoiDung, int level, String diaChi){
+        boolean b = false;
+        String sql = "SELECT * FROM " + DatabaseSanPham.TB_NGUOIDUNG;
+        Cursor cursor =  database.rawQuery(sql, null);
+        int count = cursor.getCount();
+        ContentValues values = new ContentValues();
+        values.put(DatabaseSanPham.TB_NGUOIDUNG_ID, 1);
+        values.put(DatabaseSanPham.TB_NGUOIDUNG_MAND, idNguoiDung);
+        values.put(DatabaseSanPham.TB_NGUOIDUNG_LEVEL, level);
+        if(!diaChi.equals(""))
+            values.put(DatabaseSanPham.TB_NGUOIDUNG_DIACHI, diaChi);
+
+        if(count == 0){
+            long id = database.insert(DatabaseSanPham.TB_NGUOIDUNG, null, values);
+            if (id > 0){
+                b = true;
+            }
+        }else if(count == 1){
+            int id = database.update(DatabaseSanPham.TB_NGUOIDUNG, values, DatabaseSanPham.TB_NGUOIDUNG_ID + " = " + 1, null);
+            if (id > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        return b;
     }
 
     public boolean xacNhanMuaHang(int idKhachHang, int idSanPham){
@@ -112,4 +154,30 @@ public class ModelKhachHang {
         return b;
     }
 
+    public boolean themSanPhamYeuThich(int idSanPham){
+        boolean b = false;
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/likes/customer/like?product_id=" + idSanPham);
+        downloadJSON.execute();
+
+        try {
+            String dataJSON = downloadJSON.get();
+            Log.d("THEMSP", dataJSON);
+            JSONObject object = new JSONObject(dataJSON);
+            b = object.getBoolean("success");
+            Log.d("THEMSP", String.valueOf(b));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    public boolean xoaSanPhamYeuThich(int idSanPham){
+        boolean b = false;
+
+        return b;
+    }
 }
