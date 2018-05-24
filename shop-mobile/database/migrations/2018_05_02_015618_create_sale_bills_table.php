@@ -17,7 +17,7 @@ class CreateSaleBillsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->integer('shipper_id')->unsigned()->nullable();
-            $table->enum('status_order', ['pending','shipping','shipped','refunded','canceled'])->nullable();//trang thai don hang
+            $table->enum('status_order', ['pending','waitting','shipping','shipped','refunded','canceled'])->nullable();//trang thai don hang
             $table->dateTime('delivery_date')->nullable();
             $table->string('destination_address');
             $table->string('ship_fee');

@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('likes/customer/dislike','LikeProductController@disLike');
 	Route::get('likes/customer','LikeProductController@getLikeOfCustomer');
 	Route::get('likes/customer/is_liked','LikeProductController@checkIsLikeOfCustomer');
+
+	Route::get('shipper/order/waiting','ShipperController@getListWaitingOrder');
+	Route::get('shipper/order/info/{sale_id}','ShipperController@getProductInfoOfSaleBill');
 });
 
 
