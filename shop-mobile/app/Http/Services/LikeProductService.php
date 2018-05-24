@@ -7,7 +7,8 @@ class LikeProductService {
 
 	public function getLikeOfCustomer($user_id) {
 		$likes = DB::table('like_product_lists')->where('customer_id','=',$user_id)->pluck('product_id')->toArray();
-		return $likes;
+		$products = DB::table('products')->whereIn('id', $likes)->select('id','product_name','base_price','main_image')->get();
+		return $products;
 	}
 
 	public function checkCustommerLikedProduct($customer_id, $product_id) {	
