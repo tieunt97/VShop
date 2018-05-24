@@ -20,10 +20,31 @@ class ShipperController extends AppBaseController
     	return $this->sendResponse($orderList, '200');
     }
 
+    public function getOrderListIsReceived() {
+        $orderList = $this->shipperService->getOrderListIsReceived();
+        return $this->sendResponse($orderList, '200');
+    }
+
+    
+
     public function getProductInfoOfSaleBill($sale_bill_id) {
     	// return "1";
     	$orderInfo = $this->shipperService->getProductInfoOfSaleBill($sale_bill_id);
     	return $this->sendResponse($orderInfo, '200');
+    }
+
+    public function receiveOrderByShipper(Request $request) {
+        $user = Auth::user();
+        $sale_bill_id = $request->sale_bill_id;
+         DB::beginTransaction();
+        try {
+            DB::table('sale_bills')->where('id','=', $sale_bill_id)->update(['shipper_id' => $user->id,'status_order' => 'received_order']);    
+            DB::commit();
+            return $this->sendResponse(null, 'updated');
+         } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->sendError(null, $e->getMessage());
+        }
     }
 
 }

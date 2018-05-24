@@ -7,6 +7,7 @@ use App\SaleBill;
 use App\SaleDescription;
 use App\User;
 use App\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -14,6 +15,17 @@ class ShipperService {
 	public function getOrderListIsWaitting() {
 		$orders = SaleBill::select('id','customer_id','destination_address','ship_fee')
 		->where('status_order', '=', 'waitting')->get();
+		foreach ($orders as $order) {
+			$customer_info = User::select('name','phone_number')->where('id', '=' , $order->customer_id)->get();
+			$order->customer_info = $customer_info;
+			$order->order_detail = $this->getProductInfoOfSaleBill($order->id);
+		}
+		return $orders;
+	}
+
+	public function getOrderListIsReceived() {
+		$orders = SaleBill::select('id','customer_id','destination_address','ship_fee')
+		->where('status_order', '=', 'received_order')->get();
 		foreach ($orders as $order) {
 			$customer_info = User::select('name','phone_number')->where('id', '=' , $order->customer_id)->get();
 			$order->customer_info = $customer_info;
@@ -41,4 +53,6 @@ class ShipperService {
 		return ['info' => $info,'total' => $total];
 		
 	}
+
+	
 }

@@ -23,5 +23,9 @@ class SaleBillController extends AppBaseController
     	return $this->sendResponse($saleDes, '200');
     }
 
+    public function receiveOrderByShipper() {
+        
+    }
+
     
 }

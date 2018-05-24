@@ -25,7 +25,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('likes/customer/is_liked','LikeProductController@checkIsLikeOfCustomer');
 
 	Route::get('shipper/order/waiting','ShipperController@getListWaitingOrder');
+	Route::get('shipper/order/receive_order','ShipperController@getOrderListIsReceived');
+	
 	Route::get('shipper/order/info/{sale_id}','ShipperController@getProductInfoOfSaleBill');
+	Route::post('shipper/order/receive_order','ShipperController@receiveOrderByShipper');
 });
 
 
