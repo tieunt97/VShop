@@ -94,13 +94,13 @@ class ProductService {
 		if(isset($params["sort"]) && !is_null($params["sort"])) {
 			switch ($params["sort"]) {
 			case 'new':
-				$query = $query->orderBy('created_at','desc');
+				$query = $query->orderBy('products.created_at','desc');
 				break;
 			case 'top':
-				$query = $query->orderBy('base_price','desc');
+				$query = $query->orderBy('products.base_price','desc');
 				break;
 			case 'last':
-				$query = $query->orderBy('base_price','asc');
+				$query = $query->orderBy('products.base_price','asc');
 				break;
 			default:
 				break;
