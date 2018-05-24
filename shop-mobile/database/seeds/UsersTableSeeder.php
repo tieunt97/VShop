@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
 
         for ($user_id = 1; $user_id <= $RECORD_COUNT; $user_id ++) {
 
-        	if($user_id > 20) {
+        	if($user_id > 30) {
         		$users[] = [
         		'id' => $user_id,
         		'name' => $faker->name,
@@ -30,6 +30,33 @@ class UsersTableSeeder extends Seeder
                 'api_token' => bin2hex(random_bytes(32)),
         		'created_at' => Carbon::now()
         	];
+
+            }else if($user_id > 25) {
+                $users[] = [
+                'id' => $user_id,
+                'name' => $faker->name,
+                'phone_number' => $faker->phoneNumber,
+                'password' => bcrypt('123456'),
+                'address'       => $faker->address,
+                'email' => $faker->email,
+                'level' => 2,
+                'api_token' => bin2hex(random_bytes(32)),
+                'created_at' => Carbon::now()
+            ];
+
+            }else if($user_id > 20) {
+                $users[] = [
+                'id' => $user_id,
+                'name' => $faker->name,
+                'phone_number' => $faker->phoneNumber,
+                'password' => bcrypt('123456'),
+                'address'       => $faker->address,
+                'email' => $faker->email,
+                'level' => 3,
+                'api_token' => bin2hex(random_bytes(32)),
+                'created_at' => Carbon::now()
+            ];
+
         	}else if($user_id > 2) {
         		$users[] = [
         		'id' => $user_id,
@@ -38,7 +65,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'address'       => $faker->address,
         		'email'	=> $faker->email,
-                'level' => 2,
+                'level' => 4,
                 'api_token' => bin2hex(random_bytes(32)),
         		'created_at' => Carbon::now()
         	];
@@ -50,7 +77,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'address'       => $faker->address,
         		'email'	=> $faker->email,
-                'level' => 3,
+                'level' => 5,
                 'api_token' => bin2hex(random_bytes(32)),
         		'created_at' => Carbon::now()
         	];

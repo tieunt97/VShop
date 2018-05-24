@@ -25,7 +25,7 @@ class SaleBillsTableSeeder extends Seeder
         		'shipper_id' => null,
         		'status_order' => 'pending',
         		'destination_address' =>$faker->address,
-        		'ship_fee'	=> '2',
+        		'ship_fee'	=> 2,
         		'delivery_date' => Carbon::now(),
         		'book_date'		=> Carbon::now()
         	];
