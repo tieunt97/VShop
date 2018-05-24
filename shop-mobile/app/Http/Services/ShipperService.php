@@ -28,11 +28,12 @@ class ShipperService {
 		$total = 0;
 		$orderInfos = SaleDescription::select('product_id','amount')->where('sale_bill_id' , '=', $sale_bill_id)->get();
 		foreach ($orderInfos as $orderInfo) {
-			$products = Product::select('product_name','base_price')->where('id' ,'=',$orderInfo->product_id)->first();
+			$products = Product::select('product_name','base_price','main_image')->where('id' ,'=',$orderInfo->product_id)->first();
 			$info[] = [
 				'product_name' => $products->product_name,
 				'base_price'   => $products->base_price,
-				'amount'		=> $orderInfo->amount
+				'amount'		=> $orderInfo->amount,
+				'main_image'	=> $products->main_image
 			];
 			$total += $products->base_price*$orderInfo->amount;
 		}
