@@ -19,6 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('user/update','UsersController@updateUser');
+	Route::post('likes/customer/like','LikeProductController@like');
+	Route::post('likes/customer/dislike','LikeProductController@disLike');
+	Route::get('likes/customer','LikeProductController@getLikeOfCustomer');
+	Route::get('likes/customer/is_liked','LikeProductController@checkIsLikeOfCustomer');
 });
 
 
