@@ -14,7 +14,6 @@ class LikeProductController extends AppBaseController
     public function __construct(LikeProductService $likeProductService)
     {
         $this->likeProductService = $likeProductService;
-        $this->middleware('auth');
     }
   
 

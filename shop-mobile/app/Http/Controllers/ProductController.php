@@ -36,6 +36,8 @@ class ProductController extends AppBaseController
         return $this->sendResponse($this->productService->getRestOfProductsInStock($product_id), '200');
     }
 
+
+
     public function checkCustommerLikedProduct(Request $request) {
         $customer_id = $request->customer_id;
         $product_id = $request->product_id;
@@ -44,8 +46,8 @@ class ProductController extends AppBaseController
     }
 
     public function searchProductBy($keyword) {
-    	$product = $this->productService->searchProductBy($keyword);
-    	return $this->sendResponse($product, '200');
+    	$products = $this->productService->searchProductBy($keyword);
+    	return $this->sendResponse($this->additionStarInfoToProducts($products), '200');
     }
 
     public function getEvaluationsOfProductId($id) {
@@ -56,6 +58,15 @@ class ProductController extends AppBaseController
     public function test(Request $request) {
         // $valuations =  $this->productService->sortAndFilterProducts($request);
         // return $this->sendResponse($valuations, '200');
+    }
+
+    public function additionStarInfoToProducts($products) {
+        foreach ($products as $product) {
+            $star_info = $this->productService->getStarNumberOfProduct($product->id);
+            $product->star_number = $star_info['star_number'];
+            $product->star_count  = $star_info['star_count'];
+        }
+        return $products;
     }
 
     
