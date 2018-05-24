@@ -21,7 +21,7 @@ import com.example.tieu_nt.vshop.R;
 
 public class XacNhanMuaHangActivity extends AppCompatActivity{
     private Toolbar toolbar;
-    private EditText edtHoTen, edtDiaChi, edtSoDT;
+    private EditText edtHoTen, edtDiaChi;
     private Button btnXacNhan;
     private DonHang donHang;
 
@@ -49,11 +49,9 @@ public class XacNhanMuaHangActivity extends AppCompatActivity{
 
     private void setThongTin(){
         edtHoTen.setText(donHang.getKhachHang().getTenNguoiDung());
+        edtHoTen.setEnabled(false);
         if(!donHang.getDiaChi().equals("null")){
             edtDiaChi.setText(donHang.getDiaChi());
-        }
-        if(!donHang.getKhachHang().getSoDT().equals("null")){
-            edtSoDT.setText(donHang.getKhachHang().getSoDT());
         }
     }
 
@@ -70,7 +68,6 @@ public class XacNhanMuaHangActivity extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
-        edtSoDT = (EditText) findViewById(R.id.edtSoDT);
         btnXacNhan = (Button) findViewById(R.id.btnXacNhan);
     }
 }

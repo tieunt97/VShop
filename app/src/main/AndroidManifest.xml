@@ -75,6 +75,9 @@
         <activity android:name=".View.TrangChu.XacNhanMuaHangActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".View.TrangChu.SanPhamTimKiemActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

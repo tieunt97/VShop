@@ -3,7 +3,6 @@ package com.example.tieu_nt.vshop.View.TrangChu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -32,6 +31,8 @@ import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.DialogSapXep;
+import com.example.tieu_nt.vshop.View.SapXepSanPham;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ import java.util.List;
  */
 
 public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity implements View.OnClickListener,
-        ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
+        ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham {
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerSanPham;

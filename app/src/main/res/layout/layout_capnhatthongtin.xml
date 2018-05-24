@@ -25,17 +25,44 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/edtHoTen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Họ tên"
+                android:textColor="@color/colorBlack"
+                android:padding="15dp"
+                android:background="@drawable/custom_edt_gia"
+                />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="Email"
+                android:textColor="@color/colorBlack"
+                android:padding="15dp"
+                android:background="@drawable/custom_edt_gia"
+                android:layout_marginVertical="5dp"
+                />
 
             <EditText
                 android:id="@+id/edtDiaChi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:hint="Địa chỉ"
                 android:textColor="@color/colorBlack"
                 android:padding="15dp"
+                android:background="@drawable/custom_edt_gia"
                 />
 
             <EditText
@@ -47,12 +74,8 @@
                 android:hint="Số điện thoại"
                 android:textColor="@color/colorBlack"
                 android:padding="15dp"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorGrey"/>
+                android:background="@drawable/custom_edt_gia"
+                android:layout_marginVertical="5dp"/>
 
             <Button
                 android:id="@+id/btnCapNhat"

@@ -32,7 +32,6 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelKhachHang {
     private static ModelKhachHang modelKhachHang;
-    private SQLiteDatabase database;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     private ModelKhachHang(){}
@@ -44,43 +43,13 @@ public class ModelKhachHang {
         return modelKhachHang;
     }
 
-    public void ketNoiSQLite(Context context){
-        DatabaseSanPham databaseSanPham = new DatabaseSanPham(context);
-        database = databaseSanPham.getWritableDatabase();
-    }
-
     public boolean huyDonHang(int idDonHang){
 
         return false;
     }
 
-    public boolean capNhatThongTinNguoiDung(int idNguoiDung, int level, String diaChi){
-        boolean b = false;
-        String sql = "SELECT * FROM " + DatabaseSanPham.TB_NGUOIDUNG;
-        Cursor cursor =  database.rawQuery(sql, null);
-        int count = cursor.getCount();
-        ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.TB_NGUOIDUNG_ID, 1);
-        values.put(DatabaseSanPham.TB_NGUOIDUNG_MAND, idNguoiDung);
-        values.put(DatabaseSanPham.TB_NGUOIDUNG_LEVEL, level);
-        if(!diaChi.equals(""))
-            values.put(DatabaseSanPham.TB_NGUOIDUNG_DIACHI, diaChi);
-
-        if(count == 0){
-            long id = database.insert(DatabaseSanPham.TB_NGUOIDUNG, null, values);
-            if (id > 0){
-                b = true;
-            }
-        }else if(count == 1){
-            int id = database.update(DatabaseSanPham.TB_NGUOIDUNG, values, DatabaseSanPham.TB_NGUOIDUNG_ID + " = " + 1, null);
-            if (id > 0){
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-        return b;
+    public boolean capNhatThongTin(String hoTen, String email, String soDT, String diaChi){
+        return false;
     }
 
     public boolean xacNhanMuaHang(int idKhachHang, int idSanPham){

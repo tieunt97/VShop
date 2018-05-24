@@ -12,7 +12,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Xác nhận mua hàng">
+            app:title="Xác nhận địa chỉ giao hàng">
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Địa chỉ: "
+            android:text="Địa chỉ nhận: "
             android:textSize="17sp"
             android:textColor="@color/colorBlack"/>
 
@@ -53,24 +53,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:inputType="textPersonName"
-            android:hint="Địa chỉ"
-            android:background="@drawable/custom_edt_gia"
-            android:layout_marginVertical="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số điện thoại: "
-            android:textSize="17sp"
-            android:textColor="@color/colorBlack"/>
-
-        <EditText
-            android:id="@+id/edtSoDT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:inputType="textPersonName"
-            android:hint="Số điện thoại"
+            android:hint="Nhập địa chi"
             android:background="@drawable/custom_edt_gia"
             android:layout_marginVertical="5dp"/>
 

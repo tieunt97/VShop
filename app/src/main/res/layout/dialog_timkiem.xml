@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhập thông tin tìm kiếm:"
+        android:textColor="@color/colorBlack"
+        android:textSize="17sp"/>
+
+    <EditText
+        android:id="@+id/edtTimKiem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_edt_gia"
+        android:padding="10dp"
+        android:hint="Tìm kiếm"
+        android:layout_marginVertical="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btnHuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hủy"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/custom_btn_huy"/>
+
+        <Button
+            android:id="@+id/btnTimKiem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tìm kiếm"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/custom_button_hotro"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -15,7 +15,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +40,11 @@ import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.Presenter.TrangChu.PresenterLogicThuongHieu;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.BottomSheetLocSanPham;
+import com.example.tieu_nt.vshop.View.DialogSapXep;
+import com.example.tieu_nt.vshop.View.DialogTimKiem;
 import com.example.tieu_nt.vshop.View.MainActivity;
+import com.example.tieu_nt.vshop.View.SapXepSanPham;
+import com.example.tieu_nt.vshop.View.TimKiemSanPham;
 
 import java.util.List;
 
@@ -52,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TrangChuActivity extends MainActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, ViewHienThiDanhSachThuongHieu,
-ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
+ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -79,7 +82,7 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
-    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
+    public static final String SERVER = "http://10.11.3.255:8080/VShop/shop-mobile/public";
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
     public static final String API_THUONGHIEU = SERVER + "/providers";
@@ -185,6 +188,12 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemTimKiem:
+                DialogTimKiem dialogTimKiem = new DialogTimKiem(this, this);
+                dialogTimKiem.show();
+                break;
+        }
         return true;
     }
 
@@ -307,5 +316,12 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham{
     @Override
     public void sapXep(String giaTri, String sapXep) {
         Toast.makeText(this, giaTri + ": " + sapXep, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void timKiemSanPham(String timKiem) {
+        Intent iTimKiem = new Intent(this, SanPhamTimKiemActivity.class);
+        iTimKiem.putExtra("timKiem", timKiem);
+        startActivity(iTimKiem);
     }
 }
