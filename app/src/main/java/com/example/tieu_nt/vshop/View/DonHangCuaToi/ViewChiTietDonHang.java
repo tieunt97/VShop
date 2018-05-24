@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface ViewChiTietDonHang {
     void hienThiDSSanPhamDonHang(List<SanPham> dsSanPham);
-    void huyDonHang(int idDonHang);
 }

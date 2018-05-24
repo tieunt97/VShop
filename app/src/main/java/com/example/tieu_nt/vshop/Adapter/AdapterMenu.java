@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Model.DrawerItem;
+import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDangXuat;
 import com.example.tieu_nt.vshop.Presenter.ItemClickListener;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.CaiDat.CaiDatActivity;
@@ -34,6 +36,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
     private List<DrawerItem> dsItems;
     private Context context;
     private DrawerLayout drawerLayout;
+    private PresenterLogicDangXuat presenterLogicDangXuat;
     private int position;
     private String tenItems[] = {"Trang chủ", "Tin tức", "Danh sách yêu thích","Đơn hàng của tôi", "Cài đặt",
             "Trung tâm hỗ trợ", "Đăng xuất"};
@@ -45,6 +48,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
         this.dsItems = new ArrayList<>();
         this.drawerLayout = drawerLayout;
         this.position = position;
+        presenterLogicDangXuat = PresenterLogicDangXuat.getInstance();
 
         int length = tenItems.length;
         if (TrangChuActivity.nguoiDung != null) tenItems[length - 1] = "Đăng xuất";
@@ -89,19 +93,31 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                             context.startActivity(iTinTuc);
                             break;
                         case 2:
-                            Intent iDSYeuThich = new Intent(context, DanhSachYeuThichActivity.class);
-                            iDSYeuThich.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            context.startActivity(iDSYeuThich);
+                            if(!kiemTraDangNhap()){
+                                Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Intent iDSYeuThich = new Intent(context, DanhSachYeuThichActivity.class);
+                                iDSYeuThich.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                context.startActivity(iDSYeuThich);
+                            }
                             break;
                         case 3:
-                            Intent iDonHangCuaToi = new Intent(context, DonHangCuaToiActivity.class);
-                            iDonHangCuaToi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            context.startActivity(iDonHangCuaToi);
+                            if(!kiemTraDangNhap()){
+                                Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Intent iDonHangCuaToi = new Intent(context, DonHangCuaToiActivity.class);
+                                iDonHangCuaToi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                context.startActivity(iDonHangCuaToi);
+                            }
                             break;
                         case 4:
-                            Intent iCaiDat = new Intent(context, CaiDatActivity.class);
-                            iCaiDat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            context.startActivity(iCaiDat);
+                            if(!kiemTraDangNhap()){
+                                Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Intent iCaiDat = new Intent(context, CaiDatActivity.class);
+                                iCaiDat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                context.startActivity(iCaiDat);
+                            }
                             break;
                         case 5:
                             Intent iTrungTamHoTro = new Intent(context, TrungTamHoTroActivity.class);
@@ -115,6 +131,13 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                 }
             }
         });
+    }
+
+    private boolean kiemTraDangNhap(){
+        if(TrangChuActivity.nguoiDung == null)
+            return false;
+        else
+            return true;
     }
 
     private void dangNhapDangXuat(){
@@ -138,9 +161,11 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
             btnDongY.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent iDangNhap = new Intent(context, DangNhapActivity.class);
-                    iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    context.startActivity(iDangNhap);
+                    if(presenterLogicDangXuat.dangXuat()){
+                        Intent iDangNhap = new Intent(context, DangNhapActivity.class);
+                        iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(iDangNhap);
+                    }
                 }
             });
         }else{

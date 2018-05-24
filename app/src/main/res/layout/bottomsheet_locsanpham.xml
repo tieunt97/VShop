@@ -98,14 +98,27 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp" />
 
-            <RatingBar
-                android:id="@+id/rbDanhGia"
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:transformPivotX="0dp"
-                android:transformPivotY="15dp"/>
+                android:layout_height="wrap_content">
+                <RatingBar
+                    android:id="@+id/rbDanhGia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="35dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trở lên"
+                    android:textSize="17sp"
+                    android:textColor="@color/colorBlue"
+                    android:layout_gravity="right|center"/>
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"

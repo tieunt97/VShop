@@ -1,5 +1,7 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import android.util.Log;
+
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
@@ -60,6 +62,7 @@ public class ModelDangNhapDangKy {
                 nguoiDung.setDiaChi(obNguoiDung.getString("address"));
                 nguoiDung.setEmail(obNguoiDung.getString("email"));
                 nguoiDung.setLevel(obNguoiDung.getInt("level"));
+                nguoiDung.setToken(obNguoiDung.getString("remember_token"));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

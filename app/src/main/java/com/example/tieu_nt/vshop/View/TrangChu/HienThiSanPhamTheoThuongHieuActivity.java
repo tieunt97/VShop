@@ -31,7 +31,9 @@ import com.example.tieu_nt.vshop.Model.ThuongHieu;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
+import com.example.tieu_nt.vshop.View.BottomSheetLocSanPham;
 import com.example.tieu_nt.vshop.View.DialogSapXep;
+import com.example.tieu_nt.vshop.View.LocSanPham;
 import com.example.tieu_nt.vshop.View.SapXepSanPham;
 
 import java.util.List;
@@ -41,7 +43,7 @@ import java.util.List;
  */
 
 public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity implements View.OnClickListener,
-        ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham {
+        ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, LocSanPham {
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerSanPham;
@@ -62,12 +64,16 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
     private ThuongHieu thuongHieu;
     private int soSP;
     private LoadMoreScroll loadMoreScroll;
+    private BottomSheetLocSanPham bottomSheetLocSanPham;
+    private String sapXep = "", maThuongHieu = "", soSaoTB = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_hienthisanphamtheothuonghieu);
         anhXa();
+
+        bottomSheetLocSanPham = new BottomSheetLocSanPham();
 
         thuongHieu = (ThuongHieu) getIntent().getSerializableExtra("thuongHieu");
         if(thuongHieu != null){
@@ -165,6 +171,10 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
             case R.id.btnSapXep:
                 DialogSapXep dialogSapXep = new DialogSapXep(this, this);
                 dialogSapXep.show();
+                break;
+            case R.id.btnLoc:
+                bottomSheetLocSanPham.show(getSupportFragmentManager(), "LocSanPham");
+                break;
         }
     }
 
@@ -238,8 +248,30 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
         super.finish();
     }
 
+
+    private String getDuongDan(){
+        String dd = duongDan + sapXep + maThuongHieu + soSaoTB;
+        return dd;
+    }
+
     @Override
-    public void sapXep(String giaTri, String sapXep) {
-        Toast.makeText(this, giaTri + ": " + sapXep, Toast.LENGTH_SHORT).show();
+    public void sapXep(String sapXep) {
+        if(!sapXep.equals("")){
+            this.sapXep = "&sort=" + sapXep;
+            presenterLogicSanPham.layDanhSachSanPham(getDuongDan());
+        }
+    }
+
+    @Override
+    public void locSanPham(int idThuongHieu, int giaThap, int giaCao, float danhGia) {
+        Toast.makeText(this, "Lọc sẩn phẩm", Toast.LENGTH_SHORT).show();
+        if(idThuongHieu > 0){
+            this.maThuongHieu = "&provider_id=" + idThuongHieu;
+        }
+        if(danhGia > 0){
+            soSaoTB = "&evaluation=" + danhGia;
+        }
+        bottomSheetLocSanPham.dismiss();
+        presenterLogicSanPham.layDanhSachSanPham(getDuongDan());
     }
 }

@@ -43,37 +43,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/tvDiaChi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Xã Tiền Yên, Huyện Hoài Đức, Hà Nội"
-                            android:drawableLeft="@drawable/location"
-                            android:drawablePadding="10dp"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="15sp"/>
-
-                        <TextView
-                            android:id="@+id/tvThayDoi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="THAY ĐỔI"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorBlue"
-                            android:textSize="15sp"/>
-
-                    </LinearLayout>
+                    android:orientation="vertical"
+                    android:layout_margin="5dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerGioHang"

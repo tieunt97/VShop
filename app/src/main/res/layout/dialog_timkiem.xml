@@ -30,7 +30,7 @@
         <Button
             android:id="@+id/btnHuy"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:layout_weight="1"
             android:text="Hủy"
             android:textColor="@color/colorWhite"
@@ -39,7 +39,7 @@
         <Button
             android:id="@+id/btnTimKiem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:text="Tìm kiếm"
             android:textColor="@color/colorWhite"
             android:layout_weight="1"

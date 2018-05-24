@@ -5,5 +5,5 @@ package com.example.tieu_nt.vshop.View;
  */
 
 public interface SapXepSanPham {
-    void sapXep(String giaTri, String sapXep);
+    void sapXep(String sapXep);
 }

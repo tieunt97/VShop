@@ -6,9 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
@@ -35,12 +40,14 @@ public class SanPhamTimKiemActivity extends AppCompatActivity implements ViewHie
     private AdapterSanPham adapterSanPham;
     private RecyclerView.LayoutManager layoutManager;
     private LoadMoreScroll loadMoreScroll;
+    private TextView tvThongBao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_sanphamtimkiem);
         anhXa();
+        tvThongBao.setVisibility(View.VISIBLE);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -50,11 +57,12 @@ public class SanPhamTimKiemActivity extends AppCompatActivity implements ViewHie
 
         timKiem = getIntent().getStringExtra("timKiem");
 
-        duongDan = "";
+        duongDan = TrangChuActivity.SERVER + "/products/search/" + timKiem;
+
+        layoutManager = new GridLayoutManager(this, 2);
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
-        if(!timKiem.equals(""))
-            presenterLogicSanPham.layDanhSachSanPham(duongDan);
+        presenterLogicSanPham.layDanhSachSanPham(duongDan);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,10 +86,12 @@ public class SanPhamTimKiemActivity extends AppCompatActivity implements ViewHie
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         recyclerSanPham = findViewById(R.id.recyclerSanPham);
+        tvThongBao = findViewById(R.id.tvThongBao);
     }
 
     @Override
     public void hienThiDanhSachSanPham(TrangSanPham trangSanPham) {
+        tvThongBao.setVisibility(View.GONE);
         this.dsSanPham = trangSanPham.getDsSanPham();
         recyclerSanPham.setLayoutManager(layoutManager);
         adapterSanPham = new AdapterSanPham(this,  dsSanPham, R.layout.custom_layout_sanpham);

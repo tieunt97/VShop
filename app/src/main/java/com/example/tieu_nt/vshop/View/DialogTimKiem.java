@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.R;
 
@@ -45,8 +46,13 @@ public class DialogTimKiem extends AlertDialog.Builder{
         btnTimKiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
-                timKiemSanPham.timKiemSanPham(edtTimKiem.getText().toString());
+                String timKiem = edtTimKiem.getText().toString();
+                if(timKiem.equals("")){
+                    Toast.makeText(context, "Chưa có thông tin tìm kiếm", Toast.LENGTH_SHORT).show();
+                }else{
+                    timKiemSanPham.timKiemSanPham(timKiem);
+                    alertDialog.dismiss();
+                }
             }
         });
         return alertDialog;

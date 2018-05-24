@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamGioHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
-import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPhamGioHang;
+import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
-import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPhamGioHang;
+import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPham;
 import com.example.tieu_nt.vshop.R;
 
 import java.text.DecimalFormat;
@@ -32,8 +32,8 @@ import java.util.List;
  * Created by tieu_nt on 5/9/2018.
  */
 
-public class GioHangActivity extends AppCompatActivity implements ViewHienThiSanPhamGioHang, CapNhatSoLuongSanPhamGioHang,
-        XoaSanPhamGioHang{
+public class GioHangActivity extends AppCompatActivity implements ViewHienThiSanPhamGioHang, CapNhatSoLuongSanPham,
+        XoaSanPham {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private TextView tvDiaChi, tvGiaTongSP, tvPhiGiaoHang, tvTongTienTT, tvThongBao, tvSoSanPham;
@@ -68,7 +68,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
             @Override
             public void onClick(View view) {
                 if(TrangChuActivity.nguoiDung == null){
-                    Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập thanh toán", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập để thanh toán", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent iThanhToan = new Intent(GioHangActivity.this, XacNhanMuaHangActivity.class);
                     iThanhToan.putExtra("phiShip", phiGiaoHang);
@@ -110,7 +110,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         }else{
             tvThongBao.setVisibility(View.GONE);
             relaGioHang.setVisibility(View.VISIBLE);
-            adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, this.dsSanPham, presenterLogicGioHang,
+            adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, this.dsSanPham,
                     this, this);
             recyclerView.setAdapter(adapterSanPhamGioHang);
             adapterSanPhamGioHang.notifyDataSetChanged();
@@ -133,7 +133,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     }
 
     @Override
-    public void xoaSanPhamGioHang(SanPham sanPham) {
+    public void xoaSanPham(SanPham sanPham) {
         int tongXoa = sanPham.getSoLuong();
         soSP -= tongXoa;
         giaTong -= tongXoa*sanPham.getGiaChuan();
@@ -147,7 +147,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     }
 
     @Override
-    public void capNhatSoLuongSanPhamGioHang(int positon, boolean them) {
+    public void capNhatSoLuongSanPham(int positon, boolean them) {
         SanPham sanPham = dsSanPham.get(positon);
         if(them) {
             soSP += 1;

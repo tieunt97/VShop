@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -53,6 +54,8 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     private List<SanPham> dsSanPham;
     private TextView tvHoTen;
     private LoadMoreScroll loadMoreScroll;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private String duongDan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,19 +93,30 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
             tvHoTen.setText("Bạn chưa đăng nhập");
         }
 
+        duongDan = "";
+
         adapterMenu = new AdapterMenu(DanhSachYeuThichActivity.this, drawerLayout, 2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
 
         presenterLogicSanPham = new PresenterLogicSanPham(this);
-        presenterLogicSanPham.layDanhSachSanPham("");
+        presenterLogicSanPham.layDanhSachSanPham(duongDan);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenterLogicSanPham.layDanhSachSanPham(duongDan);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void anhXa(){
         trangChu = (FrameLayout) findViewById(R.id.trangChu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         recyclerSanPhamYeuThich = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);

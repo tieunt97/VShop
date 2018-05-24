@@ -43,6 +43,35 @@ public class ModelKhachHang {
         return modelKhachHang;
     }
 
+    public boolean dangXuat(){
+        boolean b = false;
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.API_DANGXUAT);
+        downloadJSON.execute();
+
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            Log.d("dataJSON", dataJSON);
+            b = object.getBoolean("data");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    public boolean xoaSanPhamDonHang(int idDonHang, int idSanPham){
+        return false;
+    }
+
+    public boolean capNhatSanPhamDonHang(int idDonHang, int idSanPham, boolean them){
+
+        return false;
+    }
+
     public boolean huyDonHang(int idDonHang){
 
         return false;
@@ -117,23 +146,21 @@ public class ModelKhachHang {
         return trangTinTuc;
     }
 
-    public boolean capNhatSanPhamYeuThich(int idKhachHang, int idSanPham){
+    public boolean capNhatSanPhamYeuThich(boolean isThich, int idSanPham){
         boolean b = false;
-
-        return b;
-    }
-
-    public boolean themSanPhamYeuThich(int idSanPham){
-        boolean b = false;
-        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/likes/customer/like?product_id=" + idSanPham);
+        String duongDan;
+        if(isThich){
+            duongDan = "/likes/customer/like?product_id=";
+        }else{
+            duongDan = "/likes/customer/dislike?product_id=";
+        }
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + duongDan + idSanPham);
         downloadJSON.execute();
 
         try {
             String dataJSON = downloadJSON.get();
-            Log.d("THEMSP", dataJSON);
             JSONObject object = new JSONObject(dataJSON);
             b = object.getBoolean("success");
-            Log.d("THEMSP", String.valueOf(b));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -144,7 +171,7 @@ public class ModelKhachHang {
         return b;
     }
 
-    public boolean xoaSanPhamYeuThich(int idSanPham){
+    public boolean kiemTraSanPhamYeuThich(int idSanPham){
         boolean b = false;
 
         return b;

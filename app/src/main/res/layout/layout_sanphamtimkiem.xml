@@ -18,7 +18,7 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -34,6 +34,18 @@
 
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvThongBao"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="Không tìm thấy sản phẩm phù hợp"
+            android:textSize="18sp"
+            android:textColor="@color/colorOrange"
+            android:layout_margin="10dp"
+            android:textAlignment="center"
+            android:visibility="gone"/>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

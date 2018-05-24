@@ -42,6 +42,7 @@ import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.BottomSheetLocSanPham;
 import com.example.tieu_nt.vshop.View.DialogSapXep;
 import com.example.tieu_nt.vshop.View.DialogTimKiem;
+import com.example.tieu_nt.vshop.View.LocSanPham;
 import com.example.tieu_nt.vshop.View.MainActivity;
 import com.example.tieu_nt.vshop.View.SapXepSanPham;
 import com.example.tieu_nt.vshop.View.TimKiemSanPham;
@@ -55,7 +56,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TrangChuActivity extends MainActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, ViewHienThiDanhSachThuongHieu,
-ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham{
+ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham, LocSanPham{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -82,11 +83,13 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham{
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
-    public static final String SERVER = "http://10.11.3.255:8080/VShop/shop-mobile/public";
+    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
+    public static final String API_DANGXUAT = SERVER + "/logout";
     public static final String API_THUONGHIEU = SERVER + "/providers";
     private String duongDan = SERVER + "/sort&filter/products?product_type_id=1";
+    private String sapXep = "", maThuongHieu = "", soSaoTB = "";
     private LoadMoreScroll loadMoreScroll;
 
     @Override
@@ -313,9 +316,17 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham{
         }
     }
 
+    private String getDuongDan(){
+        String dd = duongDan + sapXep + maThuongHieu + soSaoTB;
+        return dd;
+    }
+
     @Override
-    public void sapXep(String giaTri, String sapXep) {
-        Toast.makeText(this, giaTri + ": " + sapXep, Toast.LENGTH_SHORT).show();
+    public void sapXep(String sapXep) {
+        if(!sapXep.equals("")){
+            this.sapXep = "&sort=" + sapXep;
+            presenterLogicSanPham.layDanhSachSanPham(getDuongDan());
+        }
     }
 
     @Override
@@ -323,5 +334,18 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham{
         Intent iTimKiem = new Intent(this, SanPhamTimKiemActivity.class);
         iTimKiem.putExtra("timKiem", timKiem);
         startActivity(iTimKiem);
+    }
+
+    @Override
+    public void locSanPham(int idThuongHieu, int giaThap, int giaCao, float danhGia) {
+        Toast.makeText(this, "Lọc sẩn phẩm", Toast.LENGTH_SHORT).show();
+        if(idThuongHieu > 0){
+            this.maThuongHieu = "&provider_id=" + idThuongHieu;
+        }
+        if(danhGia > 0){
+            soSaoTB = "&evaluation=" + danhGia;
+        }
+        bottomSheetLocSanPham.dismiss();
+        presenterLogicSanPham.layDanhSachSanPham(getDuongDan());
     }
 }

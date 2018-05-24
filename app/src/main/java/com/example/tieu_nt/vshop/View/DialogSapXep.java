@@ -16,13 +16,12 @@ import com.example.tieu_nt.vshop.R;
 
 public class DialogSapXep extends AlertDialog.Builder{
     private Context context;
-    private ImageView[] imgSapXep = new ImageView[4];
-    private RelativeLayout[] relaSapXep = new RelativeLayout[4];
+    private ImageView[] imgSapXep = new ImageView[3];
+    private RelativeLayout[] relaSapXep = new RelativeLayout[3];
     private int viTriSapXep = -1;
-    private final String SAPXEP_SPMOI = "idSanPham", SAPXEP_GIA = "giaChuan", SAPXEP_DANHGIA = "soDanhGia", SAPXEP_GIAM = "DESC", SAPXEP_TANG = "ASC";
-    private String sapXep = "", giaTri = "";
     private AlertDialog alertDialog;
     private SapXepSanPham sapXepSanPham;
+    private String sapXep = "";
 
 
     public DialogSapXep(Context context, SapXepSanPham sapXepSanPham){
@@ -37,12 +36,12 @@ public class DialogSapXep extends AlertDialog.Builder{
         relaSapXep[0] = view.findViewById(R.id.relaGiaCaoDenThap);
         relaSapXep[1] = view.findViewById(R.id.relaGiaThapDenCao);
         relaSapXep[2] = view.findViewById(R.id.relaSanPhamMoi);
-        relaSapXep[3] = view.findViewById(R.id.relaDanhGia);
+//        relaSapXep[3] = view.findViewById(R.id.relaDanhGia);
 
         imgSapXep[0] = view.findViewById(R.id.imgGiaCaoDenThap);
         imgSapXep[1] = view.findViewById(R.id.imgGiaThapDenCao);
         imgSapXep[2] = view.findViewById(R.id.imgSanPhamMoi);
-        imgSapXep[3] = view.findViewById(R.id.imgDanhGia);
+//        imgSapXep[3] = view.findViewById(R.id.imgDanhGia);
 
         Button btnHuy = (Button) view.findViewById(R.id.btnHuy);
         Button btnApDung = (Button) view.findViewById(R.id.btnApDung);
@@ -61,8 +60,7 @@ public class DialogSapXep extends AlertDialog.Builder{
                         imgSapXep[viTriSapXep].setVisibility(View.GONE);
                     viTriSapXep = 0;
                     imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_GIA;
-                    sapXep = SAPXEP_GIAM;
+                    sapXep = "top";
                 }
             }
         });
@@ -78,8 +76,7 @@ public class DialogSapXep extends AlertDialog.Builder{
                         imgSapXep[viTriSapXep].setVisibility(View.GONE);
                     viTriSapXep = 1;
                     imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_GIA;
-                    sapXep = SAPXEP_TANG;
+                    sapXep = "last";
                 }
             }
         });
@@ -95,28 +92,25 @@ public class DialogSapXep extends AlertDialog.Builder{
                         imgSapXep[viTriSapXep].setVisibility(View.GONE);
                     viTriSapXep = 2;
                     imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_SPMOI;
-                    sapXep = SAPXEP_GIAM;
+                    sapXep = "new";
                 }
             }
         });
-
-        relaSapXep[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viTriSapXep == 3){
-                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = -1;
-                }else {
-                    if(viTriSapXep != -1)
-                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-                    viTriSapXep = 3;
-                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-                    giaTri = SAPXEP_DANHGIA;
-                    sapXep = SAPXEP_GIAM;
-                }
-            }
-        });
+//
+//        relaSapXep[3].setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(viTriSapXep == 3){
+//                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
+//                    viTriSapXep = -1;
+//                }else {
+//                    if(viTriSapXep != -1)
+//                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
+//                    viTriSapXep = 3;
+//                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
 
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +122,9 @@ public class DialogSapXep extends AlertDialog.Builder{
         btnApDung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sapXepSanPham.sapXep(giaTri, sapXep);
+                alertDialog.dismiss();
+                if(!sapXep.equals(""))
+                    sapXepSanPham.sapXep(sapXep);
             }
         });
 

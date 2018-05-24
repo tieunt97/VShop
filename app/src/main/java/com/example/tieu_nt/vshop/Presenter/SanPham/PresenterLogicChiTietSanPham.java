@@ -17,11 +17,9 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     private ViewChiTietSanPham viewChiTietSanPham;
     private ModelSanPham modelSanPham;
     private ModelKhachHang modelKhachHang;
-    private Context context;
 
 
-    public PresenterLogicChiTietSanPham(Context context, ViewChiTietSanPham viewChiTietSanPham) {
-        this.context = context;
+    public PresenterLogicChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
         this.viewChiTietSanPham = viewChiTietSanPham;
         this.modelSanPham = ModelSanPham.getInstance();
         this.modelKhachHang = ModelKhachHang.getInstance();
@@ -38,15 +36,5 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
         if(sanPham.getDsDanhGia().size() > 0){
             viewChiTietSanPham.hienThiDSDanhGia(sanPham.getDsDanhGia());
         }
-    }
-
-    @Override
-    public boolean themSanPhamYeuThich(int idSanPham) {
-        return modelKhachHang.themSanPhamYeuThich(idSanPham);
-    }
-
-    @Override
-    public boolean xoaSanPhamYeuThich(int idSanPham) {
-        return false;
     }
 }

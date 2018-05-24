@@ -4,12 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by tieu_nt on 5/18/2018.
@@ -28,6 +31,21 @@ public class ModelGioHang {
             modelGioHang = new ModelGioHang();
 
         return modelGioHang;
+    }
+
+    public Bitmap layHinhSanPham(String hinhSanPham){
+        DownloadHinhSanPham downloadHinhSanPham = new DownloadHinhSanPham(hinhSanPham);
+        downloadHinhSanPham.execute();
+        Bitmap bitmap = null;
+        try {
+            bitmap = downloadHinhSanPham.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     public void ketNoiSQLite(Context context){
