@@ -17,5 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('likes','LikeProductController')->except(['index']);
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('user/update','UsersController@updateUser');
+});
+
+
+
 

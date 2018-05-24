@@ -36,7 +36,7 @@ class RegisterController extends AppBaseController
     		$user = $this->create($request);
     		DB::commit();
     	}catch(Exception $e) {
-    		DB:rollback();
+    		DB::rollback();
     		throw($e);
     	}
     	return $this->sendResponse($user, '200');
@@ -55,6 +55,7 @@ class RegisterController extends AppBaseController
             'email' => $data['email'],
             'level'=> $data['level'],
             'password' => bcrypt($data['password']),
+            'api_token' => bin2hex(random_bytes(32))
         ]);
     }
 }
