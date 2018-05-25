@@ -24,8 +24,12 @@ class ShipperService {
 	}
 
 	public function getMyOrderList() {
+		return $this->getMyOrderListWithStates(['received_order','shipping']);
+	}
+
+	public function getMyOrderListByState($state) {
 		$orders = SaleBill::select('id','customer_id','destination_address','ship_fee','status_order')
-		->where('status_order', '=', 'received_order')->get();
+		->where('status_order', '=', $state)->get();
 		foreach ($orders as $order) {
 			$customer_info = User::select('name','phone_number')->where('id', '=' , $order->customer_id)->get();
 			$order->customer_info = $customer_info;
@@ -34,6 +38,24 @@ class ShipperService {
 		return $orders;
 	}
 
+	public function getMyOrderListWithStates($states) {
+		$query = SaleBill::select('id','customer_id','destination_address','ship_fee','status_order');
+		foreach ($states as $state) {
+			$query = $query->orWhere('status_order', '=', $state);		
+		}
+		$orders = $query->get();
+		foreach ($orders as $order) {
+			$customer_info = User::select('name','phone_number')->where('id', '=' , $order->customer_id)->get();
+			$order->customer_info = $customer_info;
+			$order->order_detail = $this->getProductInfoOfSaleBill($order->id);
+		}
+		return $orders;
+	}
+	
+
+	public function getMyHistoryOrderList() {
+		return $this->getMyOrderListByState('shipped');
+	}
 
 	public function getProductInfoOfSaleBill($sale_bill_id) {
 		$info = [];

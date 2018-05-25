@@ -25,6 +25,11 @@ class ShipperController extends AppBaseController
         return $this->sendResponse($orderList, '200');
     }
 
+    public function getMyHistoryOrderList() {
+        $orderList = $this->shipperService->getMyHistoryOrderList('shipped');
+        return $this->sendResponse($orderList, '200');
+    }
+
     
 
     public function getProductInfoOfSaleBill($sale_bill_id) {
