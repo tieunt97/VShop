@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamGioHang;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
@@ -39,6 +41,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     private TextView tvDiaChi, tvGiaTongSP, tvPhiGiaoHang, tvTongTienTT, tvThongBao, tvSoSanPham;
     private Button btnThanhToan;
     private RelativeLayout relaGioHang;
+    private LinearLayout linerThanhToan;
     private List<SanPham> dsSanPham;
     private PresenterLogicGioHang presenterLogicGioHang;
     private AdapterSanPhamGioHang adapterSanPhamGioHang;
@@ -68,7 +71,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TrangChuActivity.nguoiDung == null){
+                if(DangNhap.getInstance().getNguoiDung() == null){
                     Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập để thanh toán", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent iThanhToan = new Intent(GioHangActivity.this, XacNhanMuaHangActivity.class);
@@ -99,6 +102,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         tvSoSanPham = (TextView) findViewById(R.id.tvSoSanPham);
         btnThanhToan = (Button) findViewById(R.id.btnThanhToan);
         relaGioHang = (RelativeLayout) findViewById(R.id.relaGioHang);
+        linerThanhToan = (LinearLayout) findViewById(R.id.linearThanhToan);
     }
 
     @Override
@@ -179,6 +183,12 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_MUAHANG){
                 soSP = data.getIntExtra("soSP", soSP);
+                if(soSP == 0){
+                    tvThongBao.setVisibility(View.VISIBLE);
+                    relaGioHang.setVisibility(View.GONE);
+                    linerThanhToan.setVisibility(View.GONE);
+                    toolbar.setTitle("Giỏ hàng của tôi");
+                }
             }
         }
     }

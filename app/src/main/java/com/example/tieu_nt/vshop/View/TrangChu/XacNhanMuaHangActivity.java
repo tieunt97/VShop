@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterMuaHang;
@@ -48,8 +49,8 @@ public class XacNhanMuaHangActivity extends AppCompatActivity implements View.On
         donHang = new DonHang();
         donHang.setPhiShip(getIntent().getIntExtra("phiShip", 0));
         donHang.setTrangThai(DonHang.TRANGTHAI_DADATHANG);
-        donHang.setKhachHang(TrangChuActivity.nguoiDung);
-        donHang.setDiaChi(TrangChuActivity.nguoiDung.getDiaChi());
+        donHang.setKhachHang(DangNhap.getInstance().getNguoiDung());
+        donHang.setDiaChi(DangNhap.getInstance().getNguoiDung().getDiaChi());
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -152,8 +153,8 @@ public class XacNhanMuaHangActivity extends AppCompatActivity implements View.On
         if(presenterLogicGioHang.xoaSanPhamGioHang()){
             soSP = 0;
         }
-        if(presenterMuaHang.muaHang(TrangChuActivity.nguoiDung.getToken(), donHang)){
-            Toast.makeText(this, "Mua hàng thành công", Toast.LENGTH_SHORT).show();
+        if(presenterMuaHang.muaHang(DangNhap.getInstance().getNguoiDung().getToken(), donHang)){
+            Toast.makeText(XacNhanMuaHangActivity.this, "Mua hàng thành công", Toast.LENGTH_SHORT).show();
         }
     }
 

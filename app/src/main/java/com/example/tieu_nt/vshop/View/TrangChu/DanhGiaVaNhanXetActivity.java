@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterDanhGia;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
@@ -161,7 +162,7 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvDanhGiaSanPham:
-                if(TrangChuActivity.nguoiDung == null){
+                if(DangNhap.getInstance().getNguoiDung() == null){
                     Toast.makeText(this, "Bạn cần đăng nhập để có thể đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
                 }else{
                     bottomSheetDanhGiaSanPham.show(getSupportFragmentManager(), "DanhGiaSP");

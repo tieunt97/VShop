@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDangKy;
 import com.example.tieu_nt.vshop.R;
@@ -98,9 +99,9 @@ public class FragmentDangKy extends Fragment implements View.OnClickListener, Te
 
     @Override
     public void thaoTacThanhCong(NguoiDung nguoiDung) {
+        DangNhap.getInstance().setNguoiDung(nguoiDung);
         if(nguoiDung.getLevel() == NguoiDung.LEVEL_KHACHHANG){
             Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
-            iTrangChu.putExtra("nguoiDung", nguoiDung);
             startActivity(iTrangChu);
         }
     }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DrawerItem;
 import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDangXuat;
 import com.example.tieu_nt.vshop.Presenter.ItemClickListener;
@@ -51,7 +52,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
         presenterLogicDangXuat = PresenterLogicDangXuat.getInstance();
 
         int length = tenItems.length;
-        if (TrangChuActivity.nguoiDung != null) tenItems[length - 1] = "Đăng xuất";
+        if (DangNhap.getInstance().getNguoiDung() != null) tenItems[length - 1] = "Đăng xuất";
         else tenItems[length - 1] = "Đăng nhập";
 
         for (int i = 0; i < length; i++){
@@ -128,14 +129,14 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
     }
 
     private boolean kiemTraDangNhap(){
-        if(TrangChuActivity.nguoiDung == null)
+        if(DangNhap.getInstance().getNguoiDung() == null)
             return false;
         else
             return true;
     }
 
     private void dangNhapDangXuat(){
-        if(TrangChuActivity.nguoiDung != null){
+        if(DangNhap.getInstance().getNguoiDung() != null){
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_thongbao_xacnhan, null);
             Button btnHuy = (Button) view1.findViewById(R.id.btnHuy);
@@ -155,11 +156,10 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
             btnDongY.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(presenterLogicDangXuat.dangXuat()){
-                        Intent iDangNhap = new Intent(context, DangNhapActivity.class);
-                        iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        context.startActivity(iDangNhap);
-                    }
+                    DangNhap.getInstance().setNguoiDung(null);
+                    Intent iDangNhap = new Intent(context, DangNhapActivity.class);
+                    iDangNhap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(iDangNhap);
                 }
             });
         }else{

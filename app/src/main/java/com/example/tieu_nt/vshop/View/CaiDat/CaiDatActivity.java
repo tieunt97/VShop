@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
@@ -63,8 +64,8 @@ public class CaiDatActivity extends MainActivity implements View.OnClickListener
             }
         });
 
-        if(TrangChuActivity.nguoiDung != null){
-            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        if(DangNhap.getInstance().getNguoiDung() != null){
+            tvHoTen.setText(DangNhap.getInstance().getNguoiDung().getTenNguoiDung());
         }else{
             tvHoTen.setText("Bạn chưa đăng nhập");
         }
