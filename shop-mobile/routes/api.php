@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	
 	Route::get('shipper/order/info/{sale_id}','ShipperController@getProductInfoOfSaleBill');
 	Route::post('shipper/order/receive_order','ShipperController@receiveOrderByShipper');
+	Route::post('shipper/order/shipped','ShipperController@updateStatusOrderToShipped');
 });
 
 
