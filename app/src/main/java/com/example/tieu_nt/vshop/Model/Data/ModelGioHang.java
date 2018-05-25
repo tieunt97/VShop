@@ -62,6 +62,15 @@ public class ModelGioHang {
         }
     }
 
+    public boolean xoaSanPhamTrongGioHang(){
+        int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, null, null);
+        if (kiemTra > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public boolean capNhatSoLuongSanPhamGioHang(int idSanPham, int soLuong, int soLuongTonKho){
         ContentValues values = new ContentValues();
         values.put(DatabaseSanPham.SOLUONG, soLuong);

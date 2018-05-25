@@ -45,6 +45,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     private RecyclerView.LayoutManager layoutManager;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
     private int phiGiaoHang = 65000, giaTong = 0, soSP = 0;
+    private final int REQUEST_MUAHANG = 5;
 
 
     @Override
@@ -72,7 +73,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
                 }else{
                     Intent iThanhToan = new Intent(GioHangActivity.this, XacNhanMuaHangActivity.class);
                     iThanhToan.putExtra("phiShip", phiGiaoHang);
-                    startActivity(iThanhToan);
+                    startActivityForResult(iThanhToan, REQUEST_MUAHANG);
                 }
             }
         });
@@ -171,5 +172,14 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         data.putExtra("soSP", soSP);
         setResult(RESULT_OK, data);
         super.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_MUAHANG){
+                soSP = data.getIntExtra("soSP", soSP);
+            }
+        }
     }
 }

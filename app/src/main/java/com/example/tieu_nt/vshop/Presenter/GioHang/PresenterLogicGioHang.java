@@ -43,6 +43,10 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
         return modelGioHang.xoaSanPhamTrongGioHang(idSanPham);
     }
 
+    public boolean xoaSanPhamGioHang(){
+        return modelGioHang.xoaSanPhamTrongGioHang();
+    }
+
     @Override
     public boolean capNhatSoLuongSPGioHang(int idSanPham, int soLuong, int soLuongTonKho) {
         return modelGioHang.capNhatSoLuongSanPhamGioHang(idSanPham, soLuong, soLuongTonKho);

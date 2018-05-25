@@ -37,6 +37,25 @@ public class ModelSanPham {
         return modelSanPham;
     }
 
+    public int laySoLuongTrongKho(int idSanPham){
+        int soLuong = 0;
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham + "/getRestOfAmount");
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            soLuong = object.getInt("data");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return soLuong;
+    }
+
     public TrangDanhGia layDanhSachDanhGia(String duongDan){
         TrangDanhGia trangDanhGia = new TrangDanhGia();
         List<DanhGia> dsDanhGia = new ArrayList<>();

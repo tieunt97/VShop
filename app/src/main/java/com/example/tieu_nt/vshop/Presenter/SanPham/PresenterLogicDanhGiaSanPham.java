@@ -43,6 +43,6 @@ public class PresenterLogicDanhGiaSanPham implements IPresenterDanhGiaSanPham{
 
     @Override
     public boolean danhGiaSanPham(DanhGia danhGia) {
-        return modelKhachHang.danhGiaSanPham(danhGia);
+        return false;
     }
 }

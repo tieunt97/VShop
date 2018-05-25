@@ -5,6 +5,6 @@ package com.example.tieu_nt.vshop.Presenter.SanPham;
  */
 
 public interface IPresenterSanPhamYeuThich {
-    boolean kiemTraSanPham(int idSanPham);
-    boolean capNhatSanPhamYeuThich(boolean isThich, int idSanPham);
+    boolean kiemTraSanPham(String token, int idSanPham);
+    boolean capNhatSanPhamYeuThich(String token, boolean isThich, int idSanPham);
 }

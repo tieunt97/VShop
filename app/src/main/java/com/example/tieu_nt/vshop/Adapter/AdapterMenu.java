@@ -84,12 +84,10 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                     switch (position){
                         case 0:
                             Intent iTrangChu = new Intent(context, TrangChuActivity.class);
-                            iTrangChu.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTrangChu);
                             break;
                         case 1:
                             Intent iTinTuc = new Intent(context, TinTucActivity.class);
-                            iTinTuc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTinTuc);
                             break;
                         case 2:
@@ -97,7 +95,6 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                                 Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
                             }else{
                                 Intent iDSYeuThich = new Intent(context, DanhSachYeuThichActivity.class);
-                                iDSYeuThich.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 context.startActivity(iDSYeuThich);
                             }
                             break;
@@ -106,7 +103,6 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                                 Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
                             }else{
                                 Intent iDonHangCuaToi = new Intent(context, DonHangCuaToiActivity.class);
-                                iDonHangCuaToi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 context.startActivity(iDonHangCuaToi);
                             }
                             break;
@@ -115,13 +111,11 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.RecyclerViewHo
                                 Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
                             }else{
                                 Intent iCaiDat = new Intent(context, CaiDatActivity.class);
-                                iCaiDat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 context.startActivity(iCaiDat);
                             }
                             break;
                         case 5:
                             Intent iTrungTamHoTro = new Intent(context, TrungTamHoTroActivity.class);
-                            iTrungTamHoTro.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(iTrungTamHoTro);
                             break;
                         case 6:

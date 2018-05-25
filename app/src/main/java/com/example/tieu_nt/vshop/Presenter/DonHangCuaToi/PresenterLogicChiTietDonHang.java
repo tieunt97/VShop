@@ -32,11 +32,11 @@ public class PresenterLogicChiTietDonHang implements IPresenterChiTietDonHang {
 
     @Override
     public boolean xoaSanPhamDonHang(int idDonHang, int idSanPham) {
-        return modelKhachHang.xoaSanPhamDonHang(idDonHang, idSanPham);
+        return false;
     }
 
     @Override
     public boolean capNhatSanPhamDonHang(int idDonHang, int idSanPham, boolean them) {
-        return modelKhachHang.capNhatSanPhamDonHang(idDonHang, idSanPham, them);
+        return false;
     }
 }

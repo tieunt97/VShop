@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -187,7 +188,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         adapterViewPagerSlider.notifyDataSetChanged();
         tvSoAnh.setText("1/" + soHinh);
         viewPagerSlider.setOnPageChangeListener(this);
-        sanPham.setYeuThich(presenterLogicSanPhamYeuThich.kiemTraSanPham(sanPham.getIdSanPham()));
+        if (khachHang != null){
+            sanPham.setYeuThich(presenterLogicSanPhamYeuThich.kiemTraSanPham(khachHang.getToken(), sanPham.getIdSanPham()));
+        }else{
+            sanPham.setYeuThich(false);
+        }
         changeImgYeuThich();
     }
 
@@ -319,7 +324,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             Toast.makeText(this, "Bạn cần đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
         }else{
             boolean b = sanPham.isYeuThich();
-            if (presenterLogicSanPhamYeuThich.capNhatSanPhamYeuThich(b, sanPham.getIdSanPham())){
+            Log.d("THICHSP", String.valueOf(b));
+            if (presenterLogicSanPhamYeuThich.capNhatSanPhamYeuThich(khachHang.getToken(), b, sanPham.getIdSanPham())){
                 sanPham.setYeuThich(!b);
                 if(b){
                     Toast.makeText(this, "Đã xóa sản phẩm khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();

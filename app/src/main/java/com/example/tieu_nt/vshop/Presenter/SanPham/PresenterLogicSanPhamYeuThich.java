@@ -15,12 +15,12 @@ public class PresenterLogicSanPhamYeuThich implements IPresenterSanPhamYeuThich{
 
 
     @Override
-    public boolean kiemTraSanPham(int idSanPham) {
-        return modelKhachHang.kiemTraSanPhamYeuThich(idSanPham);
+    public boolean kiemTraSanPham(String token, int idSanPham) {
+        return modelKhachHang.kiemTraSanPhamYeuThich(token, idSanPham);
     }
 
     @Override
-    public boolean capNhatSanPhamYeuThich(boolean isThich, int idSanPham) {
-        return modelKhachHang.capNhatSanPhamYeuThich(isThich, idSanPham);
+    public boolean capNhatSanPhamYeuThich(String token, boolean isThich, int idSanPham) {
+        return modelKhachHang.capNhatSanPhamYeuThich(token, isThich, idSanPham);
     }
 }

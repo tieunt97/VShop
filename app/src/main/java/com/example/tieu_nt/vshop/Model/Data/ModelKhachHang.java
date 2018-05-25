@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -45,13 +46,13 @@ public class ModelKhachHang {
 
     public boolean dangXuat(){
         boolean b = false;
-        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.API_DANGXUAT);
+        List<HashMap<String,String>> attrs = new ArrayList<>();
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.API_DANGXUAT, attrs);
         downloadJSON.execute();
 
         try {
             String dataJSON = downloadJSON.get();
             JSONObject object = new JSONObject(dataJSON);
-            Log.d("dataJSON", dataJSON);
             b = object.getBoolean("data");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -63,13 +64,35 @@ public class ModelKhachHang {
         return b;
     }
 
-    public boolean xoaSanPhamDonHang(int idDonHang, int idSanPham){
-        return false;
-    }
+    public List<SanPham> layDanhSachSanPhamYeuThich(String duongDan){
+        List<SanPham> dsSanPham = new ArrayList<>();
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan);
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            JSONArray arraySanPham = object.getJSONArray("data");
+            for(int i = 0; i < arraySanPham.length(); i++){
+                JSONObject objectSanPham = arraySanPham.getJSONObject(i);
+                SanPham sanPham = new SanPham();
+                sanPham.setIdSanPham(objectSanPham.getInt("id"));
+                sanPham.setTenSanPham(objectSanPham.getString("product_name"));
+                sanPham.setHinhSanPham(objectSanPham.getString("main_image"));
+                sanPham.setGiaChuan(objectSanPham.getInt("base_price"));
+                sanPham.setDanhGiaTB((float) objectSanPham.getDouble("star_number"));
+                sanPham.setSoLuotDanhGia(objectSanPham.getInt("star_count"));
 
-    public boolean capNhatSanPhamDonHang(int idDonHang, int idSanPham, boolean them){
+                dsSanPham.add(sanPham);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        return false;
+        return dsSanPham;
     }
 
     public boolean huyDonHang(int idDonHang){
@@ -81,13 +104,51 @@ public class ModelKhachHang {
         return false;
     }
 
-    public boolean xacNhanMuaHang(int idKhachHang, int idSanPham){
-        return false;
-    }
+    public boolean xacNhanMuaHang(String token, DonHang donHang){
+        boolean b = false;
+        List<HashMap<String,String>> attrs = new ArrayList<>();
+        String duongDan = TrangChuActivity.SERVER + "/api/user/customer/order_book";
 
-    public boolean danhGiaSanPham(DanhGia danhGia){
+        HashMap<String, String> hsToken = new HashMap<>();
+        hsToken.put("api_token", token);
 
-        return false;
+        HashMap<String, String> hsDiaChi = new HashMap<>();
+        hsDiaChi.put("destination_address", token);
+
+        String product = "";
+        int size = donHang.getDsSanPham().size();
+        for(int i = 0; i < size; i++){
+            SanPham sp = donHang.getDsSanPham().get(i);
+            if(i == 0){
+                product += sp.getIdSanPham() + "," + sp.getSoLuong();
+            }else{
+                product += "," + sp.getIdSanPham() + "," + sp.getSoLuong();
+            }
+        }
+        HashMap<String, String> hsSP = new HashMap<>();
+        hsSP.put("products", product);
+        Log.d("DONHANG", token);
+        Log.d("DONHANG", donHang.getDiaChi());
+        Log.d("DONHANG", product);
+        attrs.add(hsToken);
+        attrs.add(hsDiaChi);
+        attrs.add(hsSP);
+
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan, attrs);
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            b = object.getBoolean("success");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 
     public List<SanPham> layDanhSachSanPhamDonHang(int idDonHang){
@@ -146,19 +207,30 @@ public class ModelKhachHang {
         return trangTinTuc;
     }
 
-    public boolean capNhatSanPhamYeuThich(boolean isThich, int idSanPham){
+    public boolean capNhatSanPhamYeuThich(String token, boolean isThich, int idSanPham){
         boolean b = false;
+        List<HashMap<String,String>> attrs = new ArrayList<>();
+
+        HashMap<String,String> hsToken = new HashMap<>();
+        hsToken.put("api_token", token);
+
+        HashMap<String,String> hsIdSP = new HashMap<>();
+        hsIdSP.put("product_id", String.valueOf(idSanPham));
+
+        attrs.add(hsToken);
+        attrs.add(hsIdSP);
         String duongDan;
         if(isThich){
-            duongDan = "/likes/customer/like?product_id=";
+            duongDan = TrangChuActivity.SERVER + "/api/likes/customer/like";
         }else{
-            duongDan = "/likes/customer/dislike?product_id=";
+            duongDan = TrangChuActivity.SERVER + "/api/likes/customer/dislike";
         }
-        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + duongDan + idSanPham);
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan, attrs);
         downloadJSON.execute();
 
         try {
             String dataJSON = downloadJSON.get();
+            Log.d("dataJSONYT", dataJSON);
             JSONObject object = new JSONObject(dataJSON);
             b = object.getBoolean("success");
         } catch (InterruptedException e) {
@@ -171,9 +243,23 @@ public class ModelKhachHang {
         return b;
     }
 
-    public boolean kiemTraSanPhamYeuThich(int idSanPham){
+    public boolean kiemTraSanPhamYeuThich(String token, int idSanPham){
         boolean b = false;
+        String duongDan = TrangChuActivity.SERVER + "/api/likes/customer/is_liked?api_token=" + token + "&product_id=" + idSanPham;
+        DownloadJSON downloadJSON = new DownloadJSON(duongDan);
+        downloadJSON.execute();
 
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            b = object.getBoolean("data");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return b;
     }
 }
