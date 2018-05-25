@@ -96,13 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-<<<<<<< HEAD
                 android:gravity="center">
-=======
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:visibility="gone">
->>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -83,12 +83,8 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham, LocSanPham
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
     public static NguoiDung nguoiDung;
-<<<<<<< HEAD
-//    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
     public static final String SERVER = "http://192.168.1.76/VShop/shop-mobile/public";
-=======
-    public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
->>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
+//    public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
     public static final String API_DANGXUAT = SERVER + "/logout";

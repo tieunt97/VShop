@@ -20,7 +20,7 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
-        <activity android:name=".View.Shiper.ShiperActivity">
+        <activity android:name=".GioiThieuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <!--<activity android:name=".View.Shiper.ShiperActivity"/>-->
+        <activity android:name=".View.Shiper.ShiperActivity"/>
 
         <activity android:name=".View.Shiper.ChiTietSanPhamActivity"
             android:screenOrientation="portrait"/>

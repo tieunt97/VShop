@@ -37,14 +37,10 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
     private RecyclerView recyclerDonHang;
     private RecyclerView.LayoutManager layoutManager;
     private PresenterLogicChiTietDonHang presenterLogicChiTietDonHang;
-<<<<<<< HEAD
     private AdapterSanPhamGioHang adapterSanPhamGioHang;
     private ArrayList<SanPham> dsSanPham;
     private AdapterChiTietDonHang adapterSanPham;
-=======
-//    private AdapterSanPhamGioHang adapterSanPhamGioHang;
 
->>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

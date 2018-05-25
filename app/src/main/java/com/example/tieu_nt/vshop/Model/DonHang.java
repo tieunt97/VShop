@@ -1,30 +1,19 @@
 package com.example.tieu_nt.vshop.Model;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import java.util.Date;
-import java.util.List;
->>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
 
 /**
  * Created by tieu_nt on 3/20/2018.
  */
 
 public class DonHang implements Serializable{
-<<<<<<< HEAD
     private int idHoaDon, idKhachHang, idSanPham, tongTienTT, phiShip, trangThai;
     private String ngayDatHang, ngayGiaoHang, diaChi;
     private NguoiDung khachHang;
     private ArrayList<SanPham> dsSanPham;
-=======
-    private int idHoaDon, phiShip, trangThai;
-    private String diaChi;
     private Date ngayDat, ngayGiao;
-    private NguoiDung khachHang;
-    private List<SanPham> dsSanPham;
->>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
     public static final int TRANGTHAI_DADATHANG = 1, TRANGTHAI_DANGGIAOHANG = 2, TRANGTHAI_DANHANHANG = 3,
     TRANGTHAI_HUYDONHANG = 4, TRANGTHAI_COHANGTRA = 5;
 
@@ -61,21 +50,6 @@ public class DonHang implements Serializable{
         this.trangThai = trangThai;
     }
 
-    public NguoiDung getKhachHang() {
-        return khachHang;
-    }
-
-    public void setKhachHang(NguoiDung khachHang) {
-        this.khachHang = khachHang;
-    }
-
-    public List<SanPham> getDsSanPham() {
-        return dsSanPham;
-    }
-
-    public void setDsSanPham(List<SanPham> dsSanPham) {
-        this.dsSanPham = dsSanPham;
-    }
 
     public Date getNgayDat() {
         return ngayDat;
@@ -108,5 +82,45 @@ public class DonHang implements Serializable{
 
     public void setKhachHang(NguoiDung khachHang) {
         this.khachHang = khachHang;
+    }
+
+    public int getIdKhachHang() {
+        return idKhachHang;
+    }
+
+    public void setIdKhachHang(int idKhachHang) {
+        this.idKhachHang = idKhachHang;
+    }
+
+    public int getIdSanPham() {
+        return idSanPham;
+    }
+
+    public void setIdSanPham(int idSanPham) {
+        this.idSanPham = idSanPham;
+    }
+
+    public int getTongTienTT() {
+        return tongTienTT;
+    }
+
+    public void setTongTienTT(int tongTienTT) {
+        this.tongTienTT = tongTienTT;
+    }
+
+    public String getNgayDatHang() {
+        return ngayDatHang;
+    }
+
+    public void setNgayDatHang(String ngayDatHang) {
+        this.ngayDatHang = ngayDatHang;
+    }
+
+    public String getNgayGiaoHang() {
+        return ngayGiaoHang;
+    }
+
+    public void setNgayGiaoHang(String ngayGiaoHang) {
+        this.ngayGiaoHang = ngayGiaoHang;
     }
 }

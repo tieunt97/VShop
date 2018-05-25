@@ -21,6 +21,7 @@ import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterMuaHang;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
 import com.example.tieu_nt.vshop.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -146,7 +147,7 @@ public class XacNhanMuaHangActivity extends AppCompatActivity implements View.On
             }
         }
 
-        donHang.setDsSanPham(dsSanPham);
+        donHang.setDsSanPham((ArrayList<SanPham>) dsSanPham);
         donHang.setDiaChi(edtDiaChi.getText().toString());
         if(presenterLogicGioHang.xoaSanPhamGioHang()){
             soSP = 0;
