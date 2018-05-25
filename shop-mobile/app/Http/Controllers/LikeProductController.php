@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\LikeProductService;
+use App\Http\Services\ProductService;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LikeProductController extends AppBaseController
 {   
     protected $likeProductService;
+    protected  $productService;
 
-    public function __construct(LikeProductService $likeProductService)
+    public function __construct(LikeProductService $likeProductService, ProductService $productService)
     {
         $this->likeProductService = $likeProductService;
+        $this->productService = $productService;
     }
   
 
@@ -21,7 +25,7 @@ class LikeProductController extends AppBaseController
     {
         $user = Auth::user();
         $likeProducts = $this->likeProductService->getLikeOfCustomer($user->id);
-        return $this->sendResponse($likeProducts, '200');
+        return $this->sendResponse($this->additionStarInfoToProducts($likeProducts), '200');
     }
 
     public function checkIsLikeOfCustomer(Request $request) {
@@ -29,6 +33,15 @@ class LikeProductController extends AppBaseController
         $user = Auth::user();
         $isLike = $this->likeProductService->checkCustommerLikedProduct($user->id, $product_id);
         return $this->sendResponse($isLike, '200');
+    }
+
+    public function additionStarInfoToProducts($products) {
+        foreach ($products as $product) {
+            $star_info = $this->productService->getStarNumberOfProduct($product->id);
+            $product->star_number = $star_info['star_number'];
+            $product->star_count  = $star_info['star_count'];
+        }
+        return $products;
     }
 
     public function like(Request $request) {
