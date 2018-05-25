@@ -67,11 +67,18 @@
                         android:background="#ffc916"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recycleTatCa"
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/swipeDangGiao"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycleDangGiao"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="This is tab 1" />
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
 
                     </LinearLayout>
 
@@ -82,11 +89,40 @@
                         android:background="#ffc916"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recycleDangCho"
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/swipeNhanDon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycleNhanDon"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="This is tab 2" />
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tab3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#ffc916"
+                        android:orientation="vertical">
+
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            android:id="@+id/swipeLichSu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recycleLichSu"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="This is tab 2" />
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
 
                     </LinearLayout>
 
@@ -100,14 +136,11 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="trong an cut"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <include layout="@layout/drawer_header_layout"/>
 
     </android.support.design.widget.NavigationView>
 

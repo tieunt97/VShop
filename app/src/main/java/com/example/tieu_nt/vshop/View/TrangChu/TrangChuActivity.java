@@ -84,7 +84,8 @@ ViewHienThiDanhSachSanPham, ILoadMore{
     private String sapXep = "", giaTri = "";
 
     public static NguoiDung nguoiDung;
-    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
+//    public static final String SERVER = "http://192.168.1.110:8080/VShop/shop-mobile/public";
+    public static final String SERVER = "http://192.168.1.76/VShop/shop-mobile/public";
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
     public static final String API_THUONGHIEU = SERVER + "/providers";

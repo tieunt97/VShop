@@ -92,6 +92,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
         TextView tvTenSanPham, tvGiaSP, tvKhuyenMaiTraGop, tvSoDanhGia;
         RatingBar rbDanhGia;
         ProgressBar progressBar;
+
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardViewSanPham);

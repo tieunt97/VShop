@@ -17,7 +17,6 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
     private ModelKhachHang modelKhachHang;
 
 
-
     public PresenterLogicChiTietSanPham(ViewChiTietSanPham viewChiTietSanPham) {
         this.viewChiTietSanPham = viewChiTietSanPham;
         this.modelSanPham = ModelSanPham.getInstance();

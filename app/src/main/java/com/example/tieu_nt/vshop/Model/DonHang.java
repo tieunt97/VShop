@@ -1,14 +1,20 @@
 package com.example.tieu_nt.vshop.Model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by tieu_nt on 3/20/2018.
  */
 
-public class DonHang {
+public class DonHang implements Serializable{
     private int idHoaDon, idKhachHang, idSanPham, tongTienTT, phiShip, trangThai;
     private String ngayDatHang, ngayGiaoHang, diaChi;
+    private NguoiDung khachHang;
+    private ArrayList<SanPham> dsSanPham;
     public static final int TRANGTHAI_DADATHANG = 1, TRANGTHAI_DANGGIAOHANG = 2, TRANGTHAI_DANHANHANG = 3,
     TRANGTHAI_HUYDONHANG = 4, TRANGTHAI_COHANGTRA = 5;
+
 
     public int getIdHoaDon() {
         return idHoaDon;
@@ -80,5 +86,22 @@ public class DonHang {
 
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
+    }
+
+
+    public ArrayList<SanPham> getDsSanPham() {
+        return dsSanPham;
+    }
+
+    public void setDsSanPham(ArrayList<SanPham> dsSanPham) {
+        this.dsSanPham = dsSanPham;
+    }
+
+    public NguoiDung getKhachHang() {
+        return khachHang;
+    }
+
+    public void setKhachHang(NguoiDung khachHang) {
+        this.khachHang = khachHang;
     }
 }
