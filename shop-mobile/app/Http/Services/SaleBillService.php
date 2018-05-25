@@ -34,12 +34,45 @@ class SaleBillService {
 	}
 
 	public function orderBook($request) {
-		$user = Auth::user();
-		$destination_address = $request->destination_address;
+        $sale_bill_id = $this->createSaleBill($request->destination_address);
 		$products = $request->products;
-		// foreach ($products as $product) {
-		// 	return $product; 
-		// }
-		return $products;
+		foreach ($products as $product) {
+			DB::beginTransaction();
+        try {
+            DB::table('sale_descriptions')->insert([
+            	'product_id'	=>	$product['product_id'],
+            	'sale_bill_id'	=>	$sale_bill_id,
+            	'amount'	=>	$product['amount'],
+            	'created_at'	=> Carbon::now(),
+            ]);    
+            DB::commit();
+         } catch (\Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
+		}
+
+		return true;
+	}
+
+	public function createSaleBill($destination_address) {
+		$user = Auth::user();
+		DB::beginTransaction();
+        try {
+            DB::table('sale_bills')->insert([
+            	'customer_id'	=>	$user->id,
+            	'status_order'	=>	'pending',
+            	'delivery_date'	=>	Carbon::now(),
+            	'destination_address'	=> $destination_address,
+            	'ship_fee'			=> 2,
+            	'book_date'		=>	Carbon::now()
+            ]);    
+            DB::commit();
+            return DB::table('sale_bills')->orderBy('id','desc')->pluck('id')->first();
+         } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+
 	}
 }

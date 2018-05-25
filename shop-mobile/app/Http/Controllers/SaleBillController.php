@@ -28,7 +28,9 @@ class SaleBillController extends AppBaseController
     }
 
     public function orderBook(Request $request) {
-        $products = $request->products;
+        // $products = $request->products;
+        // $products = [['product_id' =>  5,'amount' => 4],['product_id' =>  54,'amount' => 4]];
+        // $request->products = $products;
         $orderBook = $this->saleBillService->orderBook($request);
         return $this->sendResponse($orderBook, '200');
     }
