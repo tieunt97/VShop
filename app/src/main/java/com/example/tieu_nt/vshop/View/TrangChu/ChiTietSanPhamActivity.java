@@ -31,6 +31,7 @@ import com.example.tieu_nt.vshop.Adapter.AdapterDanhGia;
 import com.example.tieu_nt.vshop.Adapter.AdapterViewPagerSlider;
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
 import com.example.tieu_nt.vshop.Model.ChiTietSanPham;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -84,7 +85,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
-        khachHang = TrangChuActivity.nguoiDung;
+        khachHang = DangNhap.getInstance().getNguoiDung();
 
         int idSanPham = getIntent().getIntExtra("idSanPham", 0);
         presenterLogicSanPhamYeuThich = new PresenterLogicSanPhamYeuThich();

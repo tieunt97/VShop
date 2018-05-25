@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterTinTuc;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.TinTuc;
@@ -80,8 +81,8 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
             }
         });
 
-        if(TrangChuActivity.nguoiDung != null){
-            tvHoTen.setText(TrangChuActivity.nguoiDung.getTenNguoiDung());
+        if(DangNhap.getInstance().getNguoiDung() != null){
+            tvHoTen.setText(DangNhap.getInstance().getNguoiDung().getTenNguoiDung());
         }else{
             tvHoTen.setText("Bạn chưa đăng nhập");
         }

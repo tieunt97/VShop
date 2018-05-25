@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Presenter.CaiDat.PresenteLogicCapNhatThongTin;
 import com.example.tieu_nt.vshop.R;
@@ -41,7 +42,7 @@ public class CapNhatThongTinActivity extends AppCompatActivity implements View.O
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
-        nguoiDung = TrangChuActivity.nguoiDung;
+        nguoiDung = DangNhap.getInstance().getNguoiDung();
         presenteLogicCapNhatThongTin = new PresenteLogicCapNhatThongTin();
         hienThiThongTin();
         setAction();

@@ -28,6 +28,7 @@ import android.widget.ToggleButton;
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Adapter.AdapterThuongHieu;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
@@ -82,7 +83,6 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham, LocSanPham
     private PresenterLogicGioHang presenterLogicGioHang;
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
 
-    public static NguoiDung nguoiDung;
     public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
     public static final String API_DANGNHAP = SERVER + "/login";
     public static final String API_DANGKY = SERVER + "/register";
@@ -100,10 +100,9 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham, LocSanPham
         linearLayoutManager = new LinearLayoutManager(this);
         gridLayoutManager = new GridLayoutManager(this, 2);
         modelKhachHang = ModelKhachHang.getInstance();
-        nguoiDung = (NguoiDung) getIntent().getSerializableExtra("nguoiDung");
 
-        if(nguoiDung != null){
-            tvHoTen.setText(nguoiDung.getTenNguoiDung());
+        if(DangNhap.getInstance().getNguoiDung() != null){
+            tvHoTen.setText(DangNhap.getInstance().getNguoiDung().getTenNguoiDung());
         }else{
             tvHoTen.setText("Bạn chưa đăng nhập");
         }

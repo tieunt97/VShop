@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterDonHangCuaToi;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
@@ -48,8 +49,8 @@ public class FragmentDonHangCuaToi extends Fragment implements ViewHienThiDanhSa
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerDonHang.setLayoutManager(layoutManager);
-        if(TrangChuActivity.nguoiDung != null){
-            idKhachHang = TrangChuActivity.nguoiDung.getIdNguoiDung();
+        if(DangNhap.getInstance().getNguoiDung() != null){
+            idKhachHang = DangNhap.getInstance().getNguoiDung().getIdNguoiDung();
         }
         presenterLogicDonHangCuaToi = new PresenterLogicDonHangCuaToi(this);
         presenterLogicDonHangCuaToi.layDanhSachDonHang(duongDan);
