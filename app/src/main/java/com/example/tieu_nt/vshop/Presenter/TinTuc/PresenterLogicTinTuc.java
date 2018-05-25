@@ -2,6 +2,7 @@ package com.example.tieu_nt.vshop.Presenter.TinTuc;
 
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
+import com.example.tieu_nt.vshop.View.TinTuc.ViewHienThiDanhSachTinTuc;
 
 /**
  * Created by tieu_nt on 4/26/2018.

@@ -11,6 +11,7 @@ public class DanhGia implements Serializable{
     private float soSao;
     private String tenKhachHang, tieuDe, noiDung;
     private Date thoiGian;
+    private int idKhachHang, idSanPham;
 
 
     public float getSoSao() {
@@ -51,5 +52,21 @@ public class DanhGia implements Serializable{
 
     public void setThoiGian(Date thoiGian) {
         this.thoiGian = thoiGian;
+    }
+
+    public int getIdKhachHang() {
+        return idKhachHang;
+    }
+
+    public void setIdKhachHang(int idKhachHang) {
+        this.idKhachHang = idKhachHang;
+    }
+
+    public int getIdSanPham() {
+        return idSanPham;
+    }
+
+    public void setIdSanPham(int idSanPham) {
+        this.idSanPham = idSanPham;
     }
 }

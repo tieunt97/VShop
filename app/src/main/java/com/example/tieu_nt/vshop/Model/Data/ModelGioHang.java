@@ -4,18 +4,49 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.example.tieu_nt.vshop.ConnectInternet.DownloadHinhSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by tieu_nt on 5/18/2018.
  */
 
 public class ModelGioHang {
-    SQLiteDatabase database;
+    private static ModelGioHang modelGioHang;
+    private SQLiteDatabase database;
+
+    private ModelGioHang(){
+
+    }
+
+    public static ModelGioHang getInstance(){
+        if(modelGioHang == null)
+            modelGioHang = new ModelGioHang();
+
+        return modelGioHang;
+    }
+
+    public Bitmap layHinhSanPham(String hinhSanPham){
+        DownloadHinhSanPham downloadHinhSanPham = new DownloadHinhSanPham(hinhSanPham);
+        downloadHinhSanPham.execute();
+        Bitmap bitmap = null;
+        try {
+            bitmap = downloadHinhSanPham.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
 
     public void ketNoiSQLite(Context context){
         DatabaseSanPham databaseSanPham = new DatabaseSanPham(context);
@@ -23,7 +54,16 @@ public class ModelGioHang {
     }
 
     public boolean xoaSanPhamTrongGioHang(int idSanPham){
-        int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, DatabaseSanPham.TB_GIOHANG_MASP + " = " + idSanPham, null);
+        int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, DatabaseSanPham.MASP + " = " + idSanPham, null);
+        if (kiemTra > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean xoaSanPhamTrongGioHang(){
+        int kiemTra = database.delete(DatabaseSanPham.TB_GIOHANG, null, null);
         if (kiemTra > 0){
             return true;
         }else{
@@ -33,10 +73,10 @@ public class ModelGioHang {
 
     public boolean capNhatSoLuongSanPhamGioHang(int idSanPham, int soLuong, int soLuongTonKho){
         ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.TB_GIOHANG_SOLUONG, soLuong);
-        values.put(DatabaseSanPham.TB_GIOHANG_SOLUONGTONKHO, soLuongTonKho);
+        values.put(DatabaseSanPham.SOLUONG, soLuong);
+        values.put(DatabaseSanPham.SOLUONGTONKHO, soLuongTonKho);
 
-        int id = database.update(DatabaseSanPham.TB_GIOHANG, values, DatabaseSanPham.TB_GIOHANG_MASP + " = " + idSanPham, null);
+        int id = database.update(DatabaseSanPham.TB_GIOHANG, values, DatabaseSanPham.MASP + " = " + idSanPham, null);
         if (id > 0){
             return true;
         }else{
@@ -46,12 +86,13 @@ public class ModelGioHang {
 
     public boolean themSanPhamGioHang(SanPham sanPham){
         ContentValues values = new ContentValues();
-        values.put(DatabaseSanPham.TB_GIOHANG_MASP, sanPham.getIdSanPham());
-        values.put(DatabaseSanPham.TB_GIOHANG_TENSP, sanPham.getTenSanPham());
-        values.put(DatabaseSanPham.TB_GIOHANG_GIATIEN, sanPham.getGiaChuan());
-        values.put(DatabaseSanPham.TB_GIOHANG_HINHANH, sanPham.getHinhSPGioHang());
-        values.put(DatabaseSanPham.TB_GIOHANG_SOLUONG, sanPham.getSoLuong());
-        values.put(DatabaseSanPham.TB_GIOHANG_SOLUONGTONKHO, sanPham.getSoLuongTonKho());
+        values.put(DatabaseSanPham.MASP, sanPham.getIdSanPham());
+        values.put(DatabaseSanPham.TENSP, sanPham.getTenSanPham());
+        values.put(DatabaseSanPham.GIATIEN, sanPham.getGiaChuan());
+        values.put(DatabaseSanPham.HINHANH, sanPham.getHinhSPGioHang());
+        values.put(DatabaseSanPham.SOLUONG, sanPham.getSoLuong());
+        values.put(DatabaseSanPham.DANHGIATB, sanPham.getDanhGiaTB());
+        values.put(DatabaseSanPham.SOLUONGTONKHO, sanPham.getSoLuongTonKho());
 
         long id = database.insert(DatabaseSanPham.TB_GIOHANG, null, values);
         if (id > 0){
@@ -59,7 +100,6 @@ public class ModelGioHang {
         }else{
             return false;
         }
-
     }
 
     public List<SanPham> layDSSanPhamGioHang(){
@@ -69,12 +109,13 @@ public class ModelGioHang {
         Cursor cursor =  database.rawQuery(sql, null);
         while (cursor.moveToNext()){
             SanPham sanPham = new SanPham();
-            sanPham.setIdSanPham(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_MASP)));
-            sanPham.setTenSanPham(cursor.getString(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_TENSP)));
-            sanPham.setGiaChuan(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_GIATIEN)));
-            sanPham.setHinhSPGioHang(cursor.getBlob(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_HINHANH)));
-            sanPham.setSoLuong(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_SOLUONG)));
-            sanPham.setSoLuongTonKho(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.TB_GIOHANG_SOLUONGTONKHO)));
+            sanPham.setIdSanPham(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.MASP)));
+            sanPham.setTenSanPham(cursor.getString(cursor.getColumnIndex(DatabaseSanPham.TENSP)));
+            sanPham.setGiaChuan(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.GIATIEN)));
+            sanPham.setHinhSPGioHang(cursor.getBlob(cursor.getColumnIndex(DatabaseSanPham.HINHANH)));
+            sanPham.setSoLuong(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.SOLUONG)));
+            sanPham.setDanhGiaTB(cursor.getFloat(cursor.getColumnIndex(DatabaseSanPham.DANHGIATB)));
+            sanPham.setSoLuongTonKho(cursor.getInt(cursor.getColumnIndex(DatabaseSanPham.SOLUONGTONKHO)));
 
             dsSanPham.add(sanPham);
         }

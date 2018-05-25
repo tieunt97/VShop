@@ -1,8 +1,10 @@
 package com.example.tieu_nt.vshop.Presenter.GioHang;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.example.tieu_nt.vshop.Model.Data.ModelGioHang;
+import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.View.TrangChu.ViewHienThiSanPhamGioHang;
 
@@ -13,21 +15,22 @@ import java.util.List;
  */
 
 public class PresenterLogicGioHang implements IPresenterGioHang {
-    private Context context;
     private ModelGioHang modelGioHang;
     private ViewHienThiSanPhamGioHang viewHienThiSanPhamGioHang;
 
     public PresenterLogicGioHang(Context context, ViewHienThiSanPhamGioHang viewHienThiSanPhamGioHang) {
-        this.context = context;
         this.viewHienThiSanPhamGioHang = viewHienThiSanPhamGioHang;
-        this.modelGioHang = new ModelGioHang();
+        this.modelGioHang = ModelGioHang.getInstance();
         this.modelGioHang.ketNoiSQLite(context);
     }
 
     public PresenterLogicGioHang(Context context) {
-        this.context = context;
-        this.modelGioHang = new ModelGioHang();
+        this.modelGioHang = ModelGioHang.getInstance();
         this.modelGioHang.ketNoiSQLite(context);
+    }
+
+    public Bitmap layHinhSanPham(String linkHinh){
+        return modelGioHang.layHinhSanPham(linkHinh);
     }
 
     @Override
@@ -38,6 +41,10 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
     @Override
     public boolean xoaSanPhamGioHang(int idSanPham) {
         return modelGioHang.xoaSanPhamTrongGioHang(idSanPham);
+    }
+
+    public boolean xoaSanPhamGioHang(){
+        return modelGioHang.xoaSanPhamTrongGioHang();
     }
 
     @Override

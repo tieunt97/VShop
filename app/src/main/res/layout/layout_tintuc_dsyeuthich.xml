@@ -25,20 +25,41 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
+                    android:layout_height="?attr/actionBarSize">
 
                 </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerTinTuc"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipeRefreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            </android.support.v7.widget.RecyclerView>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerTinTuc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+                <TextView
+                    android:id="@+id/tvThongBao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Danh sách yêu thích trống"
+                    android:textColor="@color/colorOrange"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"/>
+            </FrameLayout>
 
         </android.support.design.widget.CoordinatorLayout>
     </FrameLayout>

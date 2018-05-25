@@ -13,6 +13,7 @@ import com.example.tieu_nt.vshop.Model.TinTuc;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TinTuc.ChiTietTinTucActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ import java.util.List;
 public class AdapterTinTuc extends RecyclerView.Adapter<AdapterTinTuc.ViewHolder>{
     private Context context;
     private List<TinTuc> dsTinTuc;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy (hh:mm)");
 
     public AdapterTinTuc(Context context, List<TinTuc> dsTinTuc) {
         this.context = context;
@@ -40,16 +42,8 @@ public class AdapterTinTuc extends RecyclerView.Adapter<AdapterTinTuc.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final TinTuc tinTuc = dsTinTuc.get(position);
-        String ngayDang = tinTuc.getNgayDang()[2] + "/" + tinTuc.getNgayDang()[1] + "/" + tinTuc.getNgayDang()[0];
-        holder.tvNgay.setText(ngayDang);
-        String thoiGian = tinTuc.getGioDang()[0] + ":" + tinTuc.getGioDang()[1];
-        holder.tvThoiGian.setText(thoiGian);
+        holder.tvThoiGian.setText(sdf.format(tinTuc.getThoiGian()).toString());
         holder.tvTinTuc.setText(tinTuc.getTieuDe());
-        if(position != dsTinTuc.size() - 1){
-            holder.view.setVisibility(View.VISIBLE);
-        }else{
-            holder.view.setVisibility(View.GONE);
-        }
         holder.relaTinTuc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,15 +61,13 @@ public class AdapterTinTuc extends RecyclerView.Adapter<AdapterTinTuc.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout relaTinTuc;
-        TextView tvNgay, tvThoiGian, tvTinTuc;
+        TextView tvThoiGian, tvTinTuc;
         View view;
         public ViewHolder(View itemView) {
             super(itemView);
             relaTinTuc = (RelativeLayout) itemView.findViewById(R.id.relaTinTuc);
-            tvNgay = (TextView) itemView.findViewById(R.id.tvNgay);
             tvThoiGian = (TextView) itemView.findViewById(R.id.tvThoiGian);
             tvTinTuc = (TextView) itemView.findViewById(R.id.tvTenTinTuc);
-            view = (View) itemView.findViewById(R.id.view);
         }
     }
 }

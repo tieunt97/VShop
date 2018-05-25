@@ -20,11 +20,19 @@ public class PresenterLogicThuongHieu implements IPresenterThuongHieu{
         this.modelThuongHieu = ModelThuongHieu.getInstance();
     }
 
+    public PresenterLogicThuongHieu(){
+        this.modelThuongHieu = ModelThuongHieu.getInstance();
+    }
+
     @Override
     public void layDanhSachThuongHieu() {
         List<ThuongHieu> dsThuongHieu = modelThuongHieu.layTatCaThuongHieu();
         if(dsThuongHieu.size() > 0){
             viewHienThiDanhSachThuongHieu.hienThiThuongHieu(dsThuongHieu);
         }
+    }
+
+    public List<ThuongHieu> layDSThuongHieuLoc(){
+        return modelThuongHieu.layTatCaThuongHieu();
     }
 }

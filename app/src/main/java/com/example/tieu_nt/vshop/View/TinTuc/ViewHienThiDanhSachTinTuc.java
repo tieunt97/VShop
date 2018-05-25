@@ -1,4 +1,4 @@
-package com.example.tieu_nt.vshop.Presenter.TinTuc;
+package com.example.tieu_nt.vshop.View.TinTuc;
 
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 

@@ -37,9 +37,14 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
     private RecyclerView recyclerDonHang;
     private RecyclerView.LayoutManager layoutManager;
     private PresenterLogicChiTietDonHang presenterLogicChiTietDonHang;
+<<<<<<< HEAD
     private AdapterSanPhamGioHang adapterSanPhamGioHang;
     private ArrayList<SanPham> dsSanPham;
     private AdapterChiTietDonHang adapterSanPham;
+=======
+//    private AdapterSanPhamGioHang adapterSanPhamGioHang;
+
+>>>>>>> 1aecfad939e8da13cf73ff4396f57b1ced219b4d
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,40 +107,8 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
 
     @Override
     public void hienThiDSSanPhamDonHang(List<SanPham> dsSanPham) {
-         adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, dsSanPham, null, null, null);
-         recyclerDonHang.setAdapter(adapterSanPhamGioHang);
-         adapterSanPhamGioHang.notifyDataSetChanged();
-    }
-
-    @Override
-    public void huyDonHang(final int idDonHang) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view1 = LayoutInflater.from(this).inflate(R.layout.dialog_thongbao_xacnhan, null);
-        Button btnHuy = (Button) view1.findViewById(R.id.btnHuy);
-        Button btnDongY = (Button) view1.findViewById(R.id.btnDongY);
-        btnDongY.setText("Thoát");
-        TextView tvNoiDung = (TextView) view1.findViewById(R.id.tvNoiDung);
-        tvNoiDung.setText("Bạn có chắc muốn hủy đơn hàng này?");
-
-        builder.setView(view1);
-        final AlertDialog dialogCloseApp = builder.create();
-        dialogCloseApp.show();
-
-        btnHuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogCloseApp.dismiss();
-            }
-        });
-
-        btnDongY.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogCloseApp.dismiss();
-                if (presenterLogicChiTietDonHang.huyDonHang(idDonHang)){
-                    Toast.makeText(ChiTietDonHangActivity.this, "Hủy đơn hàng thành công", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//         adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, dsSanPham, null, null, null);
+//         recyclerDonHang.setAdapter(adapterSanPhamGioHang);
+//         adapterSanPhamGioHang.notifyDataSetChanged();
     }
 }

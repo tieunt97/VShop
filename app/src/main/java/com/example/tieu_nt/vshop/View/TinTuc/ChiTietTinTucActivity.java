@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.tieu_nt.vshop.Model.TinTuc;
 import com.example.tieu_nt.vshop.R;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by tieu_nt on 4/12/2018.
  */
@@ -19,6 +21,7 @@ import com.example.tieu_nt.vshop.R;
 public class ChiTietTinTucActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private TextView tvTieuDe, tvNgayDang, tvNoiDung;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 
     @Override
@@ -35,8 +38,8 @@ public class ChiTietTinTucActivity extends AppCompatActivity{
 
         TinTuc tinTuc = (TinTuc) getIntent().getSerializableExtra("tinTuc");
         tvTieuDe.setText(tinTuc.getTieuDe());
-        String ngayDang = "Ngày " + tinTuc.getNgayDang()[2] + " Tháng " + tinTuc.getNgayDang()[1] + " Năm" + tinTuc.getNgayDang()[0];
-        tvNgayDang.setText(ngayDang);
+        String thoiGian = "Ngày " + sdf.format(tinTuc.getThoiGian()).toString();
+        tvNgayDang.setText(thoiGian);
         tvNoiDung.setText(tinTuc.getNoiDung());
     }
 

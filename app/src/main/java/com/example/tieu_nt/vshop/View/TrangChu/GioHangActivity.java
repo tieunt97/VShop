@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.View.TrangChu;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,22 +19,21 @@ import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamGioHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
-import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPhamGioHang;
+import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.PresenterLogicGioHang;
-import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPhamGioHang;
+import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPham;
 import com.example.tieu_nt.vshop.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by tieu_nt on 5/9/2018.
  */
 
-public class GioHangActivity extends AppCompatActivity implements ViewHienThiSanPhamGioHang, CapNhatSoLuongSanPhamGioHang,
-        XoaSanPhamGioHang{
+public class GioHangActivity extends AppCompatActivity implements ViewHienThiSanPhamGioHang, CapNhatSoLuongSanPham,
+        XoaSanPham {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private TextView tvDiaChi, tvGiaTongSP, tvPhiGiaoHang, tvTongTienTT, tvThongBao, tvSoSanPham;
@@ -44,7 +44,8 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
     private AdapterSanPhamGioHang adapterSanPhamGioHang;
     private RecyclerView.LayoutManager layoutManager;
     private NumberFormat numberFormat = new DecimalFormat("###,###");
-    private int phiGiaoHang = 65000;
+    private int phiGiaoHang = 65000, giaTong = 0, soSP = 0;
+    private final int REQUEST_MUAHANG = 5;
 
 
     @Override
@@ -63,6 +64,19 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
         recyclerView.setLayoutManager(layoutManager);
         presenterLogicGioHang = new PresenterLogicGioHang(this, this);
         presenterLogicGioHang.layDSSanPhamGioHang();
+
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TrangChuActivity.nguoiDung == null){
+                    Toast.makeText(GioHangActivity.this, "Bạn cần đăng nhập để thanh toán", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent iThanhToan = new Intent(GioHangActivity.this, XacNhanMuaHangActivity.class);
+                    iThanhToan.putExtra("phiShip", phiGiaoHang);
+                    startActivityForResult(iThanhToan, REQUEST_MUAHANG);
+                }
+            }
+        });
     }
 
     @Override
@@ -95,45 +109,77 @@ public class GioHangActivity extends AppCompatActivity implements ViewHienThiSan
             tvThongBao.setVisibility(View.VISIBLE);
             relaGioHang.setVisibility(View.GONE);
         }else{
-            toolbar.setTitle("Giỏ hàng của tôi(" + dsSanPham.size() + ")");
             tvThongBao.setVisibility(View.GONE);
             relaGioHang.setVisibility(View.VISIBLE);
-            adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, this.dsSanPham, presenterLogicGioHang,
+            adapterSanPhamGioHang = new AdapterSanPhamGioHang(this, this.dsSanPham,
                     this, this);
             recyclerView.setAdapter(adapterSanPhamGioHang);
             adapterSanPhamGioHang.notifyDataSetChanged();
 
-            int giaTong = 0;
-            int soSP = 0;
             for(SanPham sp: dsSanPham){
                 giaTong += sp.getGiaChuan()*sp.getSoLuong();
                 soSP += sp.getSoLuong();
                 Log.d("SOLUONGTONKHO", sp.getSoLuongTonKho() + "");
             }
-            tvSoSanPham.setText("Tạm tính (" + soSP + " sản phẩm)");
-            tvGiaTongSP.setText(numberFormat.format(giaTong).toString() + " đ");
-            tvPhiGiaoHang.setText(numberFormat.format(phiGiaoHang).toString() + " đ");
-            tvTongTienTT.setText(numberFormat.format(giaTong + phiGiaoHang).toString()  + " đ");
+            setContent();
+        }
+    }
+
+    private void setContent(){
+        toolbar.setTitle("Giỏ hàng của tôi(" + soSP + ")");
+        tvSoSanPham.setText("Tạm tính (" + soSP + " sản phẩm)");
+        tvGiaTongSP.setText(numberFormat.format(giaTong).toString() + " đ");
+        tvPhiGiaoHang.setText(numberFormat.format(phiGiaoHang).toString() + " đ");
+        tvTongTienTT.setText(numberFormat.format(giaTong + phiGiaoHang).toString()  + " đ");
+    }
+
+    @Override
+    public void xoaSanPham(SanPham sanPham) {
+        int tongXoa = sanPham.getSoLuong();
+        soSP -= tongXoa;
+        giaTong -= tongXoa*sanPham.getGiaChuan();
+        if(dsSanPham.size() == 0){
+            toolbar.setTitle("Giỏ hàng của tôi");
+            tvThongBao.setVisibility(View.VISIBLE);
+            relaGioHang.setVisibility(View.GONE);
+        }else{
+            setContent();
         }
     }
 
     @Override
-    public void xoaSanPhamGioHang(int position) {
-        Log.d("SOLUONGSP", dsSanPham.size() + "");
-    }
-
-    @Override
-    public void capNhatSoLuongSanPhamGioHang(int positon, boolean them) {
-        int soLuong = dsSanPham.get(positon).getSoLuong();
+    public void capNhatSoLuongSanPham(int positon, boolean them) {
+        SanPham sanPham = dsSanPham.get(positon);
         if(them) {
-            Log.d("CAPNHATSOLUONG", "THEM");
+            soSP += 1;
+            giaTong += sanPham.getGiaChuan();
+            setContent();
         }else{
-            Log.d("CAPNHATSOLUONG", "XOA");
+            soSP -= 1;
+            giaTong -= sanPham.getGiaChuan();
+            setContent();
         }
     }
 
     @Override
     public void capNhatThatBai(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("soSP", soSP);
+        setResult(RESULT_OK, data);
+        super.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_MUAHANG){
+                soSP = data.getIntExtra("soSP", soSP);
+            }
+        }
     }
 }

@@ -11,17 +11,31 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseSanPham extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "SQLSANPHAM";
+
     public static final String TB_GIOHANG = "GIOHANG";
-    public static final String TB_GIOHANG_MASP = "MASP";
-    public static final String TB_GIOHANG_TENSP = "TENSP";
-    public static final String TB_GIOHANG_GIATIEN = "GIATIEN";
-    public static final String TB_GIOHANG_HINHANH = "HINHANH";
-    public static final String TB_GIOHANG_SOLUONG = "SOLUONG";
-    public static final String TB_GIOHANG_SOLUONGTONKHO = "SOLUONGTONKHO";
-    private static final String CREATE_TB_GIOHANG = "CREATE TABLE " + TB_GIOHANG + " (" + TB_GIOHANG_MASP + " INTEGER PRIMARY KEY , "
-            + TB_GIOHANG_TENSP + " TEXT, " + TB_GIOHANG_GIATIEN + " REAL, " +TB_GIOHANG_HINHANH + "  BLOB, "
-            + TB_GIOHANG_SOLUONG + " INTEGER, " + TB_GIOHANG_SOLUONGTONKHO + " INTEGER );";
+    public static final String MASP = "MASP";
+    public static final String TENSP = "TENSP";
+    public static final String GIATIEN = "GIATIEN";
+    public static final String HINHANH = "HINHANH";
+    public static final String SOLUONG = "SOLUONG";
+    public static final String DANHGIATB = "DANHGIATB";
+    public static final String SOLUONGTONKHO = "SOLUONGTONKHO";
+
+    public static final String TB_NGUOIDUNG = "NGUOIDUNG";
+    public static final String TB_NGUOIDUNG_ID = "ID";
+    public static final String TB_NGUOIDUNG_MAND = "MAND";
+    public static final String TB_NGUOIDUNG_LEVEL = "LEVEL";
+    public static final String TB_NGUOIDUNG_DIACHI = "DIACHI";
+
+    private static final String CREATE_TB_GIOHANG = "CREATE TABLE " + TB_GIOHANG + " (" + MASP + " INTEGER PRIMARY KEY , "
+            + TENSP + " TEXT, " + GIATIEN + " REAL, " + HINHANH + "  BLOB, " + SOLUONG + " INTEGER, "
+            + DANHGIATB + " REAL, " + SOLUONGTONKHO + " INTEGER );";
+
+    private static final String CREATE_TB_NGUOIDUNG = "CREATE TABLE " + TB_NGUOIDUNG + " (" + TB_NGUOIDUNG_ID + " INTEGER PRIMARY KEY , "
+            + TB_NGUOIDUNG_MAND + " INTEGER, " + TB_NGUOIDUNG_LEVEL + " INTEGER, " + TB_NGUOIDUNG_DIACHI + " TEXT);";
+
     private static final String DELETE_TB_GIOHANG = "DROP TABLE IF EXISTS "  + TB_GIOHANG;
+    private static final String DELETE_TB_NGUOIDUNG = "DROP TABLE IF EXISTS "  + TB_NGUOIDUNG;
 
 
     public DatabaseSanPham(Context context) {
@@ -30,11 +44,13 @@ public class DatabaseSanPham extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_TB_NGUOIDUNG);
         db.execSQL(CREATE_TB_GIOHANG);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DELETE_TB_NGUOIDUNG);
         db.execSQL(DELETE_TB_GIOHANG);
         onCreate(db);
     }

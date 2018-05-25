@@ -6,5 +6,6 @@ package com.example.tieu_nt.vshop.Presenter.DonHangCuaToi;
 
 public interface IPresenterChiTietDonHang {
     void layDSSanPhamDonHang(int idDonHang);
-    boolean huyDonHang(int idDonHang);
+    boolean xoaSanPhamDonHang(int idDonHang, int idSanPham);
+    boolean capNhatSanPhamDonHang(int idDonHang, int idSanPham, boolean them);
 }

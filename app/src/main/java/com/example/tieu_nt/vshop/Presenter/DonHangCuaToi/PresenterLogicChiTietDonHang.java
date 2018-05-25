@@ -20,6 +20,10 @@ public class PresenterLogicChiTietDonHang implements IPresenterChiTietDonHang {
         this.modelKhachHang = ModelKhachHang.getInstance();
     }
 
+    public PresenterLogicChiTietDonHang(){
+        modelKhachHang = ModelKhachHang.getInstance();
+    }
+
     @Override
     public void layDSSanPhamDonHang(int idDonHang) {
         List<SanPham> dsSanPham = modelKhachHang.layDanhSachSanPhamDonHang(idDonHang);
@@ -27,7 +31,12 @@ public class PresenterLogicChiTietDonHang implements IPresenterChiTietDonHang {
     }
 
     @Override
-    public boolean huyDonHang(int idDonHang) {
-        return modelKhachHang.huyDonHang(idDonHang);
+    public boolean xoaSanPhamDonHang(int idDonHang, int idSanPham) {
+        return false;
+    }
+
+    @Override
+    public boolean capNhatSanPhamDonHang(int idDonHang, int idSanPham, boolean them) {
+        return false;
     }
 }

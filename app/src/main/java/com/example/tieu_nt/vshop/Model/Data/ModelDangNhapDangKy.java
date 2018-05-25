@@ -1,5 +1,7 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
+import android.util.Log;
+
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
@@ -44,6 +46,8 @@ public class ModelDangNhapDangKy {
         attrs.add(hsEmail);
         attrs.add(hsMatKhau);
 
+        Log.d("dataJSON", email + ": "  + matKhau);
+
         DownloadJSON downloadJSON = new DownloadJSON(duongdan,attrs);
         downloadJSON.execute();
 
@@ -60,6 +64,7 @@ public class ModelDangNhapDangKy {
                 nguoiDung.setDiaChi(obNguoiDung.getString("address"));
                 nguoiDung.setEmail(obNguoiDung.getString("email"));
                 nguoiDung.setLevel(obNguoiDung.getInt("level"));
+                nguoiDung.setToken(obNguoiDung.getString("api_token"));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -110,6 +115,7 @@ public class ModelDangNhapDangKy {
                 nguoiDung.setIdNguoiDung(obNguoiDung.getInt("id"));
                 nguoiDung.setTenNguoiDung(obNguoiDung.getString("name"));
                 nguoiDung.setEmail(obNguoiDung.getString("email"));
+                nguoiDung.setToken(obNguoiDung.getString("api_token"));
                 nguoiDung.setLevel(NguoiDung.LEVEL_KHACHHANG);
             }
         } catch (InterruptedException e) {

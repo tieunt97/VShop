@@ -8,6 +8,7 @@ import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDanhGia;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,25 @@ public class ModelSanPham {
             modelSanPham = new ModelSanPham();
 
         return modelSanPham;
+    }
+
+    public int laySoLuongTrongKho(int idSanPham){
+        int soLuong = 0;
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham + "/getRestOfAmount");
+        downloadJSON.execute();
+        try {
+            String dataJSON = downloadJSON.get();
+            JSONObject object = new JSONObject(dataJSON);
+            soLuong = object.getInt("data");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return soLuong;
     }
 
     public TrangDanhGia layDanhSachDanhGia(String duongDan){
@@ -126,7 +146,7 @@ public class ModelSanPham {
 
     public SanPham layChiTietSanPham(int idSanPham){
         SanPham sanPham = new SanPham();
-        DownloadJSON downloadJSON = new DownloadJSON("http://192.168.1.110:8080/VShop/shop-mobile/public/products/" + idSanPham);
+        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham);
         downloadJSON.execute();
         try {
             String dataJSON = downloadJSON.get();
@@ -142,7 +162,8 @@ public class ModelSanPham {
             JSONArray dsHinh = data.getJSONArray("sub_images");
             List<String> dsHinhSP = new ArrayList<>();
             for(int i = 0; i < dsHinh.length(); i++){
-                dsHinhSP.add(dsHinh.getString(i));
+                JSONArray arrayHinh = dsHinh.getJSONArray(i);
+                dsHinhSP.add(arrayHinh.getString(0));
             }
             sanPham.setDsHinhSP(dsHinhSP);
 

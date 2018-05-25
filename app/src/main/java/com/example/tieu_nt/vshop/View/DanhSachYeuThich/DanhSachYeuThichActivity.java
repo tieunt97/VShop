@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
+import com.example.tieu_nt.vshop.Presenter.DanhSachYeuThich.PresenterLogicLaySPYeuThich;
 import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
@@ -38,8 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tieu_nt on 4/27/2018.
  */
 
-public class DanhSachYeuThichActivity extends MainActivity implements ViewHienThiDanhSachSanPham,
-        ILoadMore{
+public class DanhSachYeuThichActivity extends MainActivity implements ViewHienThiSanPhamYeuThich{
     private FrameLayout trangChu;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -48,10 +50,11 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
     private RecyclerView.LayoutManager layoutManager;
     private AdapterMenu adapterMenu;
     private AdapterSanPham adapterSanPham;
-    private PresenterLogicSanPham presenterLogicSanPham;
-    private TrangSanPham trangSanPham;
+    private PresenterLogicLaySPYeuThich presenterLogicSanPham;
     private List<SanPham> dsSanPham;
-    private TextView tvHoTen;
+    private TextView tvHoTen, tvThongBao;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private String duongDan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         actionBar.setTitle("Danh sách yêu thích");
 
         selectImage();
-
+        duongDan = TrangChuActivity.SERVER + "/api/likes/customer?api_token=" + TrangChuActivity.nguoiDung.getToken();
         drawerToggle = new ActionBarDrawerToggle(DanhSachYeuThichActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -94,49 +97,40 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterMenu);
 
-        presenterLogicSanPham = new PresenterLogicSanPham(this);
-        presenterLogicSanPham.layDanhSachSanPham("");
+        tvThongBao.setVisibility(View.VISIBLE);
+
+        presenterLogicSanPham = new PresenterLogicLaySPYeuThich(this);
+        presenterLogicSanPham.layDSSanPhamYT(duongDan);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenterLogicSanPham.layDSSanPhamYT(duongDan);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void anhXa(){
         trangChu = (FrameLayout) findViewById(R.id.trangChu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         recyclerSanPhamYeuThich = (RecyclerView) findViewById(R.id.recyclerTinTuc);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         imgInfo = (CircleImageView) findViewById(R.id.imgInfo);
         tvHoTen = (TextView) findViewById(R.id.tvHoTen);
+        tvThongBao = (TextView) findViewById(R.id.tvThongBao);
     }
 
     @Override
-    public void hienThiDanhSachSanPham(TrangSanPham trangSanPham) {
-        this.trangSanPham = trangSanPham;
-        this.dsSanPham = this.trangSanPham.getDsSanPham();
+    public void hienThiSanPhamYeuThich(List<SanPham> dsSanPham) {
+        tvThongBao.setVisibility(View.GONE);
+        this.dsSanPham = dsSanPham;
+        adapterSanPham = new AdapterSanPham(this, this.dsSanPham, R.layout.custom_layout_sanpham_list);
         layoutManager = new LinearLayoutManager(this);
         recyclerSanPhamYeuThich.setLayoutManager(layoutManager);
-        adapterSanPham = new AdapterSanPham(this, dsSanPham, R.layout.custom_layout_sanpham_list);
         recyclerSanPhamYeuThich.setAdapter(adapterSanPham);
-        recyclerSanPhamYeuThich.addOnScrollListener(new LoadMoreScroll(layoutManager, this,
-                this.trangSanPham.isTrangCuoi(), this.trangSanPham.getNextPage()));
-        recyclerSanPhamYeuThich.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterSanPham.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void loadMore(String duongDan) {
-        trangSanPham = presenterLogicSanPham.layDanhSachSanPhamLoadMore(duongDan);
-        if(trangSanPham.getDsSanPham().size() > 0){
-            this.dsSanPham.addAll(trangSanPham.getDsSanPham());
-            recyclerSanPhamYeuThich.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapterSanPham.notifyDataSetChanged();
-                }
-            });
-        }
+        adapterSanPham.notifyDataSetChanged();
     }
 }

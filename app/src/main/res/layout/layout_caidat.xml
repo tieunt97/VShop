@@ -49,13 +49,13 @@
                     android:background="@color/colorGreyish"/>
 
                 <TextView
-                    android:id="@+id/tvCapNhatDiaChi"
+                    android:id="@+id/tvCapNhatThongTin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cập nhật địa chỉ"
+                    android:text="Cập nhật thông tin"
                     android:textColor="@color/colorBlack"
                     android:padding="10dp"
-                    android:drawableLeft="@drawable/location_pin"
+                    android:drawableLeft="@drawable/account"
                     android:gravity="center_vertical"
                     android:drawablePadding="10dp"/>
 

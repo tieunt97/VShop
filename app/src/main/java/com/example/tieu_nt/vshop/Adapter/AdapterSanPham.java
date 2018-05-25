@@ -1,5 +1,6 @@
 package com.example.tieu_nt.vshop.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TrangChu.ChiTietSanPhamActivity;
+import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -65,8 +67,8 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGiaChuan()).toString();
         holder.tvGiaSP.setText(gia + " đ");
-        if(sanPham.getDanhGiaTB() == 0 && sanPham.getSoLuotDanhGia() == 0){
-            holder.rbDanhGia.setRating((float) 5.0);
+        if(sanPham.getSoLuotDanhGia() == 0){
+            holder.rbDanhGia.setRating(0);
         }else{
             holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
         }
@@ -76,7 +78,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ViewHold
             public void onClick(View view) {
                 Intent iChiTietSanPham = new Intent(context, ChiTietSanPhamActivity.class);
                 iChiTietSanPham.putExtra("idSanPham", sanPham.getIdSanPham());
-                context.startActivity(iChiTietSanPham);
+                ((Activity) context).startActivityForResult(iChiTietSanPham, TrangChuActivity.REQUEST_CHITIETSANPHAM);
             }
         });
     }

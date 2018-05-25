@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class NguoiDung implements Serializable{
     public static final int LEVEL_KHACHHANG = 1, LEVEL_NVGIAOHANG = 2;
     private int idNguoiDung, level;
-    private String tenNguoiDung, soDT, diaChi, anhNguoiDung, email, matKhau;
+    private String tenNguoiDung, soDT, diaChi, anhNguoiDung, email, matKhau, token;
 
 
     public int getIdNguoiDung() {
@@ -74,5 +74,13 @@ public class NguoiDung implements Serializable{
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

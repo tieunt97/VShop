@@ -1,5 +1,7 @@
 package com.example.tieu_nt.vshop.Presenter.SanPham;
 
+import android.content.Context;
+
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.Data.ModelSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -34,10 +36,5 @@ public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham{
         if(sanPham.getDsDanhGia().size() > 0){
             viewChiTietSanPham.hienThiDSDanhGia(sanPham.getDsDanhGia());
         }
-    }
-
-    @Override
-    public boolean capNhatSanPhamYeuThich(int idKhachHang, int idSanPham){
-        return modelKhachHang.capNhatSanPhamYeuThich(idKhachHang, idSanPham);
     }
 }
