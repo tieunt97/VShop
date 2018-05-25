@@ -18,6 +18,7 @@ import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Presenter.DangNhapDangKy.PresenterLogicDanhNhap;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.DangNhap.ViewDangNhapDangKy;
+import com.example.tieu_nt.vshop.View.Shiper.ShiperActivity;
 import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 /**
@@ -77,6 +78,9 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         if(nguoiDung.getLevel() == NguoiDung.LEVEL_KHACHHANG){
             Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
             startActivity(iTrangChu);
+        }else if(nguoiDung.getLevel() == NguoiDung.LEVEL_NVGIAOHANG){
+            Intent iShiper = new Intent(getActivity(), ShiperActivity.class);
+            startActivity(iShiper);
         }
     }
 

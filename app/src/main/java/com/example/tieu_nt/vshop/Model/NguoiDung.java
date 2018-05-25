@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class NguoiDung implements Serializable{
-    public static final int LEVEL_KHACHHANG = 1, LEVEL_NVGIAOHANG = 2;
+    public static final int LEVEL_KHACHHANG = 1, LEVEL_NVGIAOHANG = 4;
     private int idNguoiDung, level;
     private String tenNguoiDung, soDT, diaChi, anhNguoiDung, email, matKhau, token;
 

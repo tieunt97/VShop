@@ -36,7 +36,7 @@ public class ShiperActivity extends AppCompatActivity implements ViewDonHangShip
     private AdapterNhanDonHang adapterNhanDonHang, adapterGiaoHang, adapterLichSu;
     private PresenterDonHangShiper presenterDonHangShiper;
 
-    public static final String SERVER = "http://10.10.17.228/VShop/shop-mobile/public";
+    public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
     public static final String ORDER_WAIT = SERVER+"/api/shipper/order/waiting?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
     public static final String ORDER_SHIP = SERVER+"/api/shipper/order/my_order_list?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
     public static final String ORDER_HISTORY = SERVER+"/api/shipper/order/my_history_orders?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";

@@ -20,14 +20,6 @@ public class DangNhap {
         return dangNhap;
     }
 
-    public static DangNhap getDangNhap() {
-        return dangNhap;
-    }
-
-    public static void setDangNhap(DangNhap dangNhap) {
-        DangNhap.dangNhap = dangNhap;
-    }
-
     public NguoiDung getNguoiDung() {
         return nguoiDung;
     }
