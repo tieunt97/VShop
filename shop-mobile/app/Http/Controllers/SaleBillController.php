@@ -24,7 +24,13 @@ class SaleBillController extends AppBaseController
     }
 
     public function receiveOrderByShipper() {
-        
+
+    }
+
+    public function orderBook(Request $request) {
+        $products = $request->products;
+        $orderBook = $this->saleBillService->orderBook($request);
+        return $this->sendResponse($orderBook, '200');
     }
 
     

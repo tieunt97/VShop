@@ -23,8 +23,8 @@ class ShipperService {
 		return $orders;
 	}
 
-	public function getOrderListIsReceived() {
-		$orders = SaleBill::select('id','customer_id','destination_address','ship_fee')
+	public function getMyOrderList() {
+		$orders = SaleBill::select('id','customer_id','destination_address','ship_fee','status_order')
 		->where('status_order', '=', 'received_order')->get();
 		foreach ($orders as $order) {
 			$customer_info = User::select('name','phone_number')->where('id', '=' , $order->customer_id)->get();

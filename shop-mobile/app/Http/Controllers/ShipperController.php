@@ -20,8 +20,8 @@ class ShipperController extends AppBaseController
     	return $this->sendResponse($orderList, '200');
     }
 
-    public function getOrderListIsReceived() {
-        $orderList = $this->shipperService->getOrderListIsReceived();
+    public function getMyOrderList() {
+        $orderList = $this->shipperService->getMyOrderList();
         return $this->sendResponse($orderList, '200');
     }
 

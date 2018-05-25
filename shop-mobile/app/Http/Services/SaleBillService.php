@@ -7,6 +7,8 @@ use App\SaleBill;
 use App\SaleDescription;
 use App\User;
 use App\Product;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -29,5 +31,15 @@ class SaleBillService {
 			$saleDes->product_info = $productInfo[0];
 		}
 		return $saleDess;
+	}
+
+	public function orderBook($request) {
+		$user = Auth::user();
+		$destination_address = $request->destination_address;
+		$products = $request->products;
+		// foreach ($products as $product) {
+		// 	return $product; 
+		// }
+		return $products;
 	}
 }
