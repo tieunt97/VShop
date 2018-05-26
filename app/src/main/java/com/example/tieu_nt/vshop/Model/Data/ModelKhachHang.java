@@ -1,15 +1,10 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
-import com.example.tieu_nt.vshop.Model.DanhGia;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DonHang;
-import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDonHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.TinTuc;
@@ -107,7 +102,7 @@ public class ModelKhachHang {
     public boolean xacNhanMuaHang(String token, DonHang donHang){
         boolean b = false;
         List<HashMap<String,String>> attrs = new ArrayList<>();
-        String duongDan = TrangChuActivity.SERVER + "/api/user/customer/order_book";
+        String duongDan = Constants.SERVER + "/api/user/customer/order_book";
 
         HashMap<String, String> hsToken = new HashMap<>();
         hsToken.put("api_token", token);
@@ -221,9 +216,9 @@ public class ModelKhachHang {
         attrs.add(hsIdSP);
         String duongDan;
         if(isThich){
-            duongDan = TrangChuActivity.SERVER + "/api/likes/customer/like";
+            duongDan = Constants.SERVER + "/api/likes/customer/like";
         }else{
-            duongDan = TrangChuActivity.SERVER + "/api/likes/customer/dislike";
+            duongDan = Constants.SERVER + "/api/likes/customer/dislike";
         }
         DownloadJSON downloadJSON = new DownloadJSON(duongDan, attrs);
         downloadJSON.execute();
@@ -245,7 +240,7 @@ public class ModelKhachHang {
 
     public boolean kiemTraSanPhamYeuThich(String token, int idSanPham){
         boolean b = false;
-        String duongDan = TrangChuActivity.SERVER + "/api/likes/customer/is_liked?api_token=" + token + "&product_id=" + idSanPham;
+        String duongDan = Constants.SERVER + "/api/likes/customer/is_liked?api_token=" + token + "&product_id=" + idSanPham;
         DownloadJSON downloadJSON = new DownloadJSON(duongDan);
         downloadJSON.execute();
 

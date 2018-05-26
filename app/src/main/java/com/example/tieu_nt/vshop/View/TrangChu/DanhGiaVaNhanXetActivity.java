@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterDanhGia;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
@@ -71,7 +71,7 @@ ViewHienThiDanhSachDanhGia, ILoadMore{
         toolbar.getNavigationIcon().setColorFilter(this.getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_IN);
 
         sanPham = (SanPham) getIntent().getSerializableExtra("sanPham");
-        duongDan = TrangChuActivity.SERVER + "/products/" + sanPham.getIdSanPham() + "/allValuations";
+        duongDan = Constants.SERVER + "/products/" + sanPham.getIdSanPham() + "/allValuations";
         hienThiThongTinSanPham();
 
         setAction();

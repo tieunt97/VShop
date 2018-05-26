@@ -5,20 +5,15 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.tieu_nt.vshop.Adapter.AdapterChiTietDonHang;
-import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamGioHang;
+import com.example.tieu_nt.vshop.Adapter.AdapterSanPhamDonHang;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.DonHangCuaToi.PresenterLogicChiTietDonHang;
@@ -37,9 +32,9 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
     private RecyclerView recyclerDonHang;
     private RecyclerView.LayoutManager layoutManager;
     private PresenterLogicChiTietDonHang presenterLogicChiTietDonHang;
-    private AdapterSanPhamGioHang adapterSanPhamGioHang;
     private ArrayList<SanPham> dsSanPham;
-    private AdapterChiTietDonHang adapterSanPham;
+    private AdapterSanPhamDonHang adapterSanPham;
+    private DonHang donHang;
 
 
     @Override
@@ -60,7 +55,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
         recyclerDonHang.setLayoutManager(layoutManager);
 
         if (dsSanPham != null){
-            adapterSanPham = new AdapterChiTietDonHang(this, dsSanPham);
+            adapterSanPham = new AdapterSanPhamDonHang(this, donHang.getIdHoaDon(), dsSanPham);
             recyclerDonHang.setAdapter(adapterSanPham);
             adapterSanPham.notifyDataSetChanged();
         }else {
@@ -72,7 +67,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity implements View.On
     private void getDsSanPham() {
         Intent intent = getIntent();
         if (intent != null) {
-            DonHang donHang = (DonHang) intent.getSerializableExtra("donhang");
+            donHang = (DonHang) intent.getSerializableExtra("donhang");
             dsSanPham = donHang.getDsSanPham();
         }else{
             dsSanPham = new ArrayList<>();

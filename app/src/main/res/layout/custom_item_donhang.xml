@@ -1,6 +1,5 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="250dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp"
@@ -125,31 +124,35 @@
                 android:layout_height="wrap_content"
                 />
 
-            <Button
-                android:id="@+id/btnXemThongTin"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorWhite"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/custom_btn_nhan"
-                android:text="Xem thông tin"
-                android:layout_below="@id/tv5"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                />
+                android:layout_below="@id/tv5"
+                android:layout_marginTop="10dp"
+                >
+                <Button
+                    android:id="@+id/btnXemThongTin"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/custom_btn_nhan"
+                    android:text="Chi tiết"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    />
 
-            <Button
-                android:id="@+id/btnNhanDonHang"
-                android:layout_marginLeft="60dp"
-                android:layout_toRightOf="@+id/btnXemThongTin"
-                android:textColor="@color/colorWhite"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/custom_btn_nhan"
-                android:text="Nhận đơn hàng"
-                android:layout_below="@id/tv5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"/>
+                <Button
+                    android:id="@+id/btnNhanDonHang"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/custom_btn_nhan"
+                    android:text="Nhận"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"/>
+            </LinearLayout>
+
         </RelativeLayout>
 
 

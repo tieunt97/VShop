@@ -112,49 +112,54 @@ public class XacNhanMuaHangActivity extends AppCompatActivity implements View.On
     }
 
     private void muaHang(){
-        for(int i = 0; i < dsSanPham.size(); i++){
-            SanPham sp = dsSanPham.get(i);
-            final int soLuongKho = presenterMuaHang.laySoLuongSanPhamTrongKho(sp.getIdSanPham());
-            if(sp.getSoLuong() > soLuongKho){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                View view1 = getLayoutInflater().inflate(R.layout.dialog_thongbao_xacnhan, null, false);
-                TextView tvNoiDung = (TextView) view1.findViewById(R.id.tvNoiDung);
-                tvNoiDung.setText("Số lượng sản phẩm không đủ, bạn có muốn lấy tất sản phẩm còn lại");
-                Button btnDongY = (Button) view1.findViewById(R.id.btnDongY);
-                btnDongY.setText("Có mua");
+        if(donHang != null){
+            for(int i = 0; i < dsSanPham.size(); i++){
+                SanPham sp = dsSanPham.get(i);
+                final int soLuongKho = presenterMuaHang.laySoLuongSanPhamTrongKho(sp.getIdSanPham());
+                if(sp.getSoLuong() > soLuongKho){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    View view1 = getLayoutInflater().inflate(R.layout.dialog_thongbao_xacnhan, null, false);
+                    TextView tvNoiDung = (TextView) view1.findViewById(R.id.tvNoiDung);
+                    tvNoiDung.setText("Số lượng sản phẩm không đủ, bạn có muốn lấy tất sản phẩm còn lại");
+                    Button btnDongY = (Button) view1.findViewById(R.id.btnDongY);
+                    btnDongY.setText("Có mua");
 
-                Button btnHuy = view1.findViewById(R.id.btnHuy);
+                    Button btnHuy = view1.findViewById(R.id.btnHuy);
 
-                builder.setView(view1);
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                    builder.setView(view1);
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                final int finalI = i;
-                btnHuy.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        donHang.getDsSanPham().remove(finalI);
-                        alertDialog.dismiss();
-                    }
-                });
+                    final int finalI = i;
+                    btnHuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            donHang.getDsSanPham().remove(finalI);
+                            alertDialog.dismiss();
+                        }
+                    });
 
-                btnDongY.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dsSanPham.get(finalI).setSoLuong(soLuongKho);
-                        alertDialog.dismiss();
-                    }
-                });
+                    btnDongY.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dsSanPham.get(finalI).setSoLuong(soLuongKho);
+                            alertDialog.dismiss();
+                        }
+                    });
+                }
             }
-        }
 
-        donHang.setDsSanPham((ArrayList<SanPham>) dsSanPham);
-        donHang.setDiaChi(edtDiaChi.getText().toString());
-        if(presenterLogicGioHang.xoaSanPhamGioHang()){
-            soSP = 0;
-        }
-        if(presenterMuaHang.muaHang(DangNhap.getInstance().getNguoiDung().getToken(), donHang)){
-            Toast.makeText(XacNhanMuaHangActivity.this, "Mua hàng thành công", Toast.LENGTH_SHORT).show();
+            donHang.setDsSanPham((ArrayList<SanPham>) dsSanPham);
+            donHang.setDiaChi(edtDiaChi.getText().toString());
+            if(presenterLogicGioHang.xoaSanPhamGioHang()){
+                soSP = 0;
+            }
+            if(presenterMuaHang.muaHang(DangNhap.getInstance().getNguoiDung().getToken(), donHang)){
+                Toast.makeText(XacNhanMuaHangActivity.this, "Mua hàng thành công", Toast.LENGTH_SHORT).show();
+                donHang = null;
+            }
+        }else{
+            Toast.makeText(XacNhanMuaHangActivity.this, "Đã đặt mua hàng", Toast.LENGTH_LONG).show();
         }
     }
 

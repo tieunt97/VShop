@@ -1,14 +1,12 @@
 package com.example.tieu_nt.vshop.Model.Data;
 
-import android.util.Log;
-
 import com.example.tieu_nt.vshop.ConnectInternet.DownloadJSON;
 import com.example.tieu_nt.vshop.Model.ChiTietSanPham;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DanhGia;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangDanhGia;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
-import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +37,7 @@ public class ModelSanPham {
 
     public int laySoLuongTrongKho(int idSanPham){
         int soLuong = 0;
-        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham + "/getRestOfAmount");
+        DownloadJSON downloadJSON = new DownloadJSON(Constants.SERVER + "/products/" + idSanPham + "/getRestOfAmount");
         downloadJSON.execute();
         try {
             String dataJSON = downloadJSON.get();
@@ -146,7 +144,7 @@ public class ModelSanPham {
 
     public SanPham layChiTietSanPham(int idSanPham){
         SanPham sanPham = new SanPham();
-        DownloadJSON downloadJSON = new DownloadJSON(TrangChuActivity.SERVER + "/products/" + idSanPham);
+        DownloadJSON downloadJSON = new DownloadJSON(Constants.SERVER + "/products/" + idSanPham);
         downloadJSON.execute();
         try {
             String dataJSON = downloadJSON.get();
@@ -157,7 +155,7 @@ public class ModelSanPham {
             sanPham.setHinhSanPham(data.getString("main_image"));
             sanPham.setGiaChuan(data.getInt("base_price"));
             sanPham.setMoTa(data.getString("description"));
-            sanPham.setThuongHieu("Apple");
+            sanPham.setThuongHieu(data.getString("provider"));
             sanPham.setSoLuongTonKho(data.getInt("quantity"));
             JSONArray dsHinh = data.getJSONArray("sub_images");
             List<String> dsHinhSP = new ArrayList<>();

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.example.tieu_nt.vshop.Presenter.GioHang.CapNhatSoLuongSanPham;
 import com.example.tieu_nt.vshop.Presenter.GioHang.XoaSanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.TrangChu.ChiTietSanPhamActivity;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -40,11 +42,18 @@ public class AdapterSanPhamDonHang extends RecyclerView.Adapter<AdapterSanPhamDo
     private CapNhatSoLuongSanPham capNhatSoLuongSanPham;
     private PresenterLogicChiTietDonHang presenterLogicChiTietDonHang;
     private int idDonHang;
+    private boolean isShiper = false;
 
 
     public AdapterSanPhamDonHang(Context context, int idDonHang, List<SanPham> dsSanPham) {
         this.context = context;
         this.dsSanPham = dsSanPham;
+    }
+
+    public AdapterSanPhamDonHang(Context context, int idDonHang, List<SanPham> dsSanPham, boolean isShiper) {
+        this.context = context;
+        this.dsSanPham = dsSanPham;
+        this.isShiper = isShiper;
     }
 
 
@@ -67,19 +76,32 @@ public class AdapterSanPhamDonHang extends RecyclerView.Adapter<AdapterSanPhamDo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final SanPham sanPham = dsSanPham.get(position);
-        Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP);
-        holder.tvTenSP.setText(sanPham.getTenSanPham());
-        holder.tvGiaSP.setText(numberFormat.format(sanPham.getGiaChuan()).toString() + " đ");
-        holder.relaSanPham.setOnClickListener(new View.OnClickListener() {
+        holder.progressBar.setVisibility(View.VISIBLE);
+        Picasso.get().load(sanPham.getHinhSanPham()).into(holder.imgHinhSP, new Callback() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChiTietSanPhamActivity.class);
-                intent.putExtra("idSanPham", sanPham.getIdSanPham());
-                context.startActivity(intent);
+            public void onSuccess() {
+                holder.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
             }
         });
+        holder.tvTenSP.setText(sanPham.getTenSanPham());
+        holder.tvGiaSP.setText(numberFormat.format(sanPham.getGiaChuan()).toString() + " đ");
+        if(!isShiper){
+            holder.relaSanPham.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ChiTietSanPhamActivity.class);
+                    intent.putExtra("idSanPham", sanPham.getIdSanPham());
+                    context.startActivity(intent);
+                }
+            });
+        }
         holder.rbDanhGia.setRating(sanPham.getDanhGiaTB());
         holder.tvSoDanhGia.setText("(" + sanPham.getSoLuotDanhGia() + ")");
         if(xoaSanPham == null){
@@ -153,6 +175,7 @@ public class AdapterSanPhamDonHang extends RecyclerView.Adapter<AdapterSanPhamDo
         TextView tvTenSP, tvGiaSP, tvGiamGia, tvSoSP, tvSoLuong, tvSoDanhGia;
         ImageButton imgXoa, imgCong, imgTru;
         LinearLayout linearGioHang, linearChiTiet;
+        ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             relaSanPham = (RelativeLayout) itemView.findViewById(R.id.relaSanPham);
@@ -169,6 +192,7 @@ public class AdapterSanPhamDonHang extends RecyclerView.Adapter<AdapterSanPhamDo
             imgTru = (ImageButton) itemView.findViewById(R.id.imgTru);
             linearGioHang = (LinearLayout) itemView.findViewById(R.id.linearGioHang);
             linearChiTiet = (LinearLayout) itemView.findViewById(R.id.linearChiTiet);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar_download);
         }
     }
 }

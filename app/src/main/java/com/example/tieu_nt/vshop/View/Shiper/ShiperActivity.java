@@ -2,46 +2,38 @@ package com.example.tieu_nt.vshop.View.Shiper;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterNhanDonHang;
+import com.example.tieu_nt.vshop.Model.Constants;
+import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.DonHang;
 import com.example.tieu_nt.vshop.Presenter.Shiper.PresenterDonHangShiper;
 import com.example.tieu_nt.vshop.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ShiperActivity extends AppCompatActivity implements ViewDonHangShiper{
     private android.support.v7.widget.Toolbar toolbar;
     private LinearLayout shiper;
-    private DrawerLayout drawerLayout;
     private TabHost tabHost;
     private SwipeRefreshLayout swiperDangGiao, swiperNhanDon;
     private RecyclerView recyclerDangGiao, recyclerNhanDon, recyclerLichSu;
-    private NavigationView navigationView;
 
     private AdapterNhanDonHang adapterNhanDonHang, adapterGiaoHang, adapterLichSu;
     private PresenterDonHangShiper presenterDonHangShiper;
 
-    public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
-    public static final String ORDER_WAIT = SERVER+"/api/shipper/order/waiting?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
-    public static final String ORDER_SHIP = SERVER+"/api/shipper/order/my_order_list?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
-    public static final String ORDER_HISTORY = SERVER+"/api/shipper/order/my_history_orders?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
-    public static final String ORDER_SHIPED = SERVER+"/api/shipper/order/shipped?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
-    public static final String ORDER_RECIEVE = SERVER+"/api/shipper/order/receive_order?api_token=b38f26623f4781ef021667636d0a042283e7db70536109cfe8549a3e70159f50";
+    public static final String ORDER_WAIT = Constants.SERVER + "/api/shipper/order/waiting?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
+    public static final String ORDER_SHIP = Constants.SERVER + "/api/shipper/order/my_order_list?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
+    public static final String ORDER_HISTORY = Constants.SERVER + "/api/shipper/order/my_history_orders?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
+    public static final String ORDER_SHIPED = Constants.SERVER + "/api/shipper/order/shipped?api_token="  + DangNhap.getInstance().getNguoiDung().getToken();
+    public static final String ORDER_RECIEVE = Constants.SERVER + "/api/shipper/order/receive_order?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,27 +42,12 @@ public class ShiperActivity extends AppCompatActivity implements ViewDonHangShip
         initView();
 
         presenterDonHangShiper = new PresenterDonHangShiper(this);
-        //set navigation
-        setupNavigation();
         //set tab host
         setupTabhost();
-        //setrecycler view
-        setRecycleView();
 
         presenterDonHangShiper.layDanhSachNhanDonHang(ORDER_WAIT);
         presenterDonHangShiper.layDanhSachGiaoHang(ORDER_SHIP);
         presenterDonHangShiper.layDanhSachLichSuGiao(ORDER_HISTORY);
-    }
-
-    private void setRecycleView() {
-
-        //set don hang dang giao
-//        AdapterNhanDonHang adapterDonHang = new AdapterNhanDonHang(this, arrayList);
-//        adapterDonHang.notifyDataSetChanged();
-//        recyclerDangGiao.setAdapter(adapterDonHang);
-//        recyclerDangGiao.setLayoutManager(new LinearLayoutManager(this));
-
-        //set nhan don hang
     }
 
     private void setupTabhost() {
@@ -92,33 +69,13 @@ public class ShiperActivity extends AppCompatActivity implements ViewDonHangShip
         tabHost.addTab(spec3);
     }
 
-    private void setupNavigation() {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(ShiperActivity.this, drawerLayout, R.string.open, R.string.close);
-        toggle.syncState();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        //set header
-        navigationView.inflateHeaderView(R.layout.drawer_header_layout);
-
-    }
-
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         shiper = findViewById(R.id.shiper);
-        drawerLayout = findViewById(R.id.drawerLayout);
         tabHost = findViewById(R.id.tabhost);
         recyclerNhanDon = findViewById(R.id.recycleNhanDon);
         recyclerDangGiao = findViewById(R.id.recycleDangGiao);
         recyclerLichSu = findViewById(R.id.recycleLichSu);
-        navigationView = findViewById(R.id.navigation);
     }
 
     @Override

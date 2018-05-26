@@ -28,9 +28,9 @@ import android.widget.ToggleButton;
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
 import com.example.tieu_nt.vshop.Adapter.AdapterThuongHieu;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
-import com.example.tieu_nt.vshop.Model.NguoiDung;
 import com.example.tieu_nt.vshop.Model.Data.ModelKhachHang;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -82,13 +82,12 @@ ViewHienThiDanhSachSanPham, ILoadMore, SapXepSanPham, TimKiemSanPham, LocSanPham
     private PresenterLogicSanPham presenterLogicSanPham;
     private PresenterLogicGioHang presenterLogicGioHang;
     public static final int REQUEST_CHITIETSANPHAM = 2, REQUEST_GIOHANG = 3, REQUEST_THUONGHIEU = 4;
-    public static final String SERVER = "http://10.0.3.2:8080/VShop/shop-mobile/public";
 
-    public static final String API_DANGNHAP = SERVER + "/login";
-    public static final String API_DANGKY = SERVER + "/register";
-    public static final String API_DANGXUAT = SERVER + "/logout";
-    public static final String API_THUONGHIEU = SERVER + "/providers";
-    private String duongDan = SERVER + "/sort&filter/products?product_type_id=1";
+    public static final String API_DANGNHAP = Constants.SERVER + "/login";
+    public static final String API_DANGKY = Constants.SERVER + "/register";
+    public static final String API_DANGXUAT = Constants.SERVER + "/logout";
+    public static final String API_THUONGHIEU = Constants.SERVER + "/providers";
+    private String duongDan = Constants.SERVER + "/sort&filter/products?product_type_id=1";
     private String sapXep = "", maThuongHieu = "", soSaoTB = "";
     private LoadMoreScroll loadMoreScroll;
 

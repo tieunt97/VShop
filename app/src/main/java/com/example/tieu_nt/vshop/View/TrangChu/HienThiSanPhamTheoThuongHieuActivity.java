@@ -23,6 +23,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.SanPham;
@@ -77,7 +78,7 @@ public class HienThiSanPhamTheoThuongHieuActivity extends AppCompatActivity impl
 
         thuongHieu = (ThuongHieu) getIntent().getSerializableExtra("thuongHieu");
         if(thuongHieu != null){
-            duongDan = TrangChuActivity.SERVER + "/sort&filter/products?provider_id=" + thuongHieu.getIdThuongHieu();
+            duongDan = Constants.SERVER + "/sort&filter/products?provider_id=" + thuongHieu.getIdThuongHieu();
         }
 
         setSupportActionBar(toolbar);

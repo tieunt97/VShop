@@ -36,12 +36,10 @@ public class DialogSapXep extends AlertDialog.Builder{
         relaSapXep[0] = view.findViewById(R.id.relaGiaCaoDenThap);
         relaSapXep[1] = view.findViewById(R.id.relaGiaThapDenCao);
         relaSapXep[2] = view.findViewById(R.id.relaSanPhamMoi);
-//        relaSapXep[3] = view.findViewById(R.id.relaDanhGia);
 
         imgSapXep[0] = view.findViewById(R.id.imgGiaCaoDenThap);
         imgSapXep[1] = view.findViewById(R.id.imgGiaThapDenCao);
         imgSapXep[2] = view.findViewById(R.id.imgSanPhamMoi);
-//        imgSapXep[3] = view.findViewById(R.id.imgDanhGia);
 
         Button btnHuy = (Button) view.findViewById(R.id.btnHuy);
         Button btnApDung = (Button) view.findViewById(R.id.btnApDung);
@@ -96,21 +94,6 @@ public class DialogSapXep extends AlertDialog.Builder{
                 }
             }
         });
-//
-//        relaSapXep[3].setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(viTriSapXep == 3){
-//                    imgSapXep[viTriSapXep].setVisibility(View.GONE);
-//                    viTriSapXep = -1;
-//                }else {
-//                    if(viTriSapXep != -1)
-//                        imgSapXep[viTriSapXep].setVisibility(View.GONE);
-//                    viTriSapXep = 3;
-//                    imgSapXep[viTriSapXep].setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
 
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override

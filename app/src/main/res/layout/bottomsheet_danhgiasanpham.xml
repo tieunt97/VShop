@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:scaleX="0.85"
             android:scaleY="0.85"
+            android:transformPivotX="0dp"
+            android:transformPivotY="42dp"
             />
     </LinearLayout>
 
@@ -31,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tiêu đề"
-        android:background="@color/colorWhite"
+        android:background="@drawable/custom_edt_gia"
         android:padding="10dp"
         />
 
@@ -43,7 +45,8 @@
         android:background="@drawable/custom_edt_gia"
         android:hint="Nội dung"
         android:padding="10dp"
-        android:gravity="left"/>
+        android:gravity="left"
+        android:layout_marginVertical="10dp"/>
 
     <LinearLayout
         android:id="@+id/linearDanhGia"

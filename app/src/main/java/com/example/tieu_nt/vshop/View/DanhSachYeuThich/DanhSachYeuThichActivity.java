@@ -1,6 +1,5 @@
 package com.example.tieu_nt.vshop.View.DanhSachYeuThich;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -8,31 +7,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DangNhap;
-import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
-import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
-import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
 import com.example.tieu_nt.vshop.Model.SanPham;
 import com.example.tieu_nt.vshop.Presenter.DanhSachYeuThich.PresenterLogicLaySPYeuThich;
-import com.example.tieu_nt.vshop.Presenter.SanPham.PresenterLogicSanPham;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
-import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
-import com.example.tieu_nt.vshop.View.TrangChu.ViewHienThiDanhSachSanPham;
 
 import java.util.List;
 
@@ -69,7 +58,7 @@ public class DanhSachYeuThichActivity extends MainActivity implements ViewHienTh
         actionBar.setTitle("Danh sách yêu thích");
 
         selectImage();
-        duongDan = TrangChuActivity.SERVER + "/api/likes/customer?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
+        duongDan = Constants.SERVER + "/api/likes/customer?api_token=" + DangNhap.getInstance().getNguoiDung().getToken();
         drawerToggle = new ActionBarDrawerToggle(DanhSachYeuThichActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {

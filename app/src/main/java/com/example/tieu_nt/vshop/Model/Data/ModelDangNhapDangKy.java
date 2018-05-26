@@ -46,8 +46,6 @@ public class ModelDangNhapDangKy {
         attrs.add(hsEmail);
         attrs.add(hsMatKhau);
 
-        Log.d("dataJSON", email + ": "  + matKhau);
-
         DownloadJSON downloadJSON = new DownloadJSON(duongdan,attrs);
         downloadJSON.execute();
 

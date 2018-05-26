@@ -7,15 +7,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterSanPham;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
 import com.example.tieu_nt.vshop.Model.LoadMore.TrangSanPham;
@@ -57,7 +56,7 @@ public class SanPhamTimKiemActivity extends AppCompatActivity implements ViewHie
 
         timKiem = getIntent().getStringExtra("timKiem");
 
-        duongDan = TrangChuActivity.SERVER + "/products/search/" + timKiem;
+        duongDan = Constants.SERVER + "/products/search/" + timKiem;
 
         layoutManager = new GridLayoutManager(this, 2);
 

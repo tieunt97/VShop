@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.tieu_nt.vshop.Adapter.AdapterMenu;
 import com.example.tieu_nt.vshop.Adapter.AdapterTinTuc;
+import com.example.tieu_nt.vshop.Model.Constants;
 import com.example.tieu_nt.vshop.Model.DangNhap;
 import com.example.tieu_nt.vshop.Model.LoadMore.ILoadMore;
 import com.example.tieu_nt.vshop.Model.LoadMore.LoadMoreScroll;
@@ -25,7 +26,6 @@ import com.example.tieu_nt.vshop.Model.LoadMore.TrangTinTuc;
 import com.example.tieu_nt.vshop.Presenter.TinTuc.PresenterLogicTinTuc;
 import com.example.tieu_nt.vshop.R;
 import com.example.tieu_nt.vshop.View.MainActivity;
-import com.example.tieu_nt.vshop.View.TrangChu.TrangChuActivity;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class TinTucActivity extends MainActivity implements ViewHienThiDanhSachT
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Tin tức");
 
-        duongDan = TrangChuActivity.SERVER + "/posters/getPosters";
+        duongDan = Constants.SERVER + "/posters/getPosters";
 
         drawerToggle = new ActionBarDrawerToggle(TinTucActivity.this, drawerLayout, R.string.open, R.string.close){
             @Override
